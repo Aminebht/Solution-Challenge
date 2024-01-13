@@ -89,34 +89,36 @@ class SignUp extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Container(
-                                              width: 289,
-                                              height: 53,
-                                              padding: const EdgeInsets.all(16),
-                                              decoration: ShapeDecoration(
-                                                color: Color(0xFFF8F8F8),
-                                                shape: RoundedRectangleBorder(
-                                                  side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                  borderRadius: BorderRadius.circular(16),
-                                                ),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Email',
-                                                    style: TextStyle(
-                                                      color: Color(0xFF5F5F5F),
-                                                      fontSize: 14,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight: FontWeight.w400,
-                                                      height: 0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                                        width: 289,
+                                                        height: 53,
+                                                        padding: const EdgeInsets.all(16),
+                                                        decoration: ShapeDecoration(
+                                                          color: Color(0xFFF8F8F8),
+                                                          shape: RoundedRectangleBorder(
+                                                            side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
+                                                            borderRadius: BorderRadius.circular(16),
+                                                          ),
+                                                        ),
+                                                        child: TextField(
+                                                          style: TextStyle(
+                                                            color: Color(0xFF5F5F5F),
+                                                            fontSize: 14,
+                                                            fontFamily: 'Inter',
+                                                            fontWeight: FontWeight.w400,
+                                                          ),
+                                                          decoration: InputDecoration(
+                                                            hintText: 'Email', // Placeholder text
+                                                            hintStyle: TextStyle(
+                                                              color: Color(0xFF5F5F5F),
+                                                              fontSize: 14,
+                                                              fontFamily: 'Inter',
+                                                              fontWeight: FontWeight.w400,
+                                                            ),
+                                                            border: InputBorder.none, // Remove the border
+                                                          ),
+                                                        ),
+                                                      ),
+
                                             const SizedBox(height: 15),
                                             Container(
                                               width: double.infinity,
@@ -127,37 +129,75 @@ class SignUp extends StatelessWidget {
                                                 children: [
                                                   Expanded(
                                                     child: Container(
-                                                      height: 53,
-                                                      padding: const EdgeInsets.all(16),
-                                                      decoration: ShapeDecoration(
-                                                        color: Color(0xFFF8F8F8),
-                                                        shape: RoundedRectangleBorder(
-                                                          side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                          borderRadius: BorderRadius.circular(16),
-                                                        ),
-                                                      ),
-                                                      child: Row(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Text(
-                                                            'First Name',
-                                                            style: TextStyle(
-                                                              color: Color(0xFF5F5F5F),
-                                                              fontSize: 14,
-                                                              fontFamily: 'Inter',
-                                                              fontWeight: FontWeight.w400,
-                                                              height: 0,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
+                                                                      height: 53,
+                                                                      padding: const EdgeInsets.all(16),
+                                                                      decoration: ShapeDecoration(
+                                                                        color: Color(0xFFF8F8F8),
+                                                                        shape: RoundedRectangleBorder(
+                                                                          side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
+                                                                          borderRadius: BorderRadius.circular(16),
+                                                                        ),
+                                                                      ),
+                                                                      child: TextField(
+                                                                        style: TextStyle(
+                                                                          color: Color(0xFF5F5F5F),
+                                                                          fontSize: 14,
+                                                                          fontFamily: 'Inter',
+                                                                          fontWeight: FontWeight.w400,
+                                                                        ),
+                                                                        decoration: InputDecoration(
+                                                                          hintText: 'First Name', // Placeholder text
+                                                                          hintStyle: TextStyle(
+                                                                            color: Color(0xFF5F5F5F),
+                                                                            fontSize: 14,
+                                                                            fontFamily: 'Inter',
+                                                                            fontWeight: FontWeight.w400,
+                                                                          ),
+                                                                          border: InputBorder.none, // Remove the border
+                                                                        ),
+                                                                      ),
+                                                                    ),
+
                                                   ),
                                                   const SizedBox(width: 15),
                                                   Expanded(
                                                     child: Container(
+                                                              height: 53,
+                                                              padding: const EdgeInsets.all(16),
+                                                              decoration: ShapeDecoration(
+                                                                color: Color(0xFFF8F8F8),
+                                                                shape: RoundedRectangleBorder(
+                                                                  side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
+                                                                  borderRadius: BorderRadius.circular(16),
+                                                                ),
+                                                              ),
+                                                              child: TextField(
+                                                                style: TextStyle(
+                                                                  color: Color(0xFF5F5F5F),
+                                                                  fontSize: 14,
+                                                                  fontFamily: 'Inter',
+                                                                  fontWeight: FontWeight.w400,
+                                                                ),
+                                                                decoration: InputDecoration(
+                                                                  hintText: 'Last Name', // Placeholder text
+                                                                  hintStyle: TextStyle(
+                                                                    color: Color(0xFF5F5F5F),
+                                                                    fontSize: 14,
+                                                                    fontFamily: 'Inter',
+                                                                    fontWeight: FontWeight.w400,
+                                                                  ),
+                                                                  border: InputBorder.none, // Remove the border
+                                                                ),
+                                                              ),
+                                                            ),
+                                                  ),
+
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(height: 15),
+                                            Container(
+                                                      width: 289,
                                                       height: 53,
                                                       padding: const EdgeInsets.all(16),
                                                       decoration: ShapeDecoration(
@@ -167,148 +207,123 @@ class SignUp extends StatelessWidget {
                                                           borderRadius: BorderRadius.circular(16),
                                                         ),
                                                       ),
-                                                      child: Row(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Text(
-                                                            'Last Name',
-                                                            style: TextStyle(
+                                                      child: TextField(
+                                                        style: TextStyle(
+                                                          color: Color(0xFF5F5F5F),
+                                                          fontSize: 14,
+                                                          fontFamily: 'Inter',
+                                                          fontWeight: FontWeight.w400,
+                                                        ),
+                                                        decoration: InputDecoration(
+                                                          hintText: 'Grade', // Placeholder text
+                                                          hintStyle: TextStyle(
+                                                            color: Color(0xFF5F5F5F),
+                                                            fontSize: 14,
+                                                            fontFamily: 'Inter',
+                                                            fontWeight: FontWeight.w400,
+                                                          ),
+                                                          border: InputBorder.none, // Remove the border
+                                                        ),
+                                                      ),
+                                                    ),
+
+                                            const SizedBox(height: 15),
+                                            Container(
+                                                    width: 289,
+                                                    height: 53,
+                                                    padding: const EdgeInsets.all(16),
+                                                    decoration: ShapeDecoration(
+                                                      color: Color(0xFFF8F8F8),
+                                                      shape: RoundedRectangleBorder(
+                                                        side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
+                                                        borderRadius: BorderRadius.circular(16),
+                                                      ),
+                                                    ),
+                                                    child: TextField(
+                                                      style: TextStyle(
+                                                        color: Color(0xFF5F5F5F),
+                                                        fontSize: 14,
+                                                        fontFamily: 'Inter',
+                                                        fontWeight: FontWeight.w400,
+                                                      ),
+                                                      decoration: InputDecoration(
+                                                        hintText: 'Phone number', // Placeholder text
+                                                        hintStyle: TextStyle(
+                                                          color: Color(0xFF5F5F5F),
+                                                          fontSize: 14,
+                                                          fontFamily: 'Inter',
+                                                          fontWeight: FontWeight.w400,
+                                                        ),
+                                                        border: InputBorder.none, // Remove the border
+                                                      ),
+                                                    ),
+                                                  ),
+
+                                            const SizedBox(height: 15),
+                                            Container(
+                                                        width: 289,
+                                                        height: 53,
+                                                        padding: const EdgeInsets.all(16),
+                                                        decoration: ShapeDecoration(
+                                                          color: Color(0xFFF8F8F8),
+                                                          shape: RoundedRectangleBorder(
+                                                            side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
+                                                            borderRadius: BorderRadius.circular(16),
+                                                          ),
+                                                        ),
+                                                        child: TextField(
+                                                          obscureText: true, // Set this to true to hide the entered text for password fields
+                                                          style: TextStyle(
+                                                            color: Color(0xFF5F5F5F),
+                                                            fontSize: 14,
+                                                            fontFamily: 'Inter',
+                                                            fontWeight: FontWeight.w400,
+                                                          ),
+                                                          decoration: InputDecoration(
+                                                            hintText: 'Password', // Placeholder text
+                                                            hintStyle: TextStyle(
                                                               color: Color(0xFF5F5F5F),
                                                               fontSize: 14,
                                                               fontFamily: 'Inter',
                                                               fontWeight: FontWeight.w400,
-                                                              height: 0,
                                                             ),
+                                                            border: InputBorder.none, // Remove the border
                                                           ),
-                                                        ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+
                                             const SizedBox(height: 15),
                                             Container(
-                                              width: 289,
-                                              height: 53,
-                                              padding: const EdgeInsets.all(16),
-                                              decoration: ShapeDecoration(
-                                                color: Color(0xFFF8F8F8),
-                                                shape: RoundedRectangleBorder(
-                                                  side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                  borderRadius: BorderRadius.circular(16),
-                                                ),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Grade',
-                                                    style: TextStyle(
-                                                      color: Color(0xFF5F5F5F),
-                                                      fontSize: 14,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight: FontWeight.w400,
-                                                      height: 0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(height: 15),
-                                            Container(
-                                              width: 289,
-                                              height: 53,
-                                              padding: const EdgeInsets.all(16),
-                                              decoration: ShapeDecoration(
-                                                color: Color(0xFFF8F8F8),
-                                                shape: RoundedRectangleBorder(
-                                                  side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                  borderRadius: BorderRadius.circular(16),
-                                                ),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Phone number',
-                                                    style: TextStyle(
-                                                      color: Color(0xFF5F5F5F),
-                                                      fontSize: 14,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight: FontWeight.w400,
-                                                      height: 0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(height: 15),
-                                            Container(
-                                              width: 289,
-                                              height: 53,
-                                              padding: const EdgeInsets.all(16),
-                                              decoration: ShapeDecoration(
-                                                color: Color(0xFFF8F8F8),
-                                                shape: RoundedRectangleBorder(
-                                                  side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                  borderRadius: BorderRadius.circular(16),
-                                                ),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Password',
-                                                    style: TextStyle(
-                                                      color: Color(0xFF5F5F5F),
-                                                      fontSize: 14,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight: FontWeight.w400,
-                                                      height: 0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(height: 15),
-                                            Container(
-                                              width: 289,
-                                              height: 53,
-                                              padding: const EdgeInsets.all(16),
-                                              decoration: ShapeDecoration(
-                                                color: Color(0xFFF8F8F8),
-                                                shape: RoundedRectangleBorder(
-                                                  side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                  borderRadius: BorderRadius.circular(16),
-                                                ),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Confirm Password',
-                                                    style: TextStyle(
-                                                      color: Color(0xFF5F5F5F),
-                                                      fontSize: 14,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight: FontWeight.w400,
-                                                      height: 0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                                        width: 289,
+                                                        height: 53,
+                                                        padding: const EdgeInsets.all(16),
+                                                        decoration: ShapeDecoration(
+                                                          color: Color(0xFFF8F8F8),
+                                                          shape: RoundedRectangleBorder(
+                                                            side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
+                                                            borderRadius: BorderRadius.circular(16),
+                                                          ),
+                                                        ),
+                                                        child: TextField(
+                                                          obscureText: true, // Set this to true to hide the entered text for password fields
+                                                          style: TextStyle(
+                                                            color: Color(0xFF5F5F5F),
+                                                            fontSize: 14,
+                                                            fontFamily: 'Inter',
+                                                            fontWeight: FontWeight.w400,
+                                                          ),
+                                                          decoration: InputDecoration(
+                                                            hintText: 'Confirm Password', // Placeholder text
+                                                            hintStyle: TextStyle(
+                                                              color: Color(0xFF5F5F5F),
+                                                              fontSize: 14,
+                                                              fontFamily: 'Inter',
+                                                              fontWeight: FontWeight.w400,
+                                                            ),
+                                                            border: InputBorder.none, // Remove the border
+                                                          ),
+                                                        ),
+                                                      ),
                                           ],
                                         ),
                                       ),
