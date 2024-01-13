@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'SignIn.dart';
+import 'package:flutter/gestures.dart';
 
 void main() {
   runApp(const FigmaToCodeApp());
@@ -118,6 +120,7 @@ class SignUp extends StatelessWidget {
                                                           ),
                                                         ),
                                                       ),
+
 
                                             const SizedBox(height: 15),
                                             Container(
@@ -328,69 +331,81 @@ class SignUp extends StatelessWidget {
                                         ),
                                       ),
                                       const SizedBox(height: 32),
-                                      Container(
-                                        width: 292,
-                                        height: 45,
-                                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                                        decoration: ShapeDecoration(
-                                          color: Color(0xFF572CB2),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(30),
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Next',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w500,
-                                                height: 0,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                      ElevatedButton(
+  onPressed: () {
+    // Navigate to the SignIn page
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => SignIn(),
+    ));
+  },
+  style: ElevatedButton.styleFrom(
+    primary: Color(0xFF572CB2), // Background color
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(30),
+    ),
+  ),
+  child: Container(
+    width: 292,
+    height: 45,
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+    child: Center(
+      child: Text(
+        'Next',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 15,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w500,
+          height: 0,
+        ),
+      ),
+    ),
+  ),
+),
+
                                     ],
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                left: 44,
-                                top: 571,
-                                child: Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: 'Already have an account.',
-                                        style: TextStyle(
-                                          color: Color(0xFF5F5F5F),
-                                          fontSize: 14,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w400,
-                                          height: 0,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: 'Login',
-                                        style: TextStyle(
-                                          color: Color(0xFF572CB2),
-                                          fontSize: 14,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w400,
-                                          decoration: TextDecoration.underline,
-                                          height: 0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                             Positioned(
+                                                        left: 44,
+                                                        top: 571,
+                                                        child: RichText(
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                text: 'Already have an account.',
+                                                                style: TextStyle(
+                                                                  color: Color(0xFF5F5F5F),
+                                                                  fontSize: 14,
+                                                                  fontFamily: 'Inter',
+                                                                  fontWeight: FontWeight.w400,
+                                                                  height: 0,
+                                                                ),
+                                                              ),
+                                                              TextSpan(
+                                                                text: 'Login',
+                                                                style: TextStyle(
+                                                                  color: Color(0xFF572CB2),
+                                                                  fontSize: 14,
+                                                                  fontFamily: 'Inter',
+                                                                  fontWeight: FontWeight.w400,
+                                                                  decoration: TextDecoration.underline,
+                                                                  height: 0,
+                                                                ),
+                                                                recognizer: TapGestureRecognizer()
+                                                                  ..onTap = () {
+                                                                    // Navigate to the SignIn page
+                                                                    Navigator.of(context).push(MaterialPageRoute(
+                                                                      builder: (context) => SignIn(),
+                                                                    ));
+                                                                  },
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+
                             ],
                           ),
                         ),
