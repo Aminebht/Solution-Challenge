@@ -1,5 +1,6 @@
+import 'package:app_0/SignUp.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/gestures.dart';
 void main() {
   runApp(const FigmaToCodeApp());
 }
@@ -253,45 +254,43 @@ class SignIn extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 95,
-                top: 802,
-                child: Container(
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Don’t have an account.',
-                              style: TextStyle(
-                                color: Color(0xFF5F5F5F),
-                                fontSize: 14,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                                height: 0,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'Sign Up',
-                              style: TextStyle(
-                                color: Color(0xFF572CB2),
-                                fontSize: 14,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                                decoration: TextDecoration.underline,
-                                height: 0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                                                        left: 95,
+                                                        top: 802,
+                                                        child: RichText(
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                text: 'Don’t have an account.',
+                                                                style: TextStyle(
+                                                                  color: Color(0xFF5F5F5F),
+                                                                  fontSize: 14,
+                                                                  fontFamily: 'Inter',
+                                                                  fontWeight: FontWeight.w400,
+                                                                  height: 0,
+                                                                ),
+                                                              ),
+                                                              TextSpan(
+                                                                text: 'Sign Up',
+                                                                style: TextStyle(
+                                                                  color: Color(0xFF572CB2),
+                                                                  fontSize: 14,
+                                                                  fontFamily: 'Inter',
+                                                                  fontWeight: FontWeight.w400,
+                                                                  decoration: TextDecoration.underline,
+                                                                  height: 0,
+                                                                ),
+                                                                recognizer: TapGestureRecognizer()
+                                                                  ..onTap = () {
+                                                                   
+                                                                    Navigator.of(context).push(MaterialPageRoute(
+                                                                      builder: (context) => SignUp(),
+                                                                    ));
+                                                                  },
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
               Positioned(
                 left: -108,
                 top: 349,
@@ -328,66 +327,73 @@ class SignIn extends StatelessWidget {
                                                 left: 0,
                                                 top: 0,
                                                 child: Container(
-                                                  width: 287.08,
-                                                  height: 53,
-                                                  decoration: ShapeDecoration(
-                                                    color: const Color(0xFFF8F8F8),
-                                                    shape: RoundedRectangleBorder(
-                                                      side: const BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                      borderRadius: BorderRadius.circular(16),
-                                                    ),
-                                                  ),
-                                                ),
+                                                        width: 289,
+                                                        height: 53,
+                                                        padding: const EdgeInsets.all(16),
+                                                        decoration: ShapeDecoration(
+                                                          color: Color(0xFFF8F8F8),
+                                                          shape: RoundedRectangleBorder(
+                                                            side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
+                                                            borderRadius: BorderRadius.circular(16),
+                                                          ),
+                                                        ),
+                                                        child: TextField(
+                                                          style: TextStyle(
+                                                            color: Color(0xFF5F5F5F),
+                                                            fontSize: 14,
+                                                            fontFamily: 'Inter',
+                                                            fontWeight: FontWeight.w400,
+                                                          ),
+                                                          decoration: InputDecoration(
+                                                            hintText: 'Email', // Placeholder text
+                                                            hintStyle: TextStyle(
+                                                              color: Color(0xFF5F5F5F),
+                                                              fontSize: 14,
+                                                              fontFamily: 'Inter',
+                                                              fontWeight: FontWeight.w400,
+                                                            ),
+                                                            border: InputBorder.none, // Remove the border
+                                                          ),
+                                                        ),
+                                                      ),
                                               ),
                                               Positioned(
                                                 left: 0,
                                                 top: 63,
                                                 child: Container(
-                                                  width: 287.08,
-                                                  height: 53,
-                                                  decoration: ShapeDecoration(
-                                                    color: const Color(0xFFF8F8F8),
-                                                    shape: RoundedRectangleBorder(
-                                                      side: const BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                      borderRadius: BorderRadius.circular(16),
-                                                    ),
-                                                  ),
-                                                ),
+                                                        width: 289,
+                                                        height: 53,
+                                                        padding: const EdgeInsets.all(16),
+                                                        decoration: ShapeDecoration(
+                                                          color: Color(0xFFF8F8F8),
+                                                          shape: RoundedRectangleBorder(
+                                                            side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
+                                                            borderRadius: BorderRadius.circular(16),
+                                                          ),
+                                                        ),
+                                                        child: TextField(
+                                                          obscureText: true, // Set this to true to hide the entered text for password fields
+                                                          style: TextStyle(
+                                                            color: Color(0xFF5F5F5F),
+                                                            fontSize: 14,
+                                                            fontFamily: 'Inter',
+                                                            fontWeight: FontWeight.w400,
+                                                          ),
+                                                          decoration: InputDecoration(
+                                                            hintText: 'Password', // Placeholder text
+                                                            hintStyle: TextStyle(
+                                                              color: Color(0xFF5F5F5F),
+                                                              fontSize: 14,
+                                                              fontFamily: 'Inter',
+                                                              fontWeight: FontWeight.w400,
+                                                            ),
+                                                            border: InputBorder.none, // Remove the border
+                                                          ),
+                                                        ),
+                                                      ),
                                               ),
-                                              const Positioned(
-                                                left: 21.85,
-                                                top: 18,
-                                                child: SizedBox(
-                                                  width: 35.76,
-                                                  child: Text(
-                                                    'Email',
-                                                    style: TextStyle(
-                                                      color: Color(0xFF5F5F5F),
-                                                      fontSize: 14,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight: FontWeight.w400,
-                                                      height: 0,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              const Positioned(
-                                                left: 21.85,
-                                                top: 81,
-                                                child: SizedBox(
-                                                  width: 64.57,
-                                                  child: Text(
-                                                    'Password',
-                                                    style: TextStyle(
-                                                      color: Color(0xFF5F5F5F),
-                                                      fontSize: 14,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight: FontWeight.w400,
-                                                      height: 0,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
+                                    
+                  
                                             ],
                                           ),
                                         ),
