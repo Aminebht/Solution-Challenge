@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: Container(
-          color: Color.fromRGBO(123, 49, 244, 1.0), // RGB values for purple
+          color: Color.fromRGBO(123, 49, 244, 1.0),
           child: Center(
             child: SingleChildScrollView(
               child: Column(
@@ -18,34 +18,34 @@ class MyApp extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: 40.0,
-                  ), // Added more space above the three dots
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleIndicator(),
                       SizedBox(width: 8.0),
-                      CircleIndicator(isPink: true),
-                      SizedBox(width: 8.0),
                       CircleIndicator(),
+                      SizedBox(width: 8.0),
+                      CircleIndicator(isPink: true),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      'Choose a Lesson',
+                      'Choose a Subject',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   Card(
                     color: Colors.white,
                     margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(20), // Increased border radius
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -58,16 +58,14 @@ class MyApp extends StatelessWidget {
                             margin: EdgeInsets.symmetric(vertical: 8.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                // Handle 'Next' button press
                                 print('Next button pressed');
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Color.fromRGBO(
-                                    123, 49, 244, 1.0), // RGB values for purple
+                                primary: Color.fromRGBO(123, 49, 244, 1.0),
                                 onPrimary: Colors.white,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 24.0,
-                                  vertical: 24.0, // Increased height
+                                  vertical: 24.0,
                                 ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
@@ -76,7 +74,7 @@ class MyApp extends StatelessWidget {
                               child: Text(
                                 'Next',
                                 style: TextStyle(
-                                  fontSize: 18.0, // Increased font size
+                                  fontSize: 18.0,
                                 ),
                               ),
                             ),
@@ -104,43 +102,31 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
   int selectedChoice = -1;
 
   List<String> customTexts = [
-    'Algebra',
-    'Gain',
-    'Geometry',
-    'General',
-    'Analysis',
-    'Static',
-    'Probability',
-    'Other',
+    'Quick Exercise',
+    'A Set',
   ];
 
   List<String> customImages = [
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-  ];
+    '1',
+    '6',
+  ]; // Replace images with characters '1' and '6'
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double fontSize = screenWidth * 0.04; // Adjust the multiplier as needed
+    double fontSize = screenWidth * 0.04;
 
     return Column(
       children: [
         GridView.builder(
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 25.0, // Decreased mainAxisSpacing
-            crossAxisSpacing: 25.0, // Decreased crossAxisSpacing
-            childAspectRatio: 1.20, // Adjust the aspect ratio
+            crossAxisCount: 1,
+            mainAxisSpacing: 25.0,
+            crossAxisSpacing: 25.0,
+            childAspectRatio: 1.20,
           ),
-          itemCount: 8,
+          itemCount: 2,
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
@@ -149,12 +135,11 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                 });
               },
               child: Container(
+                margin: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   color: selectedChoice == index
-                      ? Color.fromRGBO(
-                          247, 138, 177, 1.0) // RGB values for deep pink
-                      : Color.fromRGBO(
-                          229, 212, 255, 1.0), // RGB values for blue
+                      ? Color.fromRGBO(247, 138, 177, 1.0)
+                      : Color.fromRGBO(229, 212, 255, 1.0),
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Padding(
@@ -163,33 +148,36 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 75, // Increased width
-                        height: 75, // Increased height
+                        width: 175,
+                        height: 175,
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(255, 255, 255,
-                              0.5), // RGB values for white with opacity
-                          borderRadius: BorderRadius.circular(18),
+                          color: Color.fromRGBO(255, 255, 255, 0.5),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
-                          child: Image.asset(
+                          child: Text(
                             customImages[index],
-                            width: 70, // Increased width
-                            height: 70, // Increased height
+                            style: TextStyle(
+                              color: selectedChoice == index
+                                  ? Colors.white
+                                  : Color.fromRGBO(123, 49, 244, 1.0),
+                              fontSize: fontSize + 40.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                          height: 4.0), // Reduced space between image and text
+                      SizedBox(height: 30.0),
                       Text(
                         customTexts[index],
                         style: TextStyle(
                           color: selectedChoice == index
                               ? Colors.white
-                              : Color.fromRGBO(
-                                  123, 49, 244, 1.0), // RGB values for purple
-                          fontSize: fontSize,
-                          fontWeight: FontWeight.bold, // Added fontWeight
+                              : Color.fromRGBO(123, 49, 244, 1.0),
+                          fontSize: fontSize + 10.0,
+                          fontWeight: FontWeight.bold,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
@@ -215,9 +203,7 @@ class CircleIndicator extends StatelessWidget {
       height: 12.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isPink
-            ? Color.fromRGBO(247, 138, 177, 1.0) // RGB values for deep pink
-            : Colors.white,
+        color: isPink ? Color.fromRGBO(247, 138, 177, 1.0) : Colors.white,
       ),
     );
   }

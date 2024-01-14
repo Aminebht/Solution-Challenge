@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleIndicator(),
-                      SizedBox(width: 8.0),
                       CircleIndicator(isPink: true),
+                      SizedBox(width: 8.0),
+                      CircleIndicator(),
                       SizedBox(width: 8.0),
                       CircleIndicator(),
                     ],
@@ -32,12 +32,13 @@ class MyApp extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      'Choose a Lesson',
+                      'Choose a Subject',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   Card(
@@ -104,14 +105,14 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
   int selectedChoice = -1;
 
   List<String> customTexts = [
-    'Algebra',
-    'Gain',
-    'Geometry',
-    'General',
-    'Analysis',
-    'Static',
-    'Probability',
-    'Other',
+    'Math',
+    'Physics',
+    'Science',
+    'Chemistry',
+    'Robotics',
+    'Computer \nScience',
+    'History',
+    'Geography',
   ];
 
   List<String> customImages = [
@@ -190,6 +191,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                           fontSize: fontSize,
                           fontWeight: FontWeight.bold, // Added fontWeight
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
