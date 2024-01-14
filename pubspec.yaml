@@ -63,7 +63,14 @@ flutter:
     - images/fb.png
     - images/google.png
     - images/sign_bg.png
-
+    - images/algebra.png
+    - images/gain.png
+    - images/geometry.png
+    - images/general.png
+    - images/analysis.png
+    - images/statistic.png
+    - images/probability.png
+    - images/other.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
