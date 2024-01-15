@@ -1,10 +1,22 @@
+import 'package:app_0/ChooseForm.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Choose Lesson',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ChooseLesson(),
+    );
+  }
+}
+class ChooseLesson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -58,8 +70,9 @@ class MyApp extends StatelessWidget {
                             margin: EdgeInsets.symmetric(vertical: 8.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                // Handle 'Next' button press
-                                print('Next button pressed');
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ChooseForm(),
+                                ));
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Color.fromRGBO(

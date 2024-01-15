@@ -1,25 +1,20 @@
-import 'package:flutter/material.dart';
-import 'SignIn.dart';
+import 'package:app_0/main.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const FigmaToCodeApp());
+  runApp(MyApp());
 }
 
-class FigmaToCodeApp extends StatelessWidget {
-  const FigmaToCodeApp({super.key});
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+      title: 'Sign Up Page',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body: ListView(children: [
-          SignUp(),
-        ]),
-      ),
+      home: SignUp(),
     );
   }
 }
@@ -27,411 +22,285 @@ class FigmaToCodeApp extends StatelessWidget {
 class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 393,
-          height: 852,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: Colors.white),
-          child: Stack(
-            children: [
-              Positioned(
-                left: 56,
-                top: 238,
-                child: Container(
-                  width: 292,
-                  height: 588,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          width: double.infinity,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                left: 0,
-                                top: 0,
-                                child: Container(
-                                  width: 292,
-                                  height: 536,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Sign Up',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 28,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w700,
-                                                height: 0,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 32),
-                                      Container(
-                                        width: double.infinity,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                                        width: 289,
-                                                        height: 53,
-                                                        padding: const EdgeInsets.all(16),
-                                                        decoration: ShapeDecoration(
-                                                          color: Color(0xFFF8F8F8),
-                                                          shape: RoundedRectangleBorder(
-                                                            side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                            borderRadius: BorderRadius.circular(16),
-                                                          ),
-                                                        ),
-                                                        child: TextField(
-                                                          style: TextStyle(
-                                                            color: Color(0xFF5F5F5F),
-                                                            fontSize: 14,
-                                                            fontFamily: 'Inter',
-                                                            fontWeight: FontWeight.w400,
-                                                          ),
-                                                          decoration: InputDecoration(
-                                                            hintText: 'Email', // Placeholder text
-                                                            hintStyle: TextStyle(
-                                                              color: Color(0xFF5F5F5F),
-                                                              fontSize: 14,
-                                                              fontFamily: 'Inter',
-                                                              fontWeight: FontWeight.w400,
-                                                            ),
-                                                            border: InputBorder.none, // Remove the border
-                                                          ),
-                                                        ),
-                                                      ),
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Background image covering 33% of the screen height
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.33,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/sign_bg.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            top: MediaQuery.of(context).size.height * 0.21,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Sign Up text
+                  Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
+                      color: Colors.black, // Adjust text color
+                    ),
+                  ),
+                  SizedBox(height: 6.29 * MediaQuery.of(context).size.height / 100),
 
-
-                                            const SizedBox(height: 15),
-                                            Container(
-                                              width: double.infinity,
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Expanded(
-                                                    child: Container(
-                                                                      height: 53,
-                                                                      padding: const EdgeInsets.all(16),
-                                                                      decoration: ShapeDecoration(
-                                                                        color: Color(0xFFF8F8F8),
-                                                                        shape: RoundedRectangleBorder(
-                                                                          side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                                          borderRadius: BorderRadius.circular(16),
-                                                                        ),
-                                                                      ),
-                                                                      child: TextField(
-                                                                        style: TextStyle(
-                                                                          color: Color(0xFF5F5F5F),
-                                                                          fontSize: 14,
-                                                                          fontFamily: 'Inter',
-                                                                          fontWeight: FontWeight.w400,
-                                                                        ),
-                                                                        decoration: InputDecoration(
-                                                                          hintText: 'First Name', // Placeholder text
-                                                                          hintStyle: TextStyle(
-                                                                            color: Color(0xFF5F5F5F),
-                                                                            fontSize: 14,
-                                                                            fontFamily: 'Inter',
-                                                                            fontWeight: FontWeight.w400,
-                                                                          ),
-                                                                          border: InputBorder.none, // Remove the border
-                                                                        ),
-                                                                      ),
-                                                                    ),
-
-                                                  ),
-                                                  const SizedBox(width: 15),
-                                                  Expanded(
-                                                    child: Container(
-                                                              height: 53,
-                                                              padding: const EdgeInsets.all(16),
-                                                              decoration: ShapeDecoration(
-                                                                color: Color(0xFFF8F8F8),
-                                                                shape: RoundedRectangleBorder(
-                                                                  side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                                  borderRadius: BorderRadius.circular(16),
-                                                                ),
-                                                              ),
-                                                              child: TextField(
-                                                                style: TextStyle(
-                                                                  color: Color(0xFF5F5F5F),
-                                                                  fontSize: 14,
-                                                                  fontFamily: 'Inter',
-                                                                  fontWeight: FontWeight.w400,
-                                                                ),
-                                                                decoration: InputDecoration(
-                                                                  hintText: 'Last Name', // Placeholder text
-                                                                  hintStyle: TextStyle(
-                                                                    color: Color(0xFF5F5F5F),
-                                                                    fontSize: 14,
-                                                                    fontFamily: 'Inter',
-                                                                    fontWeight: FontWeight.w400,
-                                                                  ),
-                                                                  border: InputBorder.none, // Remove the border
-                                                                ),
-                                                              ),
-                                                            ),
-                                                  ),
-
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(height: 15),
-                                            Container(
-                                                      width: 289,
-                                                      height: 53,
-                                                      padding: const EdgeInsets.all(16),
-                                                      decoration: ShapeDecoration(
-                                                        color: Color(0xFFF8F8F8),
-                                                        shape: RoundedRectangleBorder(
-                                                          side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                          borderRadius: BorderRadius.circular(16),
-                                                        ),
-                                                      ),
-                                                      child: TextField(
-                                                        style: TextStyle(
-                                                          color: Color(0xFF5F5F5F),
-                                                          fontSize: 14,
-                                                          fontFamily: 'Inter',
-                                                          fontWeight: FontWeight.w400,
-                                                        ),
-                                                        decoration: InputDecoration(
-                                                          hintText: 'Grade', // Placeholder text
-                                                          hintStyle: TextStyle(
-                                                            color: Color(0xFF5F5F5F),
-                                                            fontSize: 14,
-                                                            fontFamily: 'Inter',
-                                                            fontWeight: FontWeight.w400,
-                                                          ),
-                                                          border: InputBorder.none, // Remove the border
-                                                        ),
-                                                      ),
-                                                    ),
-
-                                            const SizedBox(height: 15),
-                                            Container(
-                                                    width: 289,
-                                                    height: 53,
-                                                    padding: const EdgeInsets.all(16),
-                                                    decoration: ShapeDecoration(
-                                                      color: Color(0xFFF8F8F8),
-                                                      shape: RoundedRectangleBorder(
-                                                        side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                        borderRadius: BorderRadius.circular(16),
-                                                      ),
-                                                    ),
-                                                    child: TextField(
-                                                      style: TextStyle(
-                                                        color: Color(0xFF5F5F5F),
-                                                        fontSize: 14,
-                                                        fontFamily: 'Inter',
-                                                        fontWeight: FontWeight.w400,
-                                                      ),
-                                                      decoration: InputDecoration(
-                                                        hintText: 'Phone number', // Placeholder text
-                                                        hintStyle: TextStyle(
-                                                          color: Color(0xFF5F5F5F),
-                                                          fontSize: 14,
-                                                          fontFamily: 'Inter',
-                                                          fontWeight: FontWeight.w400,
-                                                        ),
-                                                        border: InputBorder.none, // Remove the border
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                            const SizedBox(height: 15),
-                                            Container(
-                                                        width: 289,
-                                                        height: 53,
-                                                        padding: const EdgeInsets.all(16),
-                                                        decoration: ShapeDecoration(
-                                                          color: Color(0xFFF8F8F8),
-                                                          shape: RoundedRectangleBorder(
-                                                            side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                            borderRadius: BorderRadius.circular(16),
-                                                          ),
-                                                        ),
-                                                        child: TextField(
-                                                          obscureText: true, // Set this to true to hide the entered text for password fields
-                                                          style: TextStyle(
-                                                            color: Color(0xFF5F5F5F),
-                                                            fontSize: 14,
-                                                            fontFamily: 'Inter',
-                                                            fontWeight: FontWeight.w400,
-                                                          ),
-                                                          decoration: InputDecoration(
-                                                            hintText: 'Password', // Placeholder text
-                                                            hintStyle: TextStyle(
-                                                              color: Color(0xFF5F5F5F),
-                                                              fontSize: 14,
-                                                              fontFamily: 'Inter',
-                                                              fontWeight: FontWeight.w400,
-                                                            ),
-                                                            border: InputBorder.none, // Remove the border
-                                                          ),
-                                                        ),
-                                                      ),
-
-                                            const SizedBox(height: 15),
-                                            Container(
-                                                        width: 289,
-                                                        height: 53,
-                                                        padding: const EdgeInsets.all(16),
-                                                        decoration: ShapeDecoration(
-                                                          color: Color(0xFFF8F8F8),
-                                                          shape: RoundedRectangleBorder(
-                                                            side: BorderSide(width: 1, color: Color(0x3FB2B2B2)),
-                                                            borderRadius: BorderRadius.circular(16),
-                                                          ),
-                                                        ),
-                                                        child: TextField(
-                                                          obscureText: true, // Set this to true to hide the entered text for password fields
-                                                          style: TextStyle(
-                                                            color: Color(0xFF5F5F5F),
-                                                            fontSize: 14,
-                                                            fontFamily: 'Inter',
-                                                            fontWeight: FontWeight.w400,
-                                                          ),
-                                                          decoration: InputDecoration(
-                                                            hintText: 'Confirm Password', // Placeholder text
-                                                            hintStyle: TextStyle(
-                                                              color: Color(0xFF5F5F5F),
-                                                              fontSize: 14,
-                                                              fontFamily: 'Inter',
-                                                              fontWeight: FontWeight.w400,
-                                                            ),
-                                                            border: InputBorder.none, // Remove the border
-                                                          ),
-                                                        ),
-                                                      ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 32),
-                                      ElevatedButton(
-  onPressed: () {
-    // Navigate to the SignIn page
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => SignIn(),
-    ));
-  },
-  style: ElevatedButton.styleFrom(
-    primary: Color(0xFF572CB2), // Background color
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(30),
-    ),
-  ),
-  child: Container(
-    width: 292,
-    height: 45,
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-    child: Center(
-      child: Text(
-        'Next',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 15,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w500,
-          height: 0,
-        ),
-      ),
-    ),
-  ),
-),
-
-                                    ],
-                                  ),
-                                ),
-                              ),
-                             Positioned(
-                                                        left: 44,
-                                                        top: 571,
-                                                        child: RichText(
-                                                          text: TextSpan(
-                                                            children: [
-                                                              TextSpan(
-                                                                text: 'Already have an account.',
-                                                                style: TextStyle(
-                                                                  color: Color(0xFF5F5F5F),
-                                                                  fontSize: 14,
-                                                                  fontFamily: 'Inter',
-                                                                  fontWeight: FontWeight.w400,
-                                                                  height: 0,
-                                                                ),
-                                                              ),
-                                                              TextSpan(
-                                                                text: 'Login',
-                                                                style: TextStyle(
-                                                                  color: Color(0xFF572CB2),
-                                                                  fontSize: 14,
-                                                                  fontFamily: 'Inter',
-                                                                  fontWeight: FontWeight.w400,
-                                                                  decoration: TextDecoration.underline,
-                                                                  height: 0,
-                                                                ),
-                                                                recognizer: TapGestureRecognizer()
-                                                                  ..onTap = () {
-                                                                    // Navigate to the SignIn page
-                                                                    Navigator.of(context).push(MaterialPageRoute(
-                                                                      builder: (context) => SignIn(),
-                                                                    ));
-                                                                  },
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-
-                            ],
+                  // Email TextField
+                  SizedBox(
+                    width: 73 * MediaQuery.of(context).size.width / 100,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFF8F8F8),
+                        hintText: 'Email',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF5F5F5F),
+                          fontSize: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: Color(0xB2B2B2).withOpacity(0.25),
                           ),
                         ),
                       ),
-                    ],
+                      style: TextStyle(color: Colors.black), // Adjust text color
+                    ),
                   ),
-                ),
+                  SizedBox(height: 8),
+
+                  // First Name and Last Name text fields in the same row
+                  SizedBox(
+                    width: 73 * MediaQuery.of(context).size.width / 100,
+                    child: Row(
+                      children: [
+                        // First Name TextField
+                        Expanded(
+                          child: SizedBox(
+                            width: 0.5 * 73 * MediaQuery.of(context).size.width / 100,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color(0xFFF8F8F8),
+                                hintText: 'First Name',
+                                hintStyle: TextStyle(
+                                  color: Color(0xFF5F5F5F),
+                                  fontSize: 14,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide: BorderSide(
+                                    color: Color(0xB2B2B2).withOpacity(0.25),
+                                  ),
+                                ),
+                              ),
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        // Last Name TextField
+                        Expanded(
+                          child: SizedBox(
+                            width: 0.5 * 73 * MediaQuery.of(context).size.width / 100,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color(0xFFF8F8F8),
+                                hintText: 'Last Name',
+                                hintStyle: TextStyle(
+                                  color: Color(0xFF5F5F5F),
+                                  fontSize: 14,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide: BorderSide(
+                                    color: Color(0xB2B2B2).withOpacity(0.25),
+                                  ),
+                                ),
+                              ),
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 8),
+
+                  // Grade TextField
+                  SizedBox(
+                    width: 73 * MediaQuery.of(context).size.width / 100,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFF8F8F8),
+                        hintText: 'Grade',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF5F5F5F),
+                          fontSize: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: Color(0xB2B2B2).withOpacity(0.25),
+                          ),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+
+                  // Phone Number TextField
+                  SizedBox(
+                    width: 73 * MediaQuery.of(context).size.width / 100,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFF8F8F8),
+                        hintText: 'Phone Number',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF5F5F5F),
+                          fontSize: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: Color(0xB2B2B2).withOpacity(0.25),
+                          ),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+
+                  // Password TextField
+                  SizedBox(
+                    width: 73 * MediaQuery.of(context).size.width / 100,
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFF8F8F8),
+                        hintText: 'Password',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF5F5F5F),
+                          fontSize: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: Color(0xB2B2B2).withOpacity(0.25),
+                          ),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+
+                  // Confirm Password TextField
+                  SizedBox(
+                    width: 73 * MediaQuery.of(context).size.width / 100,
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFF8F8F8),
+                        hintText: 'Confirm Password',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF5F5F5F),
+                          fontSize: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: Color(0xB2B2B2).withOpacity(0.25),
+                          ),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+
+                  SizedBox(height: 3 * MediaQuery.of(context).size.height / 100),
+
+                  // Sign Up Button
+                  SizedBox(
+                    width: 73 * MediaQuery.of(context).size.width / 100,
+                    height: 49,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SignIn(),
+                        ));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFF572CB2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Additional UI elements
+                  SizedBox(height: 3 * MediaQuery.of(context).size.height / 100),
+
+                  // Already have an account? Login
+                  SizedBox(
+                    width: 203,
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Already have an account? ",
+                        style: TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
+                        children: [
+                          TextSpan(
+                            text: "Login",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xFF572CB2),
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => SignIn(),
+                                ));
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                                      width: 393,
-                                      height: 284,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage("images/sign_bg.png"),
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
