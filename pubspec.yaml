@@ -72,6 +72,14 @@ flutter:
     - images/probability.png
     - images/other.png
     - images/home_bg.png
+    - images/math.png
+    - images/physics.png
+    - images/science.png
+    - images/chemistry.png
+    - images/robotics.png
+    - images/lap.png
+    - images/history.png
+    - images/geography.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

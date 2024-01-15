@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -16,21 +17,33 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-class ChooseLesson extends StatelessWidget {
+
+class ChooseLesson extends StatefulWidget {
+  @override
+  _ChooseLessonState createState() => _ChooseLessonState();
+}
+
+class _ChooseLessonState extends State<ChooseLesson> {
+  int selectedChoice = -1;
+
+  void updateSelectedChoice(int choice) {
+    setState(() {
+      selectedChoice = choice;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: Container(
-          color: Color.fromRGBO(123, 49, 244, 1.0), // RGB values for purple
+          color: Color.fromRGBO(123, 49, 244, 1.0),
           child: Center(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 40.0,
-                  ), // Added more space above the three dots
+                  SizedBox(height: 40.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -56,31 +69,40 @@ class ChooseLesson extends StatelessWidget {
                     color: Colors.white,
                     margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(20), // Increased border radius
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
-                          RadioSelectGrid(),
+                          RadioSelectGrid(
+                            selectedChoice: selectedChoice,
+                            updateSelectedChoice: updateSelectedChoice,
+                          ),
                           SizedBox(height: 16.0),
                           Container(
                             width: double.infinity,
                             margin: EdgeInsets.symmetric(vertical: 8.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => ChooseForm(),
-                                ));
+                                if (selectedChoice != -1) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ChooseForm(),
+                                  ));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Please select a lesson before proceeding.'),
+                                    ),
+                                  );
+                                }
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Color.fromRGBO(
-                                    123, 49, 244, 1.0), // RGB values for purple
+                                primary: Color.fromRGBO(123, 49, 244, 1.0),
                                 onPrimary: Colors.white,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 24.0,
-                                  vertical: 24.0, // Increased height
+                                  vertical: 24.0,
                                 ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
@@ -89,7 +111,7 @@ class ChooseLesson extends StatelessWidget {
                               child: Text(
                                 'Next',
                                 style: TextStyle(
-                                  fontSize: 18.0, // Increased font size
+                                  fontSize: 18.0,
                                 ),
                               ),
                             ),
@@ -109,13 +131,16 @@ class ChooseLesson extends StatelessWidget {
 }
 
 class RadioSelectGrid extends StatefulWidget {
+  final int selectedChoice;
+  final Function(int) updateSelectedChoice;
+
+  RadioSelectGrid({required this.selectedChoice, required this.updateSelectedChoice});
+
   @override
   _RadioSelectGridState createState() => _RadioSelectGridState();
 }
 
 class _RadioSelectGridState extends State<RadioSelectGrid> {
-  int selectedChoice = -1;
-
   List<String> customTexts = [
     'Algebra',
     'Gain',
@@ -129,19 +154,19 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
 
   List<String> customImages = [
     'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
-    'images/algebra.png',
+    'images/gain.png',
+    'images/geometry.png',
+    'images/general.png',
+    'images/analysis.png',
+    'images/statistic.png',
+    'images/probability.png',
+    'images/other.png',
   ];
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double fontSize = screenWidth * 0.04; // Adjust the multiplier as needed
+    double fontSize = screenWidth * 0.04;
 
     return Column(
       children: [
@@ -149,25 +174,21 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisSpacing: 25.0, // Decreased mainAxisSpacing
-            crossAxisSpacing: 25.0, // Decreased crossAxisSpacing
-            childAspectRatio: 1.20, // Adjust the aspect ratio
+            mainAxisSpacing: 25.0,
+            crossAxisSpacing: 25.0,
+            childAspectRatio: 1.20,
           ),
           itemCount: 8,
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                setState(() {
-                  selectedChoice = index;
-                });
+                widget.updateSelectedChoice(index);
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: selectedChoice == index
-                      ? Color.fromRGBO(
-                          247, 138, 177, 1.0) // RGB values for deep pink
-                      : Color.fromRGBO(
-                          229, 212, 255, 1.0), // RGB values for blue
+                  color: widget.selectedChoice == index
+                      ? Color.fromRGBO(247, 138, 177, 1.0)
+                      : Color.fromRGBO(229, 212, 255, 1.0),
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Padding(
@@ -176,32 +197,29 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 75, // Increased width
-                        height: 75, // Increased height
+                        width: 75,
+                        height: 75,
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(255, 255, 255,
-                              0.5), // RGB values for white with opacity
+                          color: Color.fromRGBO(255, 255, 255, 0.5),
                           borderRadius: BorderRadius.circular(18),
                         ),
                         child: Center(
                           child: Image.asset(
                             customImages[index],
-                            width: 70, // Increased width
-                            height: 70, // Increased height
+                            width: 70,
+                            height: 70,
                           ),
                         ),
                       ),
-                      SizedBox(
-                          height: 4.0), // Reduced space between image and text
+                      SizedBox(height: 4.0),
                       Text(
                         customTexts[index],
                         style: TextStyle(
-                          color: selectedChoice == index
+                          color: widget.selectedChoice == index
                               ? Colors.white
-                              : Color.fromRGBO(
-                                  123, 49, 244, 1.0), // RGB values for purple
+                              : Color.fromRGBO(123, 49, 244, 1.0),
                           fontSize: fontSize,
-                          fontWeight: FontWeight.bold, // Added fontWeight
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
@@ -229,7 +247,7 @@ class CircleIndicator extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: isPink
-            ? Color.fromRGBO(247, 138, 177, 1.0) // RGB values for deep pink
+            ? Color.fromRGBO(247, 138, 177, 1.0)
             : Colors.white,
       ),
     );
