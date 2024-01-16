@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,11 +18,59 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-class ChooseSubject extends StatelessWidget {
+
+class ChooseSubject extends StatefulWidget {
+  @override
+  _ChooseSubjectState createState() => _ChooseSubjectState();
+}
+
+class _ChooseSubjectState extends State<ChooseSubject> {
+  int selectedChoice = -1; // Track the selected choice
+  String selectedSubject = ''; // Variable to store the selected subject
+
+  void showSubjectNotSelectedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Subject Not Selected'),
+          content: Text('Please select a subject before proceeding.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showUnavailableSubjectDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Subject Unavailable'),
+          content: Text(
+              'Sorry, lessons for this subject are not available at the moment.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    int selectedChoice = -1; // Track the selected choice
-
     return Scaffold(
       body: Container(
         color: Color.fromRGBO(123, 49, 244, 1.0),
@@ -38,13 +87,12 @@ class ChooseSubject extends StatelessWidget {
                   child: Center(
                     child: GestureDetector(
                       onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Home(),
-                                ));
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Home(),
+                        ));
                       },
                       child: Container(
                         padding: EdgeInsets.all(8.0),
-                       
                         child: Image.asset(
                           'images/back.png',
                           width: 24.0,
@@ -87,9 +135,22 @@ class ChooseSubject extends StatelessWidget {
                     child: Column(
                       children: [
                         RadioSelectGrid(
-                          onSelected: (index) {
-                            // Update the selected choice
-                            selectedChoice = index;
+                          customTexts: [
+                            'Math',
+                            'Physics',
+                            'Science',
+                            'Chemistry',
+                            'Robotics',
+                            'Computer Science',
+                            'History',
+                            'Geography',
+                          ],
+                          onSelected: (index, selectedSubject) {
+                            // Update the selected choice and subject
+                            setState(() {
+                              selectedChoice = index;
+                              this.selectedSubject = selectedSubject;
+                            });
                           },
                         ),
                         SizedBox(height: 16.0),
@@ -100,15 +161,24 @@ class ChooseSubject extends StatelessWidget {
                             onPressed: () {
                               // Check if a radio button is selected
                               if (selectedChoice != -1) {
-                                // Navigate to ChooseLesson when a button is pressed
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ChooseLesson(),
-                                  ),
-                                );
+                                // Check if the selected subject is "Math"
+                                if (selectedSubject.toLowerCase() == 'math') {
+                                  // Print or use the selected subject as needed
+                                  print('Selected Subject: $selectedSubject');
+
+                                  // Navigate to ChooseLesson when a button is pressed
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ChooseLesson(),
+                                    ),
+                                  );
+                                } else {
+                                  // Show a message or perform some action when the subject is not "Math"
+                                  showUnavailableSubjectDialog();
+                                }
                               } else {
                                 // Show a message or perform some action when no radio button is selected
-                                print('Please select a subject');
+                                showSubjectNotSelectedDialog();
                               }
                             },
                             style: ElevatedButton.styleFrom(
@@ -144,9 +214,14 @@ class ChooseSubject extends StatelessWidget {
 }
 
 class RadioSelectGrid extends StatefulWidget {
-  final Function(int) onSelected;
+  final List<String> customTexts;
+  final Function(int, String) onSelected;
 
-  const RadioSelectGrid({Key? key, required this.onSelected}) : super(key: key);
+  const RadioSelectGrid({
+    Key? key,
+    required this.customTexts,
+    required this.onSelected,
+  }) : super(key: key);
 
   @override
   _RadioSelectGridState createState() => _RadioSelectGridState();
@@ -155,26 +230,15 @@ class RadioSelectGrid extends StatefulWidget {
 class _RadioSelectGridState extends State<RadioSelectGrid> {
   int selectedChoice = -1;
 
-  List<String> customTexts = [
-    'Math',
-    'Physics',
-    'Science',
-    'Chemistry',
-    'Robotics',
-    'Computer \nScience',
-    'History',
-    'Geography',
-  ];
-
-  List<String> customImages = [
-    'images/math.png',
-    'images/physics.png',
-    'images/science.png',
-    'images/chemistry.png',
-    'images/robotics.png',
-    'images/lap.png',
-    'images/history.png',
-    'images/geography.png',
+  List<String> explicitImageNames = [
+    'math.png',
+    'physics.png',
+    'science.png',
+    'chemistry.png',
+    'robotics.png',
+    'computer.png',
+    'history.png',
+    'geography.png',
   ];
 
   @override
@@ -192,13 +256,16 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
             crossAxisSpacing: 25.0,
             childAspectRatio: 1.20,
           ),
-          itemCount: 8,
+          itemCount: widget.customTexts.length,
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
                 setState(() {
                   selectedChoice = index;
-                  widget.onSelected(selectedChoice); // Notify the parent about the selection
+                  widget.onSelected(
+                      index,
+                      widget.customTexts[
+                          index]); // Notify the parent about the selection
                 });
               },
               child: Container(
@@ -222,7 +289,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                         ),
                         child: Center(
                           child: Image.asset(
-                            customImages[index],
+                            'images/${explicitImageNames[index]}',
                             width: 70,
                             height: 70,
                           ),
@@ -230,7 +297,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                       ),
                       SizedBox(height: 4.0),
                       Text(
-                        customTexts[index],
+                        widget.customTexts[index],
                         style: TextStyle(
                           color: selectedChoice == index
                               ? Colors.white
