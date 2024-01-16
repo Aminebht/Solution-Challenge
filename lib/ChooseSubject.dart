@@ -1,3 +1,4 @@
+import 'package:app_0/Home.dart';
 import 'package:app_0/chooselesson.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,27 @@ class ChooseSubject extends StatelessWidget {
               children: [
                 SizedBox(
                   height: 40.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Home(),
+                                ));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                       
+                        child: Image.asset(
+                          'images/back.png',
+                          width: 24.0,
+                          height: 24.0,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

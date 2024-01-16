@@ -1,4 +1,5 @@
 import 'package:app_0/ChooseForm.dart';
+import 'package:app_0/ChooseSubject.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -44,6 +45,27 @@ class _ChooseLessonState extends State<ChooseLesson> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 40.0),
+                   Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ChooseSubject(),
+                                ));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                       
+                        child: Image.asset(
+                          'images/back.png',
+                          width: 24.0,
+                          height: 24.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
