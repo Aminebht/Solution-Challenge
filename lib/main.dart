@@ -1,7 +1,7 @@
 import 'package:app_0/ChooseSubject.dart';
 import 'package:app_0/SignIn.dart';
 import 'package:app_0/Home.dart';
-import 'package:app_0/questions.dart';
+import 'package:app_0/Questions.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: keepSignedIn ? questions() : Home(),
+      home: keepSignedIn ? SignIn() : Home(),
     );
   }
 }

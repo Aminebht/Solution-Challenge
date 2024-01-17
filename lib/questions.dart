@@ -1,17 +1,20 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-class questions extends StatefulWidget {
+class Questions extends StatefulWidget {
   @override
   _QuestionsPageState createState() => _QuestionsPageState();
 }
 
-class _QuestionsPageState extends State<questions> {
+class _QuestionsPageState extends State<Questions> {
   double screenHeight = 0.0;
   double screenWidth = 0.0;
   int numberOfQuestions = 1;
-  int timerSeconds = 120;
+  int timerSeconds = 60;
   int selectedAnswer = -1; // To track the selected answer
+
+  List<int?> userAnswers = List.filled(6, null); // List to store user answers
 
   late Timer _timer;
 
@@ -36,6 +39,7 @@ class _QuestionsPageState extends State<questions> {
           if (timerSeconds == 0) {
             timer.cancel();
             // Handle when the timer reaches 0 (e.g., move to the next question)
+            goToNextQuestion();
           } else {
             timerSeconds--;
           }
@@ -150,7 +154,7 @@ class _QuestionsPageState extends State<questions> {
 
   Widget _buildBottomBox(
       double screenHeight, double screenWidth, int numberOfQuestions) {
-    String question = "120 is what percent of 50 ?";
+    String question = "Question $numberOfQuestions: What is ...?"; // Replace with actual question text
     return Container(
       width: 0.9 * screenWidth,
       padding: EdgeInsets.all(20),
@@ -309,22 +313,49 @@ class _QuestionsPageState extends State<questions> {
   }
 
   Widget _buildSubmitAnswerButton() {
-    return Container(
+  bool isButtonEnabled = selectedAnswer != -1;
+
+  return GestureDetector(
+    onTap: isButtonEnabled ? () => goToNextQuestion() : null,
+    child: Container(
       width: 0.4 * screenWidth,
       height: 52,
       decoration: BoxDecoration(
-        color: Color(0xFFF78AB1),
+        color: isButtonEnabled ? Color(0xFFF78AB1) : Colors.grey, // Use grey color when button is disabled
         borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
         child: Text(
-          'Submit Answer',
+          numberOfQuestions < 6 ? 'Next' : 'Submit',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w600,
           ),
         ),
       ),
-    );
+    ),
+  );
+}
+
+
+  void goToNextQuestion() {
+    // Save the user's answer for the current question
+    userAnswers[numberOfQuestions - 1] = selectedAnswer;
+
+    // Reset the selected answer and timer
+    selectedAnswer = -1;
+    timerSeconds = 60;
+
+    // Move to the next question or submit answers if it's the last question
+    if (numberOfQuestions < 6) {
+      setState(() {
+        numberOfQuestions++;
+      });
+    } else {
+      // Navigate to the next page or perform the final action
+      // For now, print the user answers to the console
+      print('User Answers: $userAnswers');
+      // You can add navigation or other logic here
+    }
   }
 }

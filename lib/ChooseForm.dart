@@ -1,5 +1,5 @@
 import 'package:app_0/chooselesson.dart';
-import 'package:app_0/questions.dart';
+import 'package:app_0/Questions.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -93,7 +93,7 @@ class ChooseForm extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => questions(),
+                                  builder: (context) => Questions(),
                                 ));
                               },
                               style: ElevatedButton.styleFrom(
