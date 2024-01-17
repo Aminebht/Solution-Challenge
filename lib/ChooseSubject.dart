@@ -236,7 +236,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
     'science.png',
     'chemistry.png',
     'robotics.png',
-    'computer.png',
+    'lap.png',
     'history.png',
     'geography.png',
   ];
