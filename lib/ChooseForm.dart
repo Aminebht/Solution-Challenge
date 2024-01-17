@@ -1,4 +1,5 @@
 import 'package:app_0/chooselesson.dart';
+import 'package:app_0/questions.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -91,7 +92,9 @@ class ChooseForm extends StatelessWidget {
                             margin: EdgeInsets.symmetric(vertical: 8.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                print('Next button pressed');
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => questions(),
+                                ));
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Color.fromRGBO(123, 49, 244, 1.0),
