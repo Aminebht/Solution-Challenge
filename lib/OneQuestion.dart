@@ -35,7 +35,7 @@ class _QuestionsPageState extends State<OneQuestion> {
   void fetchOneQuestionFromAPI() {
     // Simulate fetching one question from the API. Replace this with your actual API call.
     // Replace the following lines with the actual data received from the API
-    oneQuestionData[0] = "What is ...?";
+    oneQuestionData[0] = "120 is what percent of 50 ?";
     oneQuestionData[1] = "5%";
     oneQuestionData[2] = "240 %";
     oneQuestionData[3] = "50 %";

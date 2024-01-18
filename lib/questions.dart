@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class _QuestionsPageState extends State<Questions> {
   List<List<String>> questionsMatrix = List.generate(6, (index) => List.filled(6, ""));
 
   late Timer _timer;
+  bool isTimerPaused = false;
 
   @override
   void initState() {
@@ -38,7 +40,7 @@ class _QuestionsPageState extends State<Questions> {
     // Simulate fetching questions from the API. Replace this with your actual API call.
     for (int i = 0; i < 6; i++) {
       // Replace the following lines with the actual data received from the API
-      questionsMatrix[i][0] = "Question ${i + 1}: What is ...?";
+      questionsMatrix[i][0] = "120 is what percent of 50 ?";
       questionsMatrix[i][1] = "5%";
       questionsMatrix[i][2] = "240 %";
       questionsMatrix[i][3] = "50 %";
@@ -53,12 +55,14 @@ class _QuestionsPageState extends State<Questions> {
       oneSec,
       (timer) {
         setState(() {
-          if (timerSeconds == 0) {
-            timer.cancel();
-            // Handle when the timer reaches 0 (e.g., move to the next question)
-            goToNextQuestion();
-          } else {
-            timerSeconds--;
+          if (!isTimerPaused) {
+            if (timerSeconds == 0) {
+              timer.cancel();
+              // Handle when the timer reaches 0 (e.g., move to the next question)
+              goToNextQuestion();
+            } else {
+              timerSeconds--;
+            }
           }
         });
       },
@@ -72,39 +76,55 @@ class _QuestionsPageState extends State<Questions> {
 
     return Scaffold(
       backgroundColor: Color(0xFF7B31F4),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: 0.1 * screenHeight,
-                bottom: 0.05 * screenHeight,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Left Box
-                  _buildIndicatorBox("${numberOfQuestions}/6"),
+      body: Stack(
+        children: [
+          // Blurred background
+          _buildBlurredBackground(),
 
-                  // Spacing
-                  SizedBox(width: 30),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 0.1 * screenHeight,
+                    bottom: 0.05 * screenHeight,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Left Box
+                      _buildIndicatorBox("${numberOfQuestions}/6"),
 
-                  // Evolution Indicator
-                  _buildEvolutionIndicator(numberOfQuestions),
+                      // Spacing
+                      SizedBox(width: 30),
 
-                  // Spacing
-                  SizedBox(width: 30),
+                      // Evolution Indicator
+                      _buildEvolutionIndicator(numberOfQuestions),
 
-                  // Right Box with Image (changed to PopupMenuButton)
-                  _buildPopupMenuButton(),
-                ],
-              ),
+                      // Spacing
+                      SizedBox(width: 30),
+
+                      // Right Box with Image (changed to PopupMenuButton)
+                      _buildPopupMenuButton(),
+                    ],
+                  ),
+                ),
+
+                // Big Box at the bottom
+                _buildBottomBox(screenHeight, screenWidth, numberOfQuestions),
+              ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
 
-            // Big Box at the bottom
-            _buildBottomBox(screenHeight, screenWidth, numberOfQuestions),
-          ],
-        ),
+  Widget _buildBlurredBackground() {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+      child: Container(
+        color: Colors.transparent,
       ),
     );
   }
@@ -132,6 +152,7 @@ class _QuestionsPageState extends State<Questions> {
   Widget _buildEvolutionIndicator(int numberOfQuestions) {
     double indicatorWidth = 156;
     double progress = (numberOfQuestions / 6) * indicatorWidth;
+    
 
     return Container(
       width: indicatorWidth,
@@ -156,6 +177,7 @@ class _QuestionsPageState extends State<Questions> {
   }
 
   Widget _buildPopupMenuButton() {
+    
     return PopupMenuButton<String>(
       itemBuilder: (BuildContext context) {
         return ['Pause Timer', 'Exit'].map((String choice) {
@@ -169,9 +191,9 @@ class _QuestionsPageState extends State<Questions> {
         if (choice == 'Pause Timer') {
           pauseTimer();
         } else if (choice == 'Exit') {
-            Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Home(),
-                        ));
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => Home(),
+          ));
         }
       },
       child: Container(
@@ -181,21 +203,80 @@ class _QuestionsPageState extends State<Questions> {
           color: Color(0xFFFFFFF).withOpacity(0.5),
           borderRadius: BorderRadius.circular(5),
         ),
-       child: Center(
-        child: Image.asset('images/setting.png'),
-      ),
+        child: Center(
+          child: Image.asset('images/setting.png'),
+        ),
       ),
     );
   }
-
-  void pauseTimer() {
+  
+   
+    void pauseTimer() {
     // Pause the timer
     _timer.cancel();
-    print('Timer Paused');
+    setState(() {
+      isTimerPaused = true;
+    });
+
+    // Show the pause icon overlay
+    _showPauseIconOverlay();
   }
 
+  void resumeTimer() {
+    // Resume the timer
+    setState(() {
+      isTimerPaused = false;
+    });
+
+    // Restart the timer with the remaining time
+    startTimer();
+  }
+
+  void _showPauseIconOverlay() {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Adjust the sigma values for the blur effect
+        child: AlertDialog(
+          content: Container(
+            height: 100,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context); // Close the dialog
+                    resumeTimer(); // Resume the timer
+                  },
+                  child: Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
+                    size: 50,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Tap to Resume',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+        ),
+      );
+    },
+  );
+}
+
+
   Widget _buildBottomBox(
-      double screenHeight, double screenWidth, int numberOfQuestions) {
+    double screenHeight,
+    double screenWidth,
+    int numberOfQuestions,
+  ) {
     String question = questionsMatrix[numberOfQuestions - 1][0]; // Retrieve question from the matrix
     return Container(
       width: 0.9 * screenWidth,
@@ -370,8 +451,7 @@ class _QuestionsPageState extends State<Questions> {
       setState(() {
         numberOfQuestions++;
       });
-      // Restart the timer for the new question
-      startTimer();
+      // Restart the timer for the new questions
     } else {
       // Navigate to the next page or perform the final action
       // For now, print the user answers and questions to the console

@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: keepSignedIn ? Questions() : Home(),
+      home: keepSignedIn ? SignIn() : Home(),
     );
   }
 }
