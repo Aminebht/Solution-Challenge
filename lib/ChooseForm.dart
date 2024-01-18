@@ -1,8 +1,8 @@
 // ChooseForm.dart
 
+import 'package:app_0/OneQuestion.dart';
+import 'package:app_0/Questions.dart';
 import 'package:flutter/material.dart';
-import 'package:app_0/NextPage.dart';
-
 class ChooseForm extends StatelessWidget {
   final int selectedChoice;
   late int savedChoice;
@@ -92,15 +92,15 @@ class ChooseForm extends StatelessWidget {
                               if (selectedOption != null) {
                                 print(
                                     'Next button pressed. Selected Choice: $selectedChoice, Selected Option: $selectedOption');
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => NextPage(
-                                      selectedChoice: selectedChoice,
-                                      selectedOption: selectedOption!,
-                                    ),
-                                  ),
-                                );
+                                 if (selectedOption == 0) {
+                                              Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => OneQuestion(),
+                                              ));
+                                            } else if (selectedOption == 1) {
+                                              Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => Questions(),
+                                              ));
+                                            }
                               } else {
                                 print(
                                     'Please select an option before pressing Next');

@@ -2,23 +2,6 @@ import 'package:app_0/SignIn.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sign Up Page',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SignUp(),
-    );
-  }
-}
-
 class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -56,8 +39,7 @@ class SignUp extends StatelessWidget {
                       color: Colors.black, // Adjust text color
                     ),
                   ),
-                  SizedBox(
-                      height: 6.29 * MediaQuery.of(context).size.height / 100),
+                  SizedBox(height: 6.29 * MediaQuery.of(context).size.height / 100),
 
                   // Email TextField
                   SizedBox(
@@ -78,8 +60,7 @@ class SignUp extends StatelessWidget {
                           ),
                         ),
                       ),
-                      style:
-                          TextStyle(color: Colors.black), // Adjust text color
+                      style: TextStyle(color: Colors.black), // Adjust text color
                     ),
                   ),
                   SizedBox(height: 8),
@@ -92,10 +73,7 @@ class SignUp extends StatelessWidget {
                         // First Name TextField
                         Expanded(
                           child: SizedBox(
-                            width: 0.5 *
-                                73 *
-                                MediaQuery.of(context).size.width /
-                                100,
+                            width: 0.5 * 73 * MediaQuery.of(context).size.width / 100,
                             child: TextField(
                               decoration: InputDecoration(
                                 filled: true,
@@ -120,10 +98,7 @@ class SignUp extends StatelessWidget {
                         // Last Name TextField
                         Expanded(
                           child: SizedBox(
-                            width: 0.5 *
-                                73 *
-                                MediaQuery.of(context).size.width /
-                                100,
+                            width: 0.5 * 73 * MediaQuery.of(context).size.width / 100,
                             child: TextField(
                               decoration: InputDecoration(
                                 filled: true,
@@ -246,8 +221,7 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(
-                      height: 3 * MediaQuery.of(context).size.height / 100),
+                  SizedBox(height: 3 * MediaQuery.of(context).size.height / 100),
 
                   // Sign Up Button
                   SizedBox(
@@ -276,8 +250,7 @@ class SignUp extends StatelessWidget {
                   ),
 
                   // Additional UI elements
-                  SizedBox(
-                      height: 3 * MediaQuery.of(context).size.height / 100),
+                  SizedBox(height: 3 * MediaQuery.of(context).size.height / 100),
 
                   // Already have an account? Login
                   SizedBox(
@@ -285,8 +258,7 @@ class SignUp extends StatelessWidget {
                     child: RichText(
                       text: TextSpan(
                         text: "Already have an account? ",
-                        style:
-                            TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
+                        style: TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
                         children: [
                           TextSpan(
                             text: "Login",
