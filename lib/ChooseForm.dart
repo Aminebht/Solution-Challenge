@@ -1,24 +1,11 @@
+import 'package:app_0/OneQuestion.dart';
 import 'package:app_0/chooselesson.dart';
 import 'package:app_0/Questions.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Choose Form',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ChooseForm(),
-    );
-  }
-}
 class ChooseForm extends StatelessWidget {
   @override
+  int selectedChoice = -1;
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -85,17 +72,28 @@ class ChooseForm extends StatelessWidget {
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
-                          RadioSelectGrid(),
+                          RadioSelectGrid(
+  onChoiceSelected: (choice) {
+    selectedChoice = choice;
+  },
+),
+
                           SizedBox(height: 16.0),
                           Container(
                             width: double.infinity,
                             margin: EdgeInsets.symmetric(vertical: 8.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Questions(),
-                                ));
-                              },
+                            child:  ElevatedButton(
+      onPressed: () {
+        if (selectedChoice == 0) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => OneQuestion(),
+          ));
+        } else if (selectedChoice == 1) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => Questions(),
+          ));
+        }
+      },
                               style: ElevatedButton.styleFrom(
                                 primary: Color.fromRGBO(123, 49, 244, 1.0),
                                 onPrimary: Colors.white,
@@ -129,10 +127,17 @@ class ChooseForm extends StatelessWidget {
   }
 }
 
+
 class RadioSelectGrid extends StatefulWidget {
+  final Function(int) onChoiceSelected;
+
+  const RadioSelectGrid({Key? key, required this.onChoiceSelected})
+      : super(key: key);
+
   @override
   _RadioSelectGridState createState() => _RadioSelectGridState();
 }
+
 
 class _RadioSelectGridState extends State<RadioSelectGrid> {
   int selectedChoice = -1;
@@ -168,6 +173,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
               onTap: () {
                 setState(() {
                   selectedChoice = index;
+                   widget.onChoiceSelected(selectedChoice);
                 });
               },
               child: Container(

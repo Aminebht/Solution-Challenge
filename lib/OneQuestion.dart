@@ -1,22 +1,20 @@
 import 'dart:async';
-import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
 
-class Questions extends StatefulWidget {
+class OneQuestion extends StatefulWidget {
   @override
   _QuestionsPageState createState() => _QuestionsPageState();
 }
 
-class _QuestionsPageState extends State<Questions> {
+class _QuestionsPageState extends State<OneQuestion> {
   double screenHeight = 0.0;
   double screenWidth = 0.0;
-  int numberOfQuestions = 1;
   int timerSeconds = 60;
   int selectedAnswer = -1; // To track the selected answer
 
-  List<int?> userAnswers = List.filled(6, null); // List to store user answers
+  List<int?> userAnswers = List.filled(1, null); // List to store user answers
 
-  List<List<String>> questionsMatrix = List.generate(6, (index) => List.filled(6, ""));
+  List<String> oneQuestionData = List.filled(6, ""); // List to store one question and its options
 
   late Timer _timer;
 
@@ -24,8 +22,8 @@ class _QuestionsPageState extends State<Questions> {
   void initState() {
     super.initState();
     startTimer();
-    // Fetch the initial set of questions and options from the API and update the matrix
-    fetchQuestionsFromAPI();
+    // Fetch the initial set of questions and options from the API and update the list
+    fetchOneQuestionFromAPI();
   }
 
   @override
@@ -34,17 +32,15 @@ class _QuestionsPageState extends State<Questions> {
     super.dispose();
   }
 
-  void fetchQuestionsFromAPI() {
-    // Simulate fetching questions from the API. Replace this with your actual API call.
-    for (int i = 0; i < 6; i++) {
-      // Replace the following lines with the actual data received from the API
-      questionsMatrix[i][0] = "Question ${i + 1}: What is ...?";
-      questionsMatrix[i][1] = "5%";
-      questionsMatrix[i][2] = "240 %";
-      questionsMatrix[i][3] = "50 %";
-      questionsMatrix[i][4] = "2 %";
-      questionsMatrix[i][5] = "500 %";
-    }
+  void fetchOneQuestionFromAPI() {
+    // Simulate fetching one question from the API. Replace this with your actual API call.
+    // Replace the following lines with the actual data received from the API
+    oneQuestionData[0] = "What is ...?";
+    oneQuestionData[1] = "5%";
+    oneQuestionData[2] = "240 %";
+    oneQuestionData[3] = "50 %";
+    oneQuestionData[4] = "2 %";
+    oneQuestionData[5] = "500 %";
   }
 
   void startTimer() {
@@ -67,47 +63,23 @@ class _QuestionsPageState extends State<Questions> {
 
   @override
   Widget build(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
-    screenWidth = MediaQuery.of(context).size.width;
+  screenHeight = MediaQuery.of(context).size.height;
+  screenWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      backgroundColor: Color(0xFF7B31F4),
-      body: SingleChildScrollView(
+  return Scaffold(
+    backgroundColor: Color(0xFF7B31F4),
+    body: Center(
+      child: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: 0.1 * screenHeight,
-                bottom: 0.05 * screenHeight,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Left Box
-                  _buildIndicatorBox("${numberOfQuestions}/6"),
-
-                  // Spacing
-                  SizedBox(width: 30),
-
-                  // Evolution Indicator
-                  _buildEvolutionIndicator(numberOfQuestions),
-
-                  // Spacing
-                  SizedBox(width: 30),
-
-                  // Right Box with Image (changed to PopupMenuButton)
-                  _buildPopupMenuButton(),
-                ],
-              ),
-            ),
-
-            // Big Box at the bottom
-            _buildBottomBox(screenHeight, screenWidth, numberOfQuestions),
+            _buildBottomBox(screenHeight, screenWidth),
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildIndicatorBox(String text) {
     return Container(
@@ -155,50 +127,25 @@ class _QuestionsPageState extends State<Questions> {
     );
   }
 
-  Widget _buildPopupMenuButton() {
-    return PopupMenuButton<String>(
-      itemBuilder: (BuildContext context) {
-        return ['Pause Timer', 'Exit'].map((String choice) {
-          return PopupMenuItem<String>(
-            value: choice,
-            child: Text(choice),
-          );
-        }).toList();
-      },
-      onSelected: (String choice) {
-        if (choice == 'Pause Timer') {
-          pauseTimer();
-        } else if (choice == 'Exit') {
-            Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Home(),
-                        ));
-        }
-      },
-      child: Container(
-        width: 42,
-        height: 26,
-        decoration: BoxDecoration(
-          color: Color(0xFFFFFFF).withOpacity(0.5),
-          borderRadius: BorderRadius.circular(5),
-        ),
-       child: Center(
-        child: Image.asset('images/setting.png'),
+  Widget _buildIndicatorBoxWithImage() {
+    return Container(
+      width: 42,
+      height: 26,
+      decoration: BoxDecoration(
+        color: Color(0xFFFFFFF).withOpacity(0.5),
+        borderRadius: BorderRadius.circular(5),
       ),
+      child: Center(
+        child: Image.asset('images/setting.png'),
       ),
     );
   }
 
-  void pauseTimer() {
-    // Pause the timer
-    _timer.cancel();
-    print('Timer Paused');
-  }
-
-  Widget _buildBottomBox(
-      double screenHeight, double screenWidth, int numberOfQuestions) {
-    String question = questionsMatrix[numberOfQuestions - 1][0]; // Retrieve question from the matrix
+   Widget _buildBottomBox(double screenHeight, double screenWidth) {
+    String question = oneQuestionData[0]; // Retrieve question from the list
     return Container(
       width: 0.9 * screenWidth,
+      height:screenHeight *0.8 ,
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -212,28 +159,9 @@ class _QuestionsPageState extends State<Questions> {
           _buildTimer(),
           SizedBox(height: 20),
 
-          // Question Number Text
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start, // Align to the start (left)
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  'QUESTION ${numberOfQuestions} OF 6',
-                  style: TextStyle(
-                    color: Color(0xFF979797),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-
           // Question
           Text(
-            '${question}',
+            '$question',
             style: TextStyle(
               color: Colors.black,
               fontSize: 20,
@@ -253,6 +181,8 @@ class _QuestionsPageState extends State<Questions> {
       ),
     );
   }
+
+
 
   Widget _buildTimer() {
     return Container(
@@ -293,7 +223,7 @@ class _QuestionsPageState extends State<Questions> {
         for (int i = 1; i <= 5; i++)
           Column(
             children: [
-              _buildSelectableBox(i, questionsMatrix[numberOfQuestions - 1][i]),
+              _buildSelectableBox(i, oneQuestionData[i]),
               SizedBox(height: 10),
             ],
           ),
@@ -341,12 +271,12 @@ class _QuestionsPageState extends State<Questions> {
         width: 0.4 * screenWidth,
         height: 52,
         decoration: BoxDecoration(
-          color: isButtonEnabled ? Color(0xFFF78AB1) : Colors.grey, // Use grey color when button is disabled
+          color: isButtonEnabled ? Color(0xFFF78AB1) : Colors.grey, // Use grey color when the button is disabled
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
           child: Text(
-            numberOfQuestions < 6 ? 'Next' : 'Submit',
+            'Submit',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,
@@ -359,25 +289,12 @@ class _QuestionsPageState extends State<Questions> {
 
   void goToNextQuestion() {
     // Save the user's answer for the current question
-    userAnswers[numberOfQuestions - 1] = selectedAnswer;
+    userAnswers[0] = selectedAnswer;
 
     // Reset the selected answer and timer
     selectedAnswer = -1;
     timerSeconds = 60;
 
     // Move to the next question or submit answers if it's the last question
-    if (numberOfQuestions < 6) {
-      setState(() {
-        numberOfQuestions++;
-      });
-      // Restart the timer for the new question
-      startTimer();
-    } else {
-      // Navigate to the next page or perform the final action
-      // For now, print the user answers and questions to the console
-      print('User Answers: $userAnswers');
-      print('Questions and Options: $questionsMatrix');
-      // You can add navigation or other logic here
-    }
   }
 }

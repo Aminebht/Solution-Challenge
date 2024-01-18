@@ -2,23 +2,6 @@ import 'package:app_0/ChooseForm.dart';
 import 'package:app_0/ChooseSubject.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Choose Lesson',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ChooseLesson(),
-    );
-  }
-}
-
 class ChooseLesson extends StatefulWidget {
   @override
   _ChooseLessonState createState() => _ChooseLessonState();

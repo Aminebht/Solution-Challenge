@@ -2,21 +2,6 @@ import 'package:app_0/Home.dart';
 import 'package:app_0/chooselesson.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Choose Subject',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ChooseSubject(),
-    );
-  }
-}
 class ChooseSubject extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
