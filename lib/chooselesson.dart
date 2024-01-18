@@ -2,6 +2,23 @@ import 'package:app_0/ChooseForm.dart';
 import 'package:app_0/ChooseSubject.dart';
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Choose Lesson',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ChooseLesson(),
+    );
+  }
+}
+
 class ChooseLesson extends StatefulWidget {
   @override
   _ChooseLessonState createState() => _ChooseLessonState();
@@ -28,27 +45,26 @@ class _ChooseLessonState extends State<ChooseLesson> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 40.0),
-                   Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Center(
-                    child: GestureDetector(
-                      onTap: () {
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => ChooseSubject(),
-                                ));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(8.0),
-                       
-                        child: Image.asset(
-                          'images/back.png',
-                          width: 24.0,
-                          height: 24.0,
+                            builder: (context) => ChooseSubject(),
+                          ));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            'images/back.png',
+                            width: 24.0,
+                            height: 24.0,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -92,12 +108,14 @@ class _ChooseLessonState extends State<ChooseLesson> {
                               onPressed: () {
                                 if (selectedChoice != -1) {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ChooseForm(),
+                                    builder: (context) => ChooseForm(
+                                        selectedChoice: selectedChoice),
                                   ));
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('Please select a lesson before proceeding.'),
+                                      content: Text(
+                                          'Please select a lesson before proceeding.'),
                                     ),
                                   );
                                 }
@@ -139,7 +157,8 @@ class RadioSelectGrid extends StatefulWidget {
   final int selectedChoice;
   final Function(int) updateSelectedChoice;
 
-  RadioSelectGrid({required this.selectedChoice, required this.updateSelectedChoice});
+  RadioSelectGrid(
+      {required this.selectedChoice, required this.updateSelectedChoice});
 
   @override
   _RadioSelectGridState createState() => _RadioSelectGridState();
@@ -151,7 +170,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
     'Gain',
     'Geometry',
     'General',
-    'Analysis',
+    'Physics',
     'Static',
     'Probability',
     'Other',
@@ -251,9 +270,7 @@ class CircleIndicator extends StatelessWidget {
       height: 12.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isPink
-            ? Color.fromRGBO(247, 138, 177, 1.0)
-            : Colors.white,
+        color: isPink ? Color.fromRGBO(247, 138, 177, 1.0) : Colors.white,
       ),
     );
   }
