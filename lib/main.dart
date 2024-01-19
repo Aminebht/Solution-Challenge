@@ -1,3 +1,4 @@
+import 'package:app_0/Answers.dart';
 import 'package:app_0/ChooseForm.dart';
 import 'package:app_0/ChooseSubject.dart';
 import 'package:app_0/SignIn.dart';
@@ -25,7 +26,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: keepSignedIn ? ChooseSubject() : Home(),
+      home: keepSignedIn ? Answers() : Home(),
     );
   }
 }
