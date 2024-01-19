@@ -38,24 +38,50 @@ class _QuestionsPageState extends State<OneQuestion> {
     super.dispose();
   }
 
-  Future<void> fetchData() async {
-    final String url =
-        "http://127.0.0.1:8000/api/problem-search/?count=1&category=gain&score=50";
-    final Dio dio = Dio();
+  final Dio dio = Dio(); // No timeout options specified
+
+  void fetchData() async {
+    final String baseUrl = "http://127.0.0.1:8000";
+    final String path = "/api/problem-search/";
+
+    final Map<String, dynamic> queryParams = {
+      'count': '1',
+      'category': 'gain',
+      'score': '37',
+    };
+
+    final Uri uri =
+        Uri.parse(baseUrl + path).replace(queryParameters: queryParams);
 
     try {
-      print("Before");
-      final Response response = await dio.get(url);
-      print("After");
+      final Response response = await dio.get(uri.toString());
+
+      print('Request URL: ${uri.toString()}');
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Headers: ${response.headers}');
+      print('Response Data: ${response.data}');
+
       if (response.statusCode == 200) {
         // Successful request
-        print('Response: ${response.data}');
+        final Map<String, dynamic> data = response.data;
+        // Process the data as needed
+        print("khrajt");
       } else {
         // Request failed
         print('Request failed with status: ${response.statusCode}');
       }
-    } catch (error) {
-      print('Error during the HTTP request: $error');
+    } catch (error, stackTrace) {
+      if (error is DioError) {
+        print('DioError during the HTTP request: ${error.message}');
+        print('DioError response: ${error.response}');
+        // Handle DioError specific cases if needed
+      } else {
+        print('Error during the HTTP request: $error');
+        print('Stack trace: $stackTrace');
+      }
+    } finally {
+      // Dispose of Dio instance
+      dio.close();
     }
   }
 
