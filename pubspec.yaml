@@ -87,6 +87,8 @@ flutter:
     - images/geography.png
     - images/back.png
     - images/setting.png
+    - images/tick.png
+    - images/no.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

@@ -1,3 +1,4 @@
+import 'package:app_0/OneAnswer.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';
@@ -19,17 +20,17 @@ class _QuestionsPageState extends State<OneQuestion> {
   late String correctAnswer;
   double screenHeight = 0.0;
   double screenWidth = 0.0;
-  int timerSeconds = 60;
+  int timerSeconds = 90;
   int selectedAnswer = -1;
-
+  String stcorrectAnswer = '';
   List<int?> userAnswers = List.filled(1, null);
   List<String> oneQuestionData = List.filled(6, "");
-
+  String explanation = '';
   late Timer _timer;
   final Dio dio = Dio();
   bool isLoading = true;
   bool isError = false;
-
+  int difficulty = 0;
   @override
   void initState() {
     super.initState();
@@ -250,7 +251,7 @@ class _QuestionsPageState extends State<OneQuestion> {
     final Map<String, dynamic> queryParams = {
       'count': '1',
       'category': lessons[widget.selectedChoice],
-      'score': '40',
+      'score': '80',
     };
 
     final Uri uri =
@@ -273,7 +274,20 @@ class _QuestionsPageState extends State<OneQuestion> {
             .map((option) => option.replaceAll(RegExp(r"['a )\]]"), ''))
             .toList();
         correctAnswer = data['correct'];
-        print(problem);
+        explanation = (data['rationale'] as String);
+        print('\n');
+        print(explanation);
+        print('\n');
+        stcorrectAnswer = options[correctAnswer.codeUnitAt(0) - 97];
+        difficulty = (data['difficulty_score'] as int);
+        print(difficulty);
+        if (difficulty >= 73) {
+          timerSeconds = 180;
+        } else {
+          if (difficulty >= 50) {
+            timerSeconds = 120;
+          }
+        }
       } else {
         print('Request failed with status: ${response.statusCode}');
         setState(() {
@@ -320,6 +334,16 @@ class _QuestionsPageState extends State<OneQuestion> {
     timerSeconds = 60;
     print('Selected Choice in OneQuestion: ${widget.selectedChoice}');
     print('Selected Answer in OneQuestion: ${selectedAnswer}');
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OneAnswer(
+            selectedAnswer: options[selectedAnswer - 1],
+            correctAnswer: stcorrectAnswer,
+            question: problem,
+            explanation: explanation),
+      ),
+    );
   }
 }
 

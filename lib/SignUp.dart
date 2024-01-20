@@ -7,12 +7,20 @@ import 'package:dio/dio.dart';
 import 'dart:convert';
 
 class SignUp extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController gradeController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          // Background image covering 33% of the screen height
           Positioned(
             top: 0,
             left: 0,
@@ -34,22 +42,21 @@ class SignUp extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Sign Up text
                   Text(
                     'Sign Up',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 28,
-                      color: Colors.black, // Adjust text color
+                      color: Colors.black,
                     ),
                   ),
                   SizedBox(
-                      height: 6.29 * MediaQuery.of(context).size.height / 100),
-
-                  // Email TextField
+                    height: 6.29 * MediaQuery.of(context).size.height / 100,
+                  ),
                   SizedBox(
                     width: 73 * MediaQuery.of(context).size.width / 100,
                     child: TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Color(0xFFF8F8F8),
@@ -65,18 +72,16 @@ class SignUp extends StatelessWidget {
                           ),
                         ),
                       ),
-                      style:
-                          TextStyle(color: Colors.black), // Adjust text color
+                      style: TextStyle(color: Colors.black),
+                      keyboardType: TextInputType.emailAddress,
+                      // Add validation here (e.g., validator: (value) => value.isEmpty ? 'Email is required' : null,)
                     ),
                   ),
                   SizedBox(height: 8),
-
-                  // First Name and Last Name text fields in the same row
                   SizedBox(
                     width: 73 * MediaQuery.of(context).size.width / 100,
                     child: Row(
                       children: [
-                        // First Name TextField
                         Expanded(
                           child: SizedBox(
                             width: 0.5 *
@@ -84,6 +89,7 @@ class SignUp extends StatelessWidget {
                                 MediaQuery.of(context).size.width /
                                 100,
                             child: TextField(
+                              controller: firstNameController,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color(0xFFF8F8F8),
@@ -100,11 +106,11 @@ class SignUp extends StatelessWidget {
                                 ),
                               ),
                               style: TextStyle(color: Colors.black),
+                              // Add validation here
                             ),
                           ),
                         ),
                         SizedBox(width: 8),
-                        // Last Name TextField
                         Expanded(
                           child: SizedBox(
                             width: 0.5 *
@@ -112,6 +118,7 @@ class SignUp extends StatelessWidget {
                                 MediaQuery.of(context).size.width /
                                 100,
                             child: TextField(
+                              controller: lastNameController,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Color(0xFFF8F8F8),
@@ -128,6 +135,7 @@ class SignUp extends StatelessWidget {
                                 ),
                               ),
                               style: TextStyle(color: Colors.black),
+                              // Add validation here
                             ),
                           ),
                         ),
@@ -135,11 +143,10 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 8),
-
-                  // Grade TextField
                   SizedBox(
                     width: 73 * MediaQuery.of(context).size.width / 100,
                     child: TextField(
+                      controller: gradeController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Color(0xFFF8F8F8),
@@ -156,14 +163,14 @@ class SignUp extends StatelessWidget {
                         ),
                       ),
                       style: TextStyle(color: Colors.black),
+                      // Add validation here
                     ),
                   ),
                   SizedBox(height: 8),
-
-                  // Phone Number TextField
                   SizedBox(
                     width: 73 * MediaQuery.of(context).size.width / 100,
                     child: TextField(
+                      controller: phoneNumberController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Color(0xFFF8F8F8),
@@ -180,14 +187,15 @@ class SignUp extends StatelessWidget {
                         ),
                       ),
                       style: TextStyle(color: Colors.black),
+                      keyboardType: TextInputType.phone,
+                      // Add validation here
                     ),
                   ),
                   SizedBox(height: 8),
-
-                  // Password TextField
                   SizedBox(
                     width: 73 * MediaQuery.of(context).size.width / 100,
                     child: TextField(
+                      controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         filled: true,
@@ -205,14 +213,14 @@ class SignUp extends StatelessWidget {
                         ),
                       ),
                       style: TextStyle(color: Colors.black),
+                      // Add validation here (e.g., validator: (value) => value.isEmpty ? 'Password is required' : null,)
                     ),
                   ),
                   SizedBox(height: 8),
-
-                  // Confirm Password TextField
                   SizedBox(
                     width: 73 * MediaQuery.of(context).size.width / 100,
                     child: TextField(
+                      controller: confirmPasswordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         filled: true,
@@ -230,24 +238,30 @@ class SignUp extends StatelessWidget {
                         ),
                       ),
                       style: TextStyle(color: Colors.black),
+                      // Add validation here (e.g., validator: (value) => value != passwordController.text ? 'Passwords do not match' : null,)
                     ),
                   ),
-
                   SizedBox(
-                      height: 3 * MediaQuery.of(context).size.height / 100),
-
-                  // Sign Up Button
+                    height: 3 * MediaQuery.of(context).size.height / 100,
+                  ),
                   SizedBox(
                     width: 73 * MediaQuery.of(context).size.width / 100,
                     height: 49,
                     child: ElevatedButton(
                       onPressed: () {
-                        registerWithEmailAndPassword(
-                            'ayyoub.mkadmi3@gmail.com', 'password');
+                        // Validate form
+                        if (_validateForm()) {
+                          // Get values from text fields
+                          String email = emailController.text;
+                          String password = passwordController.text;
 
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SignIn(),
-                        ));
+                          // Call the registration function with email and password
+                          registerWithEmailAndPassword(email, password);
+
+                          // Navigate or perform other actions...
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SignIn()));
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFF572CB2),
@@ -264,12 +278,9 @@ class SignUp extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  // Additional UI elements
                   SizedBox(
-                      height: 3 * MediaQuery.of(context).size.height / 100),
-
-                  // Already have an account? Login
+                    height: 3 * MediaQuery.of(context).size.height / 100,
+                  ),
                   SizedBox(
                     width: 203,
                     child: RichText(
@@ -288,8 +299,8 @@ class SignUp extends StatelessWidget {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => SignIn(),
-                                ));
+                                    builder: (context) => SignIn()));
+                                // Navigate to login screen
                               },
                           ),
                         ],
@@ -304,7 +315,23 @@ class SignUp extends StatelessWidget {
       ),
     );
   }
+
+  bool _validateForm() {
+    // Add validation logic for required fields
+    if (emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty) {
+      // Show an error message or handle it as needed
+      return false;
+    }
+
+    // You can add more validation logic if necessary (e.g., email format, password strength)
+
+    return true;
+  }
 }
+
+// Other functions...
 
 Future<void> registerWithEmailAndPassword(String email, String password) async {
   try {
@@ -325,12 +352,12 @@ Future<void> registerWithEmailAndPassword(String email, String password) async {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       // Replace 'https://your-api-endpoint.com/create_user' with your actual API endpoint
-      final String apiUrl = 'https://your-api-endpoint.com/create_user';
+      final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
 
       // Replace this with the actual data you want to send to your server
       final Map<String, dynamic> userData = {
-        "userId": user.uid,
-        "email": user.email,
+        "uid": user.uid,
+
         // ... other user data
       };
 
