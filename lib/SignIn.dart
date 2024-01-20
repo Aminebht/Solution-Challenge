@@ -3,6 +3,8 @@ import 'package:app_0/SignUp.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -57,7 +59,8 @@ class _SignInState extends State<SignIn> {
                       color: Colors.black, // Adjust text color
                     ),
                   ),
-                  SizedBox(height: 6.29 * MediaQuery.of(context).size.height / 100),
+                  SizedBox(
+                      height: 6.29 * MediaQuery.of(context).size.height / 100),
 
                   // Email TextField
                   SizedBox(
@@ -78,7 +81,8 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
-                      style: TextStyle(color: Colors.black), // Adjust text color
+                      style:
+                          TextStyle(color: Colors.black), // Adjust text color
                     ),
                   ),
                   SizedBox(height: 8),
@@ -103,7 +107,8 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
-                      style: TextStyle(color: Colors.black), // Adjust text color
+                      style:
+                          TextStyle(color: Colors.black), // Adjust text color
                     ),
                   ),
 
@@ -114,28 +119,28 @@ class _SignInState extends State<SignIn> {
                     child: Row(
                       children: [
                         // Left side - Checkbox and text
-                          Container(
-                    width: 16,
-                    height: 16,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Center(
-                        child: Checkbox(
-                          value: keepSignedIn,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              keepSignedIn = value ?? false;
-                            });
-                          },
+                        Container(
+                          width: 16,
+                          height: 16,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Center(
+                              child: Checkbox(
+                                value: keepSignedIn,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    keepSignedIn = value ?? false;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                         SizedBox(width: 8),
                         Text(
                           'Keep me signed in',
@@ -164,7 +169,8 @@ class _SignInState extends State<SignIn> {
                   ),
 
                   // Additional UI elements
-                  SizedBox(height: 6.29 * MediaQuery.of(context).size.height / 100),
+                  SizedBox(
+                      height: 6.29 * MediaQuery.of(context).size.height / 100),
 
                   // Sign In Button
                   SizedBox(
@@ -172,11 +178,15 @@ class _SignInState extends State<SignIn> {
                     height: 49,
                     child: ElevatedButton(
                       onPressed: () async {
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        signInWithEmailAndPassword(
+                            'ayyoub.mkadmi3@gmail.com', 'password');
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
                         prefs.setBool('keepSignedIn', keepSignedIn);
 
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => keepSignedIn ? Home() : SignIn(),
+                          builder: (context) =>
+                              keepSignedIn ? Home() : SignIn(),
                         ));
                       },
                       style: ElevatedButton.styleFrom(
@@ -195,7 +205,8 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
 
-                   SizedBox(height: 6.29 * MediaQuery.of(context).size.height / 100),
+                  SizedBox(
+                      height: 6.29 * MediaQuery.of(context).size.height / 100),
 
                   // New row with 'or' and horizontal lines
                   SizedBox(
@@ -254,7 +265,8 @@ class _SignInState extends State<SignIn> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10), // Adjust the space between rectangles
+                        SizedBox(
+                            width: 10), // Adjust the space between rectangles
                         // Right rectangle with Facebook image
                         Container(
                           width: 42,
@@ -273,31 +285,31 @@ class _SignInState extends State<SignIn> {
                   ),
                   SizedBox(height: 8),
                   SizedBox(
-                            width: 203, // 
-                            child: RichText(
-                    text: TextSpan(
-                      text: "Don't have an account? ",
-                      style: TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
-                      children: [
-                        TextSpan(
-                          text: "Sign Up",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xFF572CB2),
-                            decoration: TextDecoration.underline,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                                                      builder: (context) => SignUp(),
-                                                                    ));
-                            },
-                           ),
-                           ],
-                           ),
+                    width: 203, //
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Don't have an account? ",
+                        style:
+                            TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
+                        children: [
+                          TextSpan(
+                            text: "Sign Up",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xFF572CB2),
+                              decoration: TextDecoration.underline,
                             ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => SignUp(),
+                                ));
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-
                 ],
               ),
             ),
@@ -306,4 +318,23 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
+}
+
+Future<void> signInWithEmailAndPassword(String email, String password) async {
+  try {
+    print('login');
+    await Firebase.initializeApp();
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    print(isUserSignedIn());
+  } catch (e) {
+    print(e.toString());
+  }
+}
+
+bool isUserSignedIn() {
+  User? user = FirebaseAuth.instance.currentUser;
+  return user != null;
 }

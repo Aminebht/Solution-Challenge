@@ -5,8 +5,13 @@ import 'package:app_0/Home.dart';
 import 'package:app_0/Questions.dart';
 import 'package:app_0/OneQuestion.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OneQuestion extends StatefulWidget {
   final int selectedChoice;
@@ -178,6 +179,7 @@ class _QuestionsPageState extends State<OneQuestion> {
       onTap: () {
         setState(() {
           selectedAnswer = index;
+          print(selectedAnswer);
         });
       },
       child: Container(
@@ -230,6 +232,7 @@ class _QuestionsPageState extends State<OneQuestion> {
   }
 
   void fetchData() async {
+    print(isUserSignedIn());
     print(widget.selectedChoice);
     final String baseUrl = "http://127.0.0.1:8000";
     final String path = "/api/problem-search/";
@@ -247,7 +250,7 @@ class _QuestionsPageState extends State<OneQuestion> {
     final Map<String, dynamic> queryParams = {
       'count': '1',
       'category': lessons[widget.selectedChoice],
-      'score': '75',
+      'score': '40',
     };
 
     final Uri uri =
@@ -314,17 +317,13 @@ class _QuestionsPageState extends State<OneQuestion> {
   }
 
   void goToNextQuestion() {
-    userAnswers[0] = selectedAnswer;
-    selectedAnswer = -1;
     timerSeconds = 60;
     print('Selected Choice in OneQuestion: ${widget.selectedChoice}');
+    print('Selected Answer in OneQuestion: ${selectedAnswer}');
   }
 }
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: OneQuestion(selectedChoice: 1), // Example value for selectedChoice
-    ),
-  );
+bool isUserSignedIn() {
+  User? user = FirebaseAuth.instance.currentUser;
+  return user != null;
 }

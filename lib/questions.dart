@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
 class Questions extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _QuestionsPageState extends State<Questions> {
     super.initState();
     startTimer();
     // Fetch the initial set of questions and options from the API and update the matrix
-    fetchQuestionsFromAPI();
+    // fetchQuestionsFromAPI();
   }
 
   @override
@@ -37,18 +38,71 @@ class _QuestionsPageState extends State<Questions> {
     super.dispose();
   }
 
-  void fetchQuestionsFromAPI() {
-    // Simulate fetching questions from the API. Replace this with your actual API call.
-    for (int i = 0; i < 6; i++) {
-      // Replace the following lines with the actual data received from the API
-      questionsMatrix[i][0] = "120 is what percent of 50 ?";
-      questionsMatrix[i][1] = "5%";
-      questionsMatrix[i][2] = "240 %";
-      questionsMatrix[i][3] = "50 %";
-      questionsMatrix[i][4] = "2 %";
-      questionsMatrix[i][5] = "500 %";
-    }
-  }
+  // void fetchQuestionsFromAPI() async {
+  //   final String baseUrl = "http://127.0.0.1:8000";
+  //   final String path = "/api/problem-search/";
+  //   List<String> lessons = [
+  //     'algebra',
+  //     'gain',
+  //     'geometry',
+  //     'general',
+  //     'physics',
+  //     'static',
+  //     'probability',
+  //     'other'
+  //   ];
+
+  //   final Map<String, dynamic> queryParams = {
+  //     'count': '1',
+  //     'category': 'gain',
+  //     'score': '40',
+  //   };
+
+  //   final Uri uri =
+  //       Uri.parse(baseUrl + path).replace(queryParameters: queryParams);
+
+  //   try {
+  //     final Response response = await dio.get(uri.toString());
+
+  //     print('Request URL: ${uri.toString()}');
+  //     print('Response Status Code: ${response.statusCode}');
+  //     print('Response Headers: ${response.headers}');
+  //     print('Response Data: ${response.data}');
+
+  //     if (response.statusCode == 200) {
+  //       final Map<String, dynamic> data = response.data;
+  //       questionId = data['id'];
+  //       problem = data['problem'];
+  //       options = (data['options'] as String)
+  //           .split(RegExp(r',.*?\)'))
+  //           .map((option) => option.replaceAll(RegExp(r"['a )\]]"), ''))
+  //           .toList();
+  //       correctAnswer = data['correct'];
+  //       print(problem);
+  //     } else {
+  //       print('Request failed with status: ${response.statusCode}');
+  //       setState(() {
+  //         isError = true;
+  //       });
+  //     }
+  //   } catch (error, stackTrace) {
+  //     if (error is DioError) {
+  //       print('DioError during the HTTP request: ${error.message}');
+  //       print('DioError response: ${error.response}');
+  //     } else {
+  //       print('Error during the HTTP request: $error');
+  //       print('Stack trace: $stackTrace');
+  //     }
+  //     setState(() {
+  //       isError = true;
+  //     });
+  //   } finally {
+  //     dio.close();
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
 
   void startTimer() {
     const oneSec = const Duration(seconds: 1);

@@ -1,6 +1,10 @@
 import 'package:app_0/SignIn.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:dio/dio.dart';
+import 'dart:convert';
 
 class SignUp extends StatelessWidget {
   @override
@@ -39,7 +43,8 @@ class SignUp extends StatelessWidget {
                       color: Colors.black, // Adjust text color
                     ),
                   ),
-                  SizedBox(height: 6.29 * MediaQuery.of(context).size.height / 100),
+                  SizedBox(
+                      height: 6.29 * MediaQuery.of(context).size.height / 100),
 
                   // Email TextField
                   SizedBox(
@@ -60,7 +65,8 @@ class SignUp extends StatelessWidget {
                           ),
                         ),
                       ),
-                      style: TextStyle(color: Colors.black), // Adjust text color
+                      style:
+                          TextStyle(color: Colors.black), // Adjust text color
                     ),
                   ),
                   SizedBox(height: 8),
@@ -73,7 +79,10 @@ class SignUp extends StatelessWidget {
                         // First Name TextField
                         Expanded(
                           child: SizedBox(
-                            width: 0.5 * 73 * MediaQuery.of(context).size.width / 100,
+                            width: 0.5 *
+                                73 *
+                                MediaQuery.of(context).size.width /
+                                100,
                             child: TextField(
                               decoration: InputDecoration(
                                 filled: true,
@@ -98,7 +107,10 @@ class SignUp extends StatelessWidget {
                         // Last Name TextField
                         Expanded(
                           child: SizedBox(
-                            width: 0.5 * 73 * MediaQuery.of(context).size.width / 100,
+                            width: 0.5 *
+                                73 *
+                                MediaQuery.of(context).size.width /
+                                100,
                             child: TextField(
                               decoration: InputDecoration(
                                 filled: true,
@@ -221,7 +233,8 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 3 * MediaQuery.of(context).size.height / 100),
+                  SizedBox(
+                      height: 3 * MediaQuery.of(context).size.height / 100),
 
                   // Sign Up Button
                   SizedBox(
@@ -229,6 +242,9 @@ class SignUp extends StatelessWidget {
                     height: 49,
                     child: ElevatedButton(
                       onPressed: () {
+                        registerWithEmailAndPassword(
+                            'ayyoub.mkadmi3@gmail.com', 'password');
+
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SignIn(),
                         ));
@@ -250,7 +266,8 @@ class SignUp extends StatelessWidget {
                   ),
 
                   // Additional UI elements
-                  SizedBox(height: 3 * MediaQuery.of(context).size.height / 100),
+                  SizedBox(
+                      height: 3 * MediaQuery.of(context).size.height / 100),
 
                   // Already have an account? Login
                   SizedBox(
@@ -258,7 +275,8 @@ class SignUp extends StatelessWidget {
                     child: RichText(
                       text: TextSpan(
                         text: "Already have an account? ",
-                        style: TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
+                        style:
+                            TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
                         children: [
                           TextSpan(
                             text: "Login",
@@ -285,5 +303,55 @@ class SignUp extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+Future<void> registerWithEmailAndPassword(String email, String password) async {
+  try {
+    print('registration');
+
+    // Initialize Firebase if not initialized
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp();
+    }
+
+    // Create user in Firebase Authentication
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    // If Firebase registration is successful, send user data to your server
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Replace 'https://your-api-endpoint.com/create_user' with your actual API endpoint
+      final String apiUrl = 'https://your-api-endpoint.com/create_user';
+
+      // Replace this with the actual data you want to send to your server
+      final Map<String, dynamic> userData = {
+        "userId": user.uid,
+        "email": user.email,
+        // ... other user data
+      };
+
+      final Dio dio = Dio();
+
+      final response = await dio.post(
+        apiUrl,
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+        data: jsonEncode(userData),
+      );
+
+      if (response.statusCode == 200) {
+        print("User created on server successfully");
+      } else {
+        print(
+            "Failed to create user on server. Status code: ${response.statusCode}");
+      }
+    }
+  } catch (e) {
+    print("Exception during registration: $e");
   }
 }
