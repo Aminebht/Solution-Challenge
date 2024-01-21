@@ -129,8 +129,8 @@ class _QuestionsPageState extends State<OneQuestion> {
 
   Widget _buildTimer() {
     return Container(
-      width: 65,
-      height: 65,
+      width: 75,
+      height: 75,
       decoration: BoxDecoration(
         color: Color(0xFFF78AB1),
         shape: BoxShape.circle,
@@ -251,7 +251,7 @@ class _QuestionsPageState extends State<OneQuestion> {
     final Map<String, dynamic> queryParams = {
       'count': '1',
       'category': lessons[widget.selectedChoice],
-      'score': '80',
+      'score': '12',
     };
 
     final Uri uri =
@@ -331,7 +331,7 @@ class _QuestionsPageState extends State<OneQuestion> {
   }
 
   void goToNextQuestion() {
-    timerSeconds = 60;
+    //timerSeconds = 60;
     print('Selected Choice in OneQuestion: ${widget.selectedChoice}');
     print('Selected Answer in OneQuestion: ${selectedAnswer}');
     Navigator.push(

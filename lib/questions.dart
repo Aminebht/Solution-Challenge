@@ -19,12 +19,12 @@ class _QuestionsPageState extends State<Questions> {
   List<String> stuserAnswers = [];
   List<String> explanations = [];
   List<String> problems = [];
-
+  late int difficulty;
   late String correctAnswer;
   double screenHeight = 0.0;
   double screenWidth = 0.0;
   int numberOfQuestions = 1;
-  int timerSeconds = 60;
+  int timerSeconds = 90;
   int selectedAnswer = -1;
   bool isError = false;
   bool isLoading = true;
@@ -33,7 +33,7 @@ class _QuestionsPageState extends State<Questions> {
       []; // Initialize with an empty list
   List<int?> userAnswers = List.filled(6, null); // List to store user answers
 
-  late Timer _timer;
+  late Timer _timer = Timer(Duration.zero, () {});
   bool isTimerPaused = false;
 
   @override
@@ -68,7 +68,7 @@ class _QuestionsPageState extends State<Questions> {
     final Map<String, dynamic> queryParams = {
       'count': '6',
       'category': 'gain',
-      'score': '40',
+      'score': '70',
     };
 
     final Uri uri =
@@ -96,6 +96,7 @@ class _QuestionsPageState extends State<Questions> {
                   .toList(),
               'correctAnswer': data['correct'],
               'rationale': data['rationale'],
+              'difficulty': data['difficulty_score'],
             };
           }).toList();
 
@@ -111,6 +112,15 @@ class _QuestionsPageState extends State<Questions> {
                 .add(question['options'][correctAnswers[i].codeUnitAt(0) - 97]);
             explanations.add((question['rationale'] as String));
             problems.add(question['problem'] as String);
+            difficulty = (question['difficulty'] as int);
+            print(difficulty);
+            if (difficulty >= 73) {
+              timerSeconds = 180;
+            } else {
+              if (difficulty >= 50) {
+                timerSeconds = 120;
+              }
+            }
           }
         } else {
           // Handle the case when the response is a single map
@@ -142,7 +152,9 @@ class _QuestionsPageState extends State<Questions> {
     }
   }
 
+  // Updated method to start/restart the timer
   void startTimer() {
+    _timer?.cancel(); // Cancel existing timer if any
     const oneSec = const Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
@@ -152,7 +164,7 @@ class _QuestionsPageState extends State<Questions> {
             if (timerSeconds == 0) {
               timer.cancel();
               // Handle when the timer reaches 0 (e.g., move to the next question)
-              goToNextQuestion();
+              goToNextQuestion(difficulty);
             } else {
               timerSeconds--;
             }
@@ -429,8 +441,8 @@ class _QuestionsPageState extends State<Questions> {
 
   Widget _buildTimer() {
     return Container(
-      width: 65,
-      height: 65,
+      width: 75,
+      height: 75,
       decoration: BoxDecoration(
         color: Color(0xFFF78AB1),
         shape: BoxShape.circle,
@@ -517,7 +529,7 @@ class _QuestionsPageState extends State<Questions> {
     bool isButtonEnabled = selectedAnswer != -1;
 
     return GestureDetector(
-      onTap: isButtonEnabled ? () => goToNextQuestion() : null,
+      onTap: isButtonEnabled ? () => goToNextQuestion(difficulty) : null,
       child: Container(
         width: 0.4 * screenWidth,
         height: 52,
@@ -540,21 +552,32 @@ class _QuestionsPageState extends State<Questions> {
     );
   }
 
-  void goToNextQuestion() {
+  void initializeTimer(int difficulty) {
+    if (difficulty >= 73) {
+      timerSeconds = 180;
+    } else if (difficulty >= 50) {
+      timerSeconds = 120;
+    } else {
+      timerSeconds = 90; // Default duration for lower difficulty
+    }
+  }
+
+  void goToNextQuestion(int difficulty) {
     // Save the user's answer for the current question
     userAnswers[numberOfQuestions - 1] = selectedAnswer;
 
-    // Reset the selected answer and timer
+    // Reset the selected answer
     selectedAnswer = -1;
-    timerSeconds = 60;
-    print(userAnswers);
 
     // Move to the next question or submit answers if it's the last question
     if (numberOfQuestions < 6) {
       setState(() {
         numberOfQuestions++;
       });
-      // Restart the timer for the new questions
+
+      // Initialize the timer for the new question
+      initializeTimer(difficulty);
+      startTimer(); // Restart the timer
     } else {
       // Navigate to the next page or perform the final action
       // For now, print the user answers and questions to the console
@@ -564,16 +587,15 @@ class _QuestionsPageState extends State<Questions> {
       }
       print(stuserAnswers);
       Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Answers(
-              stuserAnswers: stuserAnswers,
-              stcorrectAnswers: stcorrectAnswers,
-              problems: problems,
-              explanations: explanations),
-        ),
-      );
-      // You can add navigation or other logic here
+          context,
+          MaterialPageRoute(
+            builder: (context) => Answers(
+                stuserAnswers: stuserAnswers,
+                stcorrectAnswers: stcorrectAnswers,
+                problems: problems,
+                explanations: explanations),
+          ));
+      // ...
     }
   }
 }

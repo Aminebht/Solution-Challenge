@@ -23,13 +23,7 @@ class _AnswersPageState extends State<Answers> {
   double screenHeight = 0.0;
   double screenWidth = 0.0;
   int numberOfQuestions = 1;
-  String selectedAnswer = '240%';
-  String correctAnswer = '240%';
-  String explanation =
-      '50 .x = 120\n=> x = 2.4\n=> 2.4 expressed as percent\nis 240 % .';
-  List<List<String>> questionsMatrix =
-      List.generate(6, (index) => List.filled(6, ""));
-
+  int average = 0;
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -43,7 +37,7 @@ class _AnswersPageState extends State<Answers> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  top: 0.1 * screenHeight,
+                  top: 0.04 * screenHeight,
                   bottom: 0.05 * screenHeight,
                 ),
                 child: Row(
@@ -61,8 +55,13 @@ class _AnswersPageState extends State<Answers> {
                   ],
                 ),
               ),
-              _buildBottomBox(screenHeight, screenWidth, numberOfQuestions,
-                  selectedAnswer, correctAnswer, explanation),
+              _buildBottomBox(
+                  screenHeight,
+                  screenWidth,
+                  numberOfQuestions,
+                  widget.stuserAnswers[numberOfQuestions - 1],
+                  widget.stcorrectAnswers[numberOfQuestions - 1],
+                  widget.explanations[numberOfQuestions - 1]),
             ],
           ),
         ),
@@ -70,33 +69,74 @@ class _AnswersPageState extends State<Answers> {
     );
   }
 
-  void initState() {
-    super.initState();
-    fetchQuestionsFromAPI();
+  Widget _buildSubmitAnswerButton(double screenWidth, int numberOfQuestions) {
+    return GestureDetector(
+      onTap: () => goToNextAnswer(),
+      child: Container(
+        width: 0.8 * screenWidth,
+        height: 52,
+        decoration: BoxDecoration(
+          color: Color(0xFF7B31F4), // Change the color to 7B31F4
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+          child: Text(
+            numberOfQuestions < 6 ? 'Next' : 'Submit',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
-  void fetchQuestionsFromAPI() {
-    // Simulate fetching questions from the API. Replace this with your actual API call.
-    for (int i = 0; i < 6; i++) {
-      // Replace the following lines with the actual data received from the API
-      questionsMatrix[i][0] = "120 is what percent of 50 ?";
-      questionsMatrix[i][1] = "5%";
-      questionsMatrix[i][2] = "240 %";
-      questionsMatrix[i][3] = "50 %";
-      questionsMatrix[i][4] = "2 %";
-      questionsMatrix[i][5] = "500 %";
+  void goToNextAnswer() {
+    // Move to the next question or submit answers if it's the last question
+    if (numberOfQuestions < 6) {
+      setState(() {
+        numberOfQuestions++;
+      });
+      // Restart the timer for the new questions
+    } else {
+      // Navigate to the next page or perform the final action
+      // For now, print the user answers and questions to the console
+
+      // You can add navigation or other logic here
     }
   }
 
+  void initState() {
+    super.initState();
+    calculateAverage();
+  }
+
+  void calculateAverage() {
+    int correctCount = 0;
+    for (int i = 0; i < widget.stuserAnswers.length; i++) {
+      if (widget.stuserAnswers[i] == widget.stcorrectAnswers[i]) {
+        correctCount++;
+      }
+    }
+    double percentage = (correctCount / widget.stuserAnswers.length) * 100;
+    setState(() {
+      average = percentage.round();
+    });
+
+    print("Number of correct answers: $correctCount");
+  }
+
   Widget _buildBottomBox(
-      double screenHeight,
-      double screenWidth,
-      int numberOfQuestions,
-      String selectedAnswer,
-      String correctAnswer,
-      String explanation) {
-    String question = questionsMatrix[numberOfQuestions - 1]
-        [0]; // Retrieve question from the matrix
+    double screenHeight,
+    double screenWidth,
+    int numberOfQuestions,
+    String selectedAnswer,
+    String correctAnswer,
+    String explanation,
+  ) {
+    String question = widget
+        .problems[numberOfQuestions - 1]; // Retrieve question from the matrix
     return SingleChildScrollView(
       child: Container(
         width: 0.9 * screenWidth,
@@ -215,34 +255,13 @@ class _AnswersPageState extends State<Answers> {
   }
 }
 
-Widget _buildSubmitAnswerButton(double screenWidth, int numberOfQuestions) {
-  return GestureDetector(
-    onTap: () => goToNextAnswer(),
-    child: Container(
-      width: 0.8 * screenWidth,
-      height: 52,
-      decoration: BoxDecoration(
-        color: Color(0xFF7B31F4), // Change the color to 7B31F4
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Center(
-        child: Text(
-          numberOfQuestions < 6 ? 'Next' : 'Submit',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
 Widget _buildAnswerBox(
     String answer, Color color1, Color color2, double screenWidth) {
   Color textColor = (color1 == Colors.white && color2 == Color(0xFF53DF83))
       ? Color(0xFF53DF83)
-      : Colors.white;
+      : (color1 == Colors.white && color2 == Color(0xFFE33629))
+          ? Color(0xFFE33629)
+          : Colors.white;
   String imagePath =
       (color2 == Color(0xFFE33629)) ? 'images/no.png' : 'images/tick.png';
 
@@ -291,5 +310,3 @@ Widget _buildExplanationBox(String explanation, double screenWidth) {
     ),
   );
 }
-
-void goToNextAnswer() {}
