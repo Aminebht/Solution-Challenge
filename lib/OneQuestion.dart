@@ -23,7 +23,6 @@ class _QuestionsPageState extends State<OneQuestion> {
   int timerSeconds = 90;
   int selectedAnswer = -1;
   String stcorrectAnswer = '';
-  List<int?> userAnswers = List.filled(1, null);
   List<String> oneQuestionData = List.filled(6, "");
   String explanation = '';
   late Timer _timer;
@@ -31,6 +30,7 @@ class _QuestionsPageState extends State<OneQuestion> {
   bool isLoading = true;
   bool isError = false;
   int difficulty = 0;
+  late String stSelectedAnswer;
   @override
   void initState() {
     super.initState();
@@ -321,6 +321,7 @@ class _QuestionsPageState extends State<OneQuestion> {
         setState(() {
           if (timerSeconds == 0) {
             timer.cancel();
+
             goToNextQuestion();
           } else {
             timerSeconds--;
@@ -334,11 +335,16 @@ class _QuestionsPageState extends State<OneQuestion> {
     //timerSeconds = 60;
     print('Selected Choice in OneQuestion: ${widget.selectedChoice}');
     print('Selected Answer in OneQuestion: ${selectedAnswer}');
+    if (timerSeconds == 0) {
+      stSelectedAnswer = 'Timer Out';
+    } else {
+      stSelectedAnswer = options[selectedAnswer - 1];
+    }
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => OneAnswer(
-            selectedAnswer: options[selectedAnswer - 1],
+            selectedAnswer: stSelectedAnswer,
             correctAnswer: stcorrectAnswer,
             question: problem,
             explanation: explanation),

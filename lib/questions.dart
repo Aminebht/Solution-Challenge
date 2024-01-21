@@ -68,7 +68,7 @@ class _QuestionsPageState extends State<Questions> {
     final Map<String, dynamic> queryParams = {
       'count': '6',
       'category': 'gain',
-      'score': '70',
+      'score': '40',
     };
 
     final Uri uri =

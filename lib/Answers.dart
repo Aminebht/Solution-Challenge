@@ -119,10 +119,6 @@ class _AnswersPageState extends State<Answers> {
         correctCount++;
       }
     }
-    double percentage = (correctCount / widget.stuserAnswers.length) * 100;
-    setState(() {
-      average = percentage.round();
-    });
 
     print("Number of correct answers: $correctCount");
   }

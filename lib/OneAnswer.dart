@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:js';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
@@ -173,7 +174,10 @@ class _AnswersPageState extends State<OneAnswer> {
 
 Widget _buildSubmitAnswerButton(double screenWidth) {
   return GestureDetector(
-    onTap: () => goToNextAnswer(),
+    onTap: () {
+      Navigator.pushReplacementNamed(context as BuildContext,
+          'Home'); // Replace '/home' with your actual home route
+    },
     child: Container(
       width: 0.8 * screenWidth,
       height: 52,
@@ -183,7 +187,7 @@ Widget _buildSubmitAnswerButton(double screenWidth) {
       ),
       child: Center(
         child: Text(
-          'Next',
+          'Done',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w600,

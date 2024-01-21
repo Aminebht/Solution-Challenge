@@ -62,10 +62,10 @@ class _SignInState extends State<SignIn> {
                   SizedBox(
                       height: 6.29 * MediaQuery.of(context).size.height / 100),
 
-                  // Email TextField
                   SizedBox(
                     width: 73 * MediaQuery.of(context).size.width / 100,
-                    child: TextField(
+                    child: TextFormField(
+                      controller: _emailController, // Pass the controller here
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Color(0xFFF8F8F8),
@@ -81,8 +81,7 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
-                      style:
-                          TextStyle(color: Colors.black), // Adjust text color
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                   SizedBox(height: 8),
@@ -90,7 +89,9 @@ class _SignInState extends State<SignIn> {
                   // Password TextField
                   SizedBox(
                     width: 73 * MediaQuery.of(context).size.width / 100,
-                    child: TextField(
+                    child: TextFormField(
+                      controller:
+                          _passwordController, // Pass the controller here
                       obscureText: true,
                       decoration: InputDecoration(
                         filled: true,
@@ -107,8 +108,7 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
-                      style:
-                          TextStyle(color: Colors.black), // Adjust text color
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
 
@@ -178,16 +178,43 @@ class _SignInState extends State<SignIn> {
                     height: 49,
                     child: ElevatedButton(
                       onPressed: () async {
-                        signInWithEmailAndPassword(
-                            'ayyoub.mkadmi3@gmail.com', 'password');
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setBool('keepSignedIn', keepSignedIn);
+                        // Get email and password from text fields
+                        String email = _emailController.text;
+                        String password = _passwordController.text;
 
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              keepSignedIn ? Home() : SignIn(),
-                        ));
+                        // Perform sign-in and check the result
+                        bool signInSuccess =
+                            await signInWithEmailAndPassword(email, password);
+
+                        // If sign-in is successful, navigate to the home page
+                        if (signInSuccess) {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setBool('keepSignedIn', keepSignedIn);
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Home(),
+                          ));
+                        } else {
+                          // Show a popup/dialog for sign-in failure
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Sign-in Failed'),
+                                content: Text('Check your email and password.'),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFF572CB2),
@@ -320,17 +347,26 @@ class _SignInState extends State<SignIn> {
   }
 }
 
-Future<void> signInWithEmailAndPassword(String email, String password) async {
+Future<bool> signInWithEmailAndPassword(String email, String password) async {
   try {
     print('login');
+    print(email);
+    print(password);
+
     await Firebase.initializeApp();
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
     print(isUserSignedIn());
+
+    // If there is a user in the UserCredential, consider it a successful sign-in
+    return userCredential.user != null;
   } catch (e) {
     print(e.toString());
+    // Sign-in failed, return false
+    return false;
   }
 }
 
