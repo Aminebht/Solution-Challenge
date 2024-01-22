@@ -1,10 +1,13 @@
-import 'package:app_0/SignIn.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
+import 'package:app_0/SignIn.dart';
+import 'package:app_0/my_data.dart';
+import 'package:app_0/my_data_adapter.dart';
+import 'package:hive/hive.dart';
 
 class SignUp extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -74,7 +77,6 @@ class SignUp extends StatelessWidget {
                       ),
                       style: TextStyle(color: Colors.black),
                       keyboardType: TextInputType.emailAddress,
-                      // Add validation here (e.g., validator: (value) => value.isEmpty ? 'Email is required' : null,)
                     ),
                   ),
                   SizedBox(height: 8),
@@ -106,7 +108,6 @@ class SignUp extends StatelessWidget {
                                 ),
                               ),
                               style: TextStyle(color: Colors.black),
-                              // Add validation here
                             ),
                           ),
                         ),
@@ -135,7 +136,6 @@ class SignUp extends StatelessWidget {
                                 ),
                               ),
                               style: TextStyle(color: Colors.black),
-                              // Add validation here
                             ),
                           ),
                         ),
@@ -163,7 +163,6 @@ class SignUp extends StatelessWidget {
                         ),
                       ),
                       style: TextStyle(color: Colors.black),
-                      // Add validation here
                     ),
                   ),
                   SizedBox(height: 8),
@@ -188,7 +187,6 @@ class SignUp extends StatelessWidget {
                       ),
                       style: TextStyle(color: Colors.black),
                       keyboardType: TextInputType.phone,
-                      // Add validation here
                     ),
                   ),
                   SizedBox(height: 8),
@@ -213,7 +211,6 @@ class SignUp extends StatelessWidget {
                         ),
                       ),
                       style: TextStyle(color: Colors.black),
-                      // Add validation here (e.g., validator: (value) => value.isEmpty ? 'Password is required' : null,)
                     ),
                   ),
                   SizedBox(height: 8),
@@ -238,7 +235,6 @@ class SignUp extends StatelessWidget {
                         ),
                       ),
                       style: TextStyle(color: Colors.black),
-                      // Add validation here (e.g., validator: (value) => value != passwordController.text ? 'Passwords do not match' : null,)
                     ),
                   ),
                   SizedBox(
@@ -250,13 +246,14 @@ class SignUp extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         // Validate form
-                        if (_validateForm()) {
+                        if (_validateForm(context)) {
                           // Get values from text fields
                           String email = emailController.text;
                           String password = passwordController.text;
 
                           // Call the registration function with email and password
-                          registerWithEmailAndPassword(email, password);
+                          registerWithEmailAndPassword(
+                              context, email, password);
 
                           // Navigate or perform other actions...
                           Navigator.of(context).push(MaterialPageRoute(
@@ -300,7 +297,6 @@ class SignUp extends StatelessWidget {
                               ..onTap = () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => SignIn()));
-                                // Navigate to login screen
                               },
                           ),
                         ],
@@ -316,12 +312,13 @@ class SignUp extends StatelessWidget {
     );
   }
 
-  bool _validateForm() {
+  bool _validateForm(BuildContext context) {
     // Add validation logic for required fields
     if (emailController.text.isEmpty ||
         passwordController.text.isEmpty ||
         confirmPasswordController.text.isEmpty) {
       // Show an error message or handle it as needed
+      _showErrorPopup(context, 'Please fill in all required fields.');
       return false;
     }
 
@@ -329,56 +326,114 @@ class SignUp extends StatelessWidget {
 
     return true;
   }
-}
 
-// Other functions...
-
-Future<void> registerWithEmailAndPassword(String email, String password) async {
-  try {
-    print('registration');
-
-    // Initialize Firebase if not initialized
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp();
-    }
-
-    // Create user in Firebase Authentication
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
+  void _showErrorPopup(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
     );
+  }
 
-    // If Firebase registration is successful, send user data to your server
-    final User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      // Replace 'https://your-api-endpoint.com/create_user' with your actual API endpoint
-      final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
+  void _showSuccessPopup(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Success'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-      // Replace this with the actual data you want to send to your server
-      final Map<String, dynamic> userData = {
-        "uid": user.uid,
+  Future<void> registerWithEmailAndPassword(
+      BuildContext context, String email, String password) async {
+    try {
+      print('registration');
 
-        // ... other user data
-      };
+      // Initialize Firebase if not initialized
+      if (Firebase.apps.isEmpty) {
+        await Firebase.initializeApp();
+      }
 
-      final Dio dio = Dio();
-
-      final response = await dio.post(
-        apiUrl,
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
-        data: jsonEncode(userData),
+      // Create user in Firebase Authentication
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
 
-      if (response.statusCode == 200) {
-        print("User created on server successfully");
-      } else {
-        print(
-            "Failed to create user on server. Status code: ${response.statusCode}");
+      // If Firebase registration is successful, send user data to your server
+      final User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        // Replace 'https://your-api-endpoint.com/create_user' with your actual API endpoint
+        final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
+
+        // Replace this with the actual data you want to send to your server
+        final Map<String, dynamic> userData = {
+          "uid": user.uid,
+          // ... other user data
+        };
+
+        final Dio dio = Dio();
+
+        final Response response = await dio.post(
+          apiUrl,
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+          data: jsonEncode(userData),
+        );
+
+        await Hive.openBox('testBox');
+        MyData newData = MyData(
+          userId: 'exampleUserId2',
+          userScores: {'subject1': 90, 'subject2': 85},
+          keepMeSignedIn: true,
+        );
+
+        // Call the function to add the data to the database
+        await addDataToDatabase(newData);
+
+        if (response.statusCode == 201) {
+          print("User created on server successfully");
+
+          // Show a success popup
+          _showSuccessPopup(context, 'User created successfully.');
+        } else {
+          print(
+              "Failed to create user on server. Status code: ${response.statusCode}");
+
+          // Show an error popup
+          _showErrorPopup(context,
+              'Failed to create user on server. Status code: ${response.statusCode}');
+        }
       }
+    } catch (e) {
+      print("Exception during registration: $e");
+
+      // Show an error popup
+      _showErrorPopup(context, 'Exception during registration: $e');
     }
-  } catch (e) {
-    print("Exception during registration: $e");
   }
 }

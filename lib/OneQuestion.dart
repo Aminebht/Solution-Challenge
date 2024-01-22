@@ -87,7 +87,7 @@ class _QuestionsPageState extends State<OneQuestion> {
 
   Widget _buildBottomBox(double screenHeight, double screenWidth) {
     String question = problem;
-    double boxHeight = screenHeight * 0.7;
+    //double boxHeight = screenHeight * 0.7;
     double boxWidth = screenWidth * 0.9;
 
     return Center(
@@ -252,6 +252,7 @@ class _QuestionsPageState extends State<OneQuestion> {
       'count': '1',
       'category': lessons[widget.selectedChoice],
       'score': '12',
+      'new': '0',
     };
 
     final Uri uri =

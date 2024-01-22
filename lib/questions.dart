@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
 class Questions extends StatefulWidget {
+  final int selectedChoice;
+  Questions({required this.selectedChoice});
   @override
   _QuestionsPageState createState() => _QuestionsPageState();
 }
@@ -67,8 +69,9 @@ class _QuestionsPageState extends State<Questions> {
 
     final Map<String, dynamic> queryParams = {
       'count': '6',
-      'category': 'gain',
+      'category': lessons[widget.selectedChoice],
       'score': '40',
+      'new': '0',
     };
 
     final Uri uri =
@@ -178,7 +181,7 @@ class _QuestionsPageState extends State<Questions> {
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-
+    int choice = widget.selectedChoice;
     return Scaffold(
       backgroundColor: Color(0xFF7B31F4),
       body: Stack(
@@ -583,7 +586,12 @@ class _QuestionsPageState extends State<Questions> {
       // For now, print the user answers and questions to the console
       print('User Answers: $userAnswers');
       for (int i = 0; i < 6; i++) {
-        stuserAnswers.add(questions[i]['options'][userAnswers[i]! - 1]);
+        if (userAnswers[i] != null) {
+          stuserAnswers.add(questions[i]['options'][userAnswers[i]! - 1]);
+        } else {
+          // Handle the case when user answer is null (optional)
+          stuserAnswers.add(''); // or any default value
+        }
       }
       print(stuserAnswers);
       Navigator.push(
