@@ -407,13 +407,15 @@ class SignUp extends StatelessWidget {
 
         await Hive.openBox('testBox');
         MyData newData = MyData(
-          userId: 'exampleUserId2',
+          userId: 'exampleUserId3',
           userScores: {'subject1': 90, 'subject2': 85},
-          keepMeSignedIn: true,
+          keepMeSignedIn: false,
         );
 
         // Call the function to add the data to the database
-        await addDataToDatabase(newData);
+
+        var box = await Hive.openBox('testBox');
+        box.put(newData.userId, newData);
 
         if (response.statusCode == 201) {
           print("User created on server successfully");
