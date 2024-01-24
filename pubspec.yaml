@@ -42,6 +42,7 @@ dependencies:
   shared_preferences: ^2.0.10
   firebase_core: ^2.24.2
   firebase_auth: ^4.16.0
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +93,20 @@ flutter:
     - images/setting.png
     - images/tick.png
     - images/no.png
+    - images/cup.png
+    - images/sad.png
+    - images/modify.png
+    - images/plus_icon.png
+    - images/arrow.png
+    - images/lock.png
+    - images/email.png
+    - images/Arrow.png
+    - images/profile.png
+    - images/out.png
+    - images/bip.png
+    - images/heart.png
+    - images/stats.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
