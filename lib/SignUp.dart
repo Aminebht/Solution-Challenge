@@ -1,6 +1,7 @@
 import 'package:app_0/SignIn.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatelessWidget {
   @override

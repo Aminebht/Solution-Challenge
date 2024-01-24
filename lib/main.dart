@@ -1,13 +1,20 @@
-import 'package:app_0/Answers.dart';
 import 'package:app_0/ChooseForm.dart';
 import 'package:app_0/ChooseSubject.dart';
+import 'package:app_0/Done.dart';
+import 'package:app_0/Profile.dart';
 import 'package:app_0/SignIn.dart';
 import 'package:app_0/Home.dart';
 import 'package:app_0/Questions.dart';
 import 'package:app_0/OneQuestion.dart';
+import 'package:app_0/chooseLesson.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -26,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: keepSignedIn ? Answers() : Home(),
+      home: keepSignedIn ? Profile(): Home(),
     );
   }
 }

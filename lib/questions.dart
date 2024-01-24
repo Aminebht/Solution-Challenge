@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
+import 'package:app_0/Answers.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
 class Questions extends StatefulWidget {
   @override
@@ -9,25 +11,38 @@ class Questions extends StatefulWidget {
 }
 
 class _QuestionsPageState extends State<Questions> {
+  late int questionId;
+  late String problem;
+  late List<String> options;
+  List<String> correctAnswers = [];
+  List<String> stcorrectAnswers = [];
+  List<String> stuserAnswers = [];
+  List<String> explanations = [];
+  List<String> problems = [];
+  late int difficulty;
+  late String correctAnswer;
   double screenHeight = 0.0;
   double screenWidth = 0.0;
   int numberOfQuestions = 1;
-  int timerSeconds = 60;
-  int selectedAnswer = -1; // To track the selected answer
-
+  int timerSeconds = 90;
+  int selectedAnswer = -1;
+  bool isError = false;
+  bool isLoading = true;
+  final Dio dio = Dio();
+  late List<Map<String, dynamic>> questions =
+      []; // Initialize with an empty list
   List<int?> userAnswers = List.filled(6, null); // List to store user answers
 
-  List<List<String>> questionsMatrix = List.generate(6, (index) => List.filled(6, ""));
-
-  late Timer _timer;
+  late Timer _timer = Timer(Duration.zero, () {});
   bool isTimerPaused = false;
 
   @override
   void initState() {
     super.initState();
     startTimer();
-    // Fetch the initial set of questions and options from the API and update the matrix
     fetchQuestionsFromAPI();
+    // Fetch the initial set of questions and options from the API and update the matrix
+    // fetchQuestionsFromAPI();
   }
 
   @override
@@ -36,20 +51,110 @@ class _QuestionsPageState extends State<Questions> {
     super.dispose();
   }
 
-  void fetchQuestionsFromAPI() {
-    // Simulate fetching questions from the API. Replace this with your actual API call.
-    for (int i = 0; i < 6; i++) {
-      // Replace the following lines with the actual data received from the API
-      questionsMatrix[i][0] = "120 is what percent of 50 ?";
-      questionsMatrix[i][1] = "5%";
-      questionsMatrix[i][2] = "240 %";
-      questionsMatrix[i][3] = "50 %";
-      questionsMatrix[i][4] = "2 %";
-      questionsMatrix[i][5] = "500 %";
+  void fetchQuestionsFromAPI() async {
+    final String baseUrl = "http://127.0.0.1:8000";
+    final String path = "/api/problem-search/";
+    List<String> lessons = [
+      'algebra',
+      'gain',
+      'geometry',
+      'general',
+      'physics',
+      'static',
+      'probability',
+      'other'
+    ];
+
+    final Map<String, dynamic> queryParams = {
+      'count': '6',
+      'category': 'gain',
+      'score': '70',
+    };
+
+    final Uri uri =
+        Uri.parse(baseUrl + path).replace(queryParameters: queryParams);
+
+    try {
+      final Response response = await dio.get(uri.toString());
+
+      print('Request URL: ${uri.toString()}');
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Headers: ${response.headers}');
+      print('Response Data: ${response.data}');
+
+      if (response.statusCode == 200) {
+        dynamic responseData = response.data;
+
+        if (responseData is List) {
+          questions = responseData.map((data) {
+            return {
+              'id': data['id'],
+              'problem': data['problem'],
+              'options': (data['options'] as String)
+                  .split(RegExp(r',.*?\)'))
+                  .map((option) => option.replaceAll(RegExp(r"['a )\]]"), ''))
+                  .toList(),
+              'correctAnswer': data['correct'],
+              'rationale': data['rationale'],
+              'difficulty': data['difficulty_score'],
+            };
+          }).toList();
+
+          // Use a for loop instead of forEach
+          for (int i = 0; i < questions.length; i++) {
+            Map<String, dynamic> question = questions[i];
+            print('Question ID: ${question['id']}');
+            print('Problem: ${question['problem']}');
+            print('Options: ${question['options']}');
+            print('Correct Answer: ${question['correctAnswer']}');
+            correctAnswers.add(question['correctAnswer'] as String);
+            stcorrectAnswers
+                .add(question['options'][correctAnswers[i].codeUnitAt(0) - 97]);
+            explanations.add((question['rationale'] as String));
+            problems.add(question['problem'] as String);
+            difficulty = (question['difficulty'] as int);
+            print(difficulty);
+            if (difficulty >= 73) {
+              timerSeconds = 180;
+            } else {
+              if (difficulty >= 50) {
+                timerSeconds = 120;
+              }
+            }
+          }
+        } else {
+          // Handle the case when the response is a single map
+          print('Received a single map instead of a list.');
+          // Process the single map as needed
+        }
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+        setState(() {
+          isError = true;
+        });
+      }
+    } catch (error, stackTrace) {
+      if (error is DioError) {
+        print('DioError during the HTTP request: ${error.message}');
+        print('DioError response: ${error.response}');
+      } else {
+        print('Error during the HTTP request: $error');
+        print('Stack trace: $stackTrace');
+      }
+      setState(() {
+        isError = true;
+      });
+    } finally {
+      dio.close();
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
+  // Updated method to start/restart the timer
   void startTimer() {
+    _timer?.cancel(); // Cancel existing timer if any
     const oneSec = const Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
@@ -59,7 +164,7 @@ class _QuestionsPageState extends State<Questions> {
             if (timerSeconds == 0) {
               timer.cancel();
               // Handle when the timer reaches 0 (e.g., move to the next question)
-              goToNextQuestion();
+              goToNextQuestion(difficulty);
             } else {
               timerSeconds--;
             }
@@ -78,9 +183,7 @@ class _QuestionsPageState extends State<Questions> {
       backgroundColor: Color(0xFF7B31F4),
       body: Stack(
         children: [
-          // Blurred background
           _buildBlurredBackground(),
-
           SingleChildScrollView(
             child: Column(
               children: [
@@ -92,25 +195,14 @@ class _QuestionsPageState extends State<Questions> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Left Box
                       _buildIndicatorBox("${numberOfQuestions}/6"),
-
-                      // Spacing
                       SizedBox(width: 30),
-
-                      // Evolution Indicator
                       _buildEvolutionIndicator(numberOfQuestions),
-
-                      // Spacing
                       SizedBox(width: 30),
-
-                      // Right Box with Image (changed to PopupMenuButton)
                       _buildPopupMenuButton(),
                     ],
                   ),
                 ),
-
-                // Big Box at the bottom
                 _buildBottomBox(screenHeight, screenWidth, numberOfQuestions),
               ],
             ),
@@ -152,7 +244,6 @@ class _QuestionsPageState extends State<Questions> {
   Widget _buildEvolutionIndicator(int numberOfQuestions) {
     double indicatorWidth = 156;
     double progress = (numberOfQuestions / 6) * indicatorWidth;
-    
 
     return Container(
       width: indicatorWidth,
@@ -177,7 +268,6 @@ class _QuestionsPageState extends State<Questions> {
   }
 
   Widget _buildPopupMenuButton() {
-    
     return PopupMenuButton<String>(
       itemBuilder: (BuildContext context) {
         return ['Pause Timer', 'Exit'].map((String choice) {
@@ -209,9 +299,8 @@ class _QuestionsPageState extends State<Questions> {
       ),
     );
   }
-  
-   
-    void pauseTimer() {
+
+  void pauseTimer() {
     // Pause the timer
     _timer.cancel();
     setState(() {
@@ -233,51 +322,76 @@ class _QuestionsPageState extends State<Questions> {
   }
 
   void _showPauseIconOverlay() {
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Adjust the sigma values for the blur effect
-        child: AlertDialog(
-          content: Container(
-            height: 100,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context); // Close the dialog
-                    resumeTimer(); // Resume the timer
-                  },
-                  child: Icon(
-                    Icons.play_arrow,
-                    color: Colors.white,
-                    size: 50,
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(
+              sigmaX: 5.0,
+              sigmaY: 5.0), // Adjust the sigma values for the blur effect
+          child: AlertDialog(
+            content: Container(
+              height: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context); // Close the dialog
+                      resumeTimer(); // Resume the timer
+                    },
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: Colors.white,
+                      size: 50,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Tap to Resume',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
+                  SizedBox(height: 10),
+                  Text(
+                    'Tap to Resume',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
             ),
+            backgroundColor: Colors.transparent,
           ),
-          backgroundColor: Colors.transparent,
-        ),
-      );
-    },
-  );
-}
-
+        );
+      },
+    );
+  }
 
   Widget _buildBottomBox(
     double screenHeight,
     double screenWidth,
     int numberOfQuestions,
   ) {
-    String question = questionsMatrix[numberOfQuestions - 1][0]; // Retrieve question from the matrix
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+
+    if (isError) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Error occurred while fetching data.'),
+          ElevatedButton(
+            onPressed: fetchQuestionsFromAPI,
+            child: Text('Retry'),
+          ),
+        ],
+      );
+    }
+
+    if (questions.isEmpty) {
+      // Data is not available yet, return a loading indicator or placeholder
+      return Center(child: CircularProgressIndicator());
+    }
+
+    // Retrieve question from the list
+    String question = questions[numberOfQuestions - 1]['problem'];
+
     return Container(
       width: 0.9 * screenWidth,
       padding: EdgeInsets.all(20),
@@ -289,13 +403,10 @@ class _QuestionsPageState extends State<Questions> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Timer
           _buildTimer(),
           SizedBox(height: 20),
-
-          // Question Number Text
           Row(
-            mainAxisAlignment: MainAxisAlignment.start, // Align to the start (left)
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 10),
@@ -311,10 +422,8 @@ class _QuestionsPageState extends State<Questions> {
             ],
           ),
           SizedBox(height: 20),
-
-          // Question
           Text(
-            '${question}',
+            '$question',
             style: TextStyle(
               color: Colors.black,
               fontSize: 20,
@@ -322,13 +431,8 @@ class _QuestionsPageState extends State<Questions> {
             ),
           ),
           SizedBox(height: 20),
-
-          // Selectable boxes
           _buildSelectableBoxes(),
-
           SizedBox(height: 20),
-
-          // Submit Answer button
           _buildSubmitAnswerButton(),
         ],
       ),
@@ -337,8 +441,8 @@ class _QuestionsPageState extends State<Questions> {
 
   Widget _buildTimer() {
     return Container(
-      width: 65,
-      height: 65,
+      width: 75,
+      height: 75,
       decoration: BoxDecoration(
         color: Color(0xFFF78AB1),
         shape: BoxShape.circle,
@@ -360,7 +464,8 @@ class _QuestionsPageState extends State<Questions> {
     int remainingSeconds = seconds % 60;
 
     String minutesStr = minutes < 10 ? '0$minutes' : '$minutes';
-    String secondsStr = remainingSeconds < 10 ? '0$remainingSeconds' : '$remainingSeconds';
+    String secondsStr =
+        remainingSeconds < 10 ? '0$remainingSeconds' : '$remainingSeconds';
     if (minutesStr == '00') {
       return '$secondsStr';
     } else {
@@ -371,10 +476,10 @@ class _QuestionsPageState extends State<Questions> {
   Widget _buildSelectableBoxes() {
     return Column(
       children: [
-        for (int i = 1; i <= 5; i++)
+        for (String option in questions[numberOfQuestions - 1]['options'])
           Column(
             children: [
-              _buildSelectableBox(i, questionsMatrix[numberOfQuestions - 1][i]),
+              _buildSelectableBox(option),
               SizedBox(height: 10),
             ],
           ),
@@ -382,18 +487,25 @@ class _QuestionsPageState extends State<Questions> {
     );
   }
 
-  Widget _buildSelectableBox(int index, String optionText) {
+  Widget _buildSelectableBox(String optionText) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedAnswer = index;
+          selectedAnswer =
+              questions[numberOfQuestions - 1]['options'].indexOf(optionText) +
+                  1;
         });
       },
       child: Container(
         width: 0.7 * screenWidth,
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: selectedAnswer == index ? Color(0xFFE5D4FF) : Colors.white,
+          color: selectedAnswer ==
+                  questions[numberOfQuestions - 1]['options']
+                          .indexOf(optionText) +
+                      1
+              ? Color(0xFFE5D4FF)
+              : Colors.white,
           border: Border.all(color: Color(0xFFD7D7D7)),
           borderRadius: BorderRadius.circular(15),
         ),
@@ -417,12 +529,14 @@ class _QuestionsPageState extends State<Questions> {
     bool isButtonEnabled = selectedAnswer != -1;
 
     return GestureDetector(
-      onTap: isButtonEnabled ? () => goToNextQuestion() : null,
+      onTap: isButtonEnabled ? () => goToNextQuestion(difficulty) : null,
       child: Container(
         width: 0.4 * screenWidth,
         height: 52,
         decoration: BoxDecoration(
-          color: isButtonEnabled ? Color(0xFFF78AB1) : Colors.grey, // Use grey color when button is disabled
+          color: isButtonEnabled
+              ? Color(0xFFF78AB1)
+              : Colors.grey, // Use grey color when button is disabled
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
@@ -438,26 +552,50 @@ class _QuestionsPageState extends State<Questions> {
     );
   }
 
-  void goToNextQuestion() {
+  void initializeTimer(int difficulty) {
+    if (difficulty >= 73) {
+      timerSeconds = 180;
+    } else if (difficulty >= 50) {
+      timerSeconds = 120;
+    } else {
+      timerSeconds = 90; // Default duration for lower difficulty
+    }
+  }
+
+  void goToNextQuestion(int difficulty) {
     // Save the user's answer for the current question
     userAnswers[numberOfQuestions - 1] = selectedAnswer;
 
-    // Reset the selected answer and timer
+    // Reset the selected answer
     selectedAnswer = -1;
-    timerSeconds = 60;
 
     // Move to the next question or submit answers if it's the last question
     if (numberOfQuestions < 6) {
       setState(() {
         numberOfQuestions++;
       });
-      // Restart the timer for the new questions
+
+      // Initialize the timer for the new question
+      initializeTimer(difficulty);
+      startTimer(); // Restart the timer
     } else {
       // Navigate to the next page or perform the final action
       // For now, print the user answers and questions to the console
       print('User Answers: $userAnswers');
-      print('Questions and Options: $questionsMatrix');
-      // You can add navigation or other logic here
+      for (int i = 0; i < 6; i++) {
+        stuserAnswers.add(questions[i]['options'][userAnswers[i]! - 1]);
+      }
+      print(stuserAnswers);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Answers(
+                stuserAnswers: stuserAnswers,
+                stcorrectAnswers: stcorrectAnswers,
+                problems: problems,
+                explanations: explanations),
+          ));
+      // ...
     }
   }
 }

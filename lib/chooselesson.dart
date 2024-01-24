@@ -106,18 +106,53 @@ class _ChooseLessonState extends State<ChooseLesson> {
                             margin: EdgeInsets.symmetric(vertical: 8.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                if (selectedChoice != -1) {
+                                if (selectedChoice == -1) {
+                                  // Show popup for not selecting a lesson
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Select a Lesson"),
+                                        content: Text(
+                                            "Please select a lesson before proceeding."),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text("OK"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else if (selectedChoice == 0 ||
+                                    selectedChoice == 5) {
+                                  // Show popup for lesson not available
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Lesson Not Available"),
+                                        content: Text(
+                                            "The selected lesson is not available."),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text("OK"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  // Navigate to the next screen as the lesson is valid
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => ChooseForm(
                                         selectedChoice: selectedChoice),
                                   ));
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Please select a lesson before proceeding.'),
-                                    ),
-                                  );
                                 }
                               },
                               style: ElevatedButton.styleFrom(

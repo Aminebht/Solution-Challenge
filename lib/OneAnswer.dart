@@ -3,29 +3,32 @@ import 'dart:ui';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
 
-class Answers extends StatefulWidget {
-  final List<String> stuserAnswers;
-  final List<String> stcorrectAnswers;
-  final List<String> problems;
-  final List<String> explanations;
+class OneAnswer extends StatefulWidget {
+  final String selectedAnswer;
+  final String correctAnswer;
+  final String question;
+  final String explanation;
 
-  Answers({
-    required this.stuserAnswers,
-    required this.stcorrectAnswers,
-    required this.problems,
-    required this.explanations,
+  OneAnswer({
+    required this.selectedAnswer,
+    required this.correctAnswer,
+    required this.question,
+    required this.explanation,
   });
   @override
   _AnswersPageState createState() => _AnswersPageState();
 }
 
-class _AnswersPageState extends State<Answers> {
+class _AnswersPageState extends State<OneAnswer> {
   double screenHeight = 0.0;
   double screenWidth = 0.0;
-  int numberOfQuestions = 1;
-  int average = 0;
+  List<List<String>> questionsMatrix =
+      List.generate(6, (index) => List.filled(6, ""));
+
   @override
   Widget build(BuildContext context) {
+    print('Selected Answer: ${widget.selectedAnswer}');
+    print('Correct Answer: ${widget.correctAnswer}');
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
 
@@ -44,7 +47,7 @@ class _AnswersPageState extends State<Answers> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Answers Explanation',
+                      'Answer Explanation',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -55,13 +58,8 @@ class _AnswersPageState extends State<Answers> {
                   ],
                 ),
               ),
-              _buildBottomBox(
-                  screenHeight,
-                  screenWidth,
-                  numberOfQuestions,
-                  widget.stuserAnswers[numberOfQuestions - 1],
-                  widget.stcorrectAnswers[numberOfQuestions - 1],
-                  widget.explanations[numberOfQuestions - 1]),
+              _buildBottomBox(screenHeight, screenWidth, widget.correctAnswer,
+                  widget.correctAnswer, widget.explanation),
             ],
           ),
         ),
@@ -69,74 +67,8 @@ class _AnswersPageState extends State<Answers> {
     );
   }
 
-  Widget _buildSubmitAnswerButton(double screenWidth, int numberOfQuestions) {
-    return GestureDetector(
-      onTap: () => goToNextAnswer(),
-      child: Container(
-        width: 0.8 * screenWidth,
-        height: 52,
-        decoration: BoxDecoration(
-          color: Color(0xFF7B31F4), // Change the color to 7B31F4
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Center(
-          child: Text(
-            numberOfQuestions < 6 ? 'Next' : 'Submit',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void goToNextAnswer() {
-    // Move to the next question or submit answers if it's the last question
-    if (numberOfQuestions < 6) {
-      setState(() {
-        numberOfQuestions++;
-      });
-      // Restart the timer for the new questions
-    } else {
-      // Navigate to the next page or perform the final action
-      // For now, print the user answers and questions to the console
-
-      // You can add navigation or other logic here
-    }
-  }
-
-  void initState() {
-    super.initState();
-    calculateAverage();
-  }
-
-  void calculateAverage() {
-    int correctCount = 0;
-    for (int i = 0; i < widget.stuserAnswers.length; i++) {
-      if (widget.stuserAnswers[i] == widget.stcorrectAnswers[i]) {
-        correctCount++;
-      }
-    }
-    double percentage = (correctCount / widget.stuserAnswers.length) * 100;
-    setState(() {
-      average = percentage.round();
-    });
-
-    print("Number of correct answers: $correctCount");
-  }
-
-  Widget _buildBottomBox(
-    double screenHeight,
-    double screenWidth,
-    int numberOfQuestions,
-    String selectedAnswer,
-    String correctAnswer,
-    String explanation,
-  ) {
-    String question = widget
-        .problems[numberOfQuestions - 1]; // Retrieve question from the matrix
+  Widget _buildBottomBox(double screenHeight, double screenWidth,
+      String selectedAnswer, String correctAnswer, String explanation) {
     return SingleChildScrollView(
       child: Container(
         width: 0.9 * screenWidth,
@@ -149,27 +81,10 @@ class _AnswersPageState extends State<Answers> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'QUESTION ${numberOfQuestions} OF 6',
-                    style: TextStyle(
-                      color: Color(0xFF979797),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.1,
-                    ),
-                  ),
-                ),
-              ],
-            ),
             SizedBox(height: 20),
             // Question
             Text(
-              '${question}',
+              '${widget.question}',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
@@ -196,12 +111,13 @@ class _AnswersPageState extends State<Answers> {
               ],
             ),
             SizedBox(height: 20),
-            if (selectedAnswer == correctAnswer)
-              _buildAnswerBox(
-                  selectedAnswer, Colors.white, Color(0xFF53DF83), screenWidth)
+
+            if (widget.selectedAnswer == widget.correctAnswer)
+              _buildAnswerBox(widget.selectedAnswer, Colors.white,
+                  Color(0xFF53DF83), screenWidth)
             else
-              _buildAnswerBox(
-                  selectedAnswer, Colors.white, Color(0xFFE33629), screenWidth),
+              _buildAnswerBox(widget.selectedAnswer, Colors.white,
+                  Color(0xFFE33629), screenWidth),
 
             SizedBox(height: 20),
             Row(
@@ -247,12 +163,35 @@ class _AnswersPageState extends State<Answers> {
             SizedBox(height: 20),
             _buildExplanationBox(explanation, screenWidth),
             SizedBox(height: 20),
-            _buildSubmitAnswerButton(screenWidth, numberOfQuestions),
+            _buildSubmitAnswerButton(screenWidth),
           ],
         ),
       ),
     );
   }
+}
+
+Widget _buildSubmitAnswerButton(double screenWidth) {
+  return GestureDetector(
+    onTap: () => goToNextAnswer(),
+    child: Container(
+      width: 0.8 * screenWidth,
+      height: 52,
+      decoration: BoxDecoration(
+        color: Color(0xFF7B31F4), // Change the color to 7B31F4
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Center(
+        child: Text(
+          'Next',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 Widget _buildAnswerBox(
@@ -262,6 +201,7 @@ Widget _buildAnswerBox(
       : (color1 == Colors.white && color2 == Color(0xFFE33629))
           ? Color(0xFFE33629)
           : Colors.white;
+
   String imagePath =
       (color2 == Color(0xFFE33629)) ? 'images/no.png' : 'images/tick.png';
 
@@ -310,3 +250,5 @@ Widget _buildExplanationBox(String explanation, double screenWidth) {
     ),
   );
 }
+
+void goToNextAnswer() {}
