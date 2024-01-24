@@ -2,6 +2,7 @@ import 'package:app_0/OneAnswer.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OneQuestion extends StatefulWidget {
   final int selectedChoice;
@@ -19,17 +20,17 @@ class _QuestionsPageState extends State<OneQuestion> {
   late String correctAnswer;
   double screenHeight = 0.0;
   double screenWidth = 0.0;
-  int timerSeconds = 60;
+  int timerSeconds = 90;
   int selectedAnswer = -1;
-
-  List<int?> userAnswers = List.filled(1, null);
+  String stcorrectAnswer = '';
   List<String> oneQuestionData = List.filled(6, "");
-
+  String explanation = '';
   late Timer _timer;
   final Dio dio = Dio();
   bool isLoading = true;
   bool isError = false;
-
+  int difficulty = 0;
+  late String stSelectedAnswer;
   @override
   void initState() {
     super.initState();
@@ -86,7 +87,7 @@ class _QuestionsPageState extends State<OneQuestion> {
 
   Widget _buildBottomBox(double screenHeight, double screenWidth) {
     String question = problem;
-    double boxHeight = screenHeight * 0.7;
+    //double boxHeight = screenHeight * 0.7;
     double boxWidth = screenWidth * 0.9;
 
     return Center(
@@ -179,6 +180,7 @@ class _QuestionsPageState extends State<OneQuestion> {
       onTap: () {
         setState(() {
           selectedAnswer = index;
+          print(selectedAnswer);
         });
       },
       child: Container(
@@ -231,6 +233,7 @@ class _QuestionsPageState extends State<OneQuestion> {
   }
 
   void fetchData() async {
+    print(isUserSignedIn());
     print(widget.selectedChoice);
     final String baseUrl = "http://127.0.0.1:8000";
     final String path = "/api/problem-search/";
@@ -248,13 +251,15 @@ class _QuestionsPageState extends State<OneQuestion> {
     final Map<String, dynamic> queryParams = {
       'count': '1',
       'category': lessons[widget.selectedChoice],
-      'score': '75',
+      'score': '12',
+      'new': '0',
     };
 
     final Uri uri =
         Uri.parse(baseUrl + path).replace(queryParameters: queryParams);
 
     try {
+      print("taw bch nab3ath");
       final Response response = await dio.get(uri.toString());
 
       print('Request URL: ${uri.toString()}');
@@ -271,7 +276,20 @@ class _QuestionsPageState extends State<OneQuestion> {
             .map((option) => option.replaceAll(RegExp(r"['a )\]]"), ''))
             .toList();
         correctAnswer = data['correct'];
-        print(problem);
+        explanation = (data['rationale'] as String);
+        print('\n');
+        print(explanation);
+        print('\n');
+        stcorrectAnswer = options[correctAnswer.codeUnitAt(0) - 97];
+        difficulty = (data['difficulty_score'] as int);
+        print(difficulty);
+        if (difficulty >= 73) {
+          timerSeconds = 180;
+        } else {
+          if (difficulty >= 50) {
+            timerSeconds = 120;
+          }
+        }
       } else {
         print('Request failed with status: ${response.statusCode}');
         setState(() {
@@ -305,6 +323,7 @@ class _QuestionsPageState extends State<OneQuestion> {
         setState(() {
           if (timerSeconds == 0) {
             timer.cancel();
+
             goToNextQuestion();
           } else {
             timerSeconds--;
@@ -315,14 +334,28 @@ class _QuestionsPageState extends State<OneQuestion> {
   }
 
   void goToNextQuestion() {
-    userAnswers[0] = selectedAnswer;
-    selectedAnswer = -1;
-    timerSeconds = 60;
+    //timerSeconds = 60;
+    print('Selected Choice in OneQuestion: ${widget.selectedChoice}');
+    print('Selected Answer in OneQuestion: ${selectedAnswer}');
+    if (timerSeconds == 0) {
+      stSelectedAnswer = 'Timer Out';
+    } else {
+      stSelectedAnswer = options[selectedAnswer - 1];
+    }
     Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => OneAnswer(selectedAnswer: '5%',correctAnswer:'240%',question:problem,explanation:'msatek tnajemsh tefhem wahdek?'),
-    ),
-  );
+      context,
+      MaterialPageRoute(
+        builder: (context) => OneAnswer(
+            selectedAnswer: stSelectedAnswer,
+            correctAnswer: stcorrectAnswer,
+            question: problem,
+            explanation: explanation),
+      ),
+    );
   }
+}
+
+bool isUserSignedIn() {
+  User? user = FirebaseAuth.instance.currentUser;
+  return user != null;
 }

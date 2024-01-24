@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
 class Questions extends StatefulWidget {
+  final int selectedChoice;
+  Questions({required this.selectedChoice});
   @override
   _QuestionsPageState createState() => _QuestionsPageState();
 }
@@ -24,15 +26,14 @@ class _QuestionsPageState extends State<Questions> {
   double screenHeight = 0.0;
   double screenWidth = 0.0;
   int numberOfQuestions = 1;
-  int timerSeconds = 90;
+  int timerSeconds = 5;
   int selectedAnswer = -1;
   bool isError = false;
   bool isLoading = true;
   final Dio dio = Dio();
-  late List<Map<String, dynamic>> questions =
-      []; // Initialize with an empty list
-  List<int?> userAnswers = List.filled(6, null); // List to store user answers
-
+  bool isSubmitted = false;
+  late List<Map<String, dynamic>> questions = [];
+  List<int?> userAnswers = List.filled(6, null);
   late Timer _timer = Timer(Duration.zero, () {});
   bool isTimerPaused = false;
 
@@ -41,8 +42,6 @@ class _QuestionsPageState extends State<Questions> {
     super.initState();
     startTimer();
     fetchQuestionsFromAPI();
-    // Fetch the initial set of questions and options from the API and update the matrix
-    // fetchQuestionsFromAPI();
   }
 
   @override
@@ -67,8 +66,9 @@ class _QuestionsPageState extends State<Questions> {
 
     final Map<String, dynamic> queryParams = {
       'count': '6',
-      'category': 'gain',
-      'score': '70',
+      'category': lessons[widget.selectedChoice],
+      'score': '20',
+      'new': '0',
     };
 
     final Uri uri =
@@ -152,9 +152,18 @@ class _QuestionsPageState extends State<Questions> {
     }
   }
 
-  // Updated method to start/restart the timer
+  void submitAnswers() {
+    _timer.cancel();
+    // isTimerPaused = true;
+    isSubmitted = true;
+    if (timerSeconds == 0) {
+      selectedAnswer = -1;
+    }
+    goToNextQuestion(difficulty);
+  }
+
   void startTimer() {
-    _timer?.cancel(); // Cancel existing timer if any
+    _timer?.cancel();
     const oneSec = const Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
@@ -163,8 +172,9 @@ class _QuestionsPageState extends State<Questions> {
           if (!isTimerPaused) {
             if (timerSeconds == 0) {
               timer.cancel();
-              // Handle when the timer reaches 0 (e.g., move to the next question)
-              goToNextQuestion(difficulty);
+              if (mounted) {
+                goToNextQuestion(difficulty);
+              }
             } else {
               timerSeconds--;
             }
@@ -178,7 +188,7 @@ class _QuestionsPageState extends State<Questions> {
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-
+    int choice = widget.selectedChoice;
     return Scaffold(
       backgroundColor: Color(0xFF7B31F4),
       body: Stack(
@@ -385,11 +395,9 @@ class _QuestionsPageState extends State<Questions> {
     }
 
     if (questions.isEmpty) {
-      // Data is not available yet, return a loading indicator or placeholder
       return Center(child: CircularProgressIndicator());
     }
 
-    // Retrieve question from the list
     String question = questions[numberOfQuestions - 1]['problem'];
 
     return Container(
@@ -526,17 +534,15 @@ class _QuestionsPageState extends State<Questions> {
   }
 
   Widget _buildSubmitAnswerButton() {
-    bool isButtonEnabled = selectedAnswer != -1;
+    bool isButtonEnabled = selectedAnswer != -1 || timerSeconds == 0;
 
     return GestureDetector(
-      onTap: isButtonEnabled ? () => goToNextQuestion(difficulty) : null,
+      onTap: isButtonEnabled ? () => submitAnswers() : null,
       child: Container(
         width: 0.4 * screenWidth,
         height: 52,
         decoration: BoxDecoration(
-          color: isButtonEnabled
-              ? Color(0xFFF78AB1)
-              : Colors.grey, // Use grey color when button is disabled
+          color: isButtonEnabled ? Color(0xFFF78AB1) : Colors.grey,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
@@ -560,42 +566,59 @@ class _QuestionsPageState extends State<Questions> {
     } else {
       timerSeconds = 90; // Default duration for lower difficulty
     }
+    print('Initialized Timer: $timerSeconds seconds');
   }
 
   void goToNextQuestion(int difficulty) {
-    // Save the user's answer for the current question
-    userAnswers[numberOfQuestions - 1] = selectedAnswer;
-
-    // Reset the selected answer
-    selectedAnswer = -1;
-
-    // Move to the next question or submit answers if it's the last question
-    if (numberOfQuestions < 6) {
-      setState(() {
-        numberOfQuestions++;
-      });
-
-      // Initialize the timer for the new question
-      initializeTimer(difficulty);
-      startTimer(); // Restart the timer
-    } else {
-      // Navigate to the next page or perform the final action
-      // For now, print the user answers and questions to the console
-      print('User Answers: $userAnswers');
-      for (int i = 0; i < 6; i++) {
-        stuserAnswers.add(questions[i]['options'][userAnswers[i]! - 1]);
+    try {
+      if (timerSeconds == 0) {
+        userAnswers[numberOfQuestions - 1] = -1;
+      } else {
+        print("timer not 0");
+        userAnswers[numberOfQuestions - 1] = selectedAnswer;
       }
-      print(stuserAnswers);
-      Navigator.push(
+
+      selectedAnswer = -1;
+
+      if (numberOfQuestions < 6) {
+        // Move to the next question
+
+        setState(() {
+          numberOfQuestions++;
+        });
+
+        // Initialize the timer for the new question
+        initializeTimer(difficulty);
+        print('Timer started: $timerSeconds seconds');
+        startTimer(); // Restart the timer
+      } else {
+        // Navigate to the answers page or perform final action
+        print('User Answers: $userAnswers');
+        for (int i = 0; i < 6; i++) {
+          if (userAnswers[i] != -1) {
+            stuserAnswers.add(questions[i]['options'][userAnswers[i]! - 1]);
+          } else {
+            stuserAnswers.add('Timer Out');
+          }
+        }
+        print(stuserAnswers);
+
+        // Navigate to the answers page or perform final action
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => Answers(
-                stuserAnswers: stuserAnswers,
-                stcorrectAnswers: stcorrectAnswers,
-                problems: problems,
-                explanations: explanations),
-          ));
-      // ...
+              stuserAnswers: stuserAnswers,
+              stcorrectAnswers: stcorrectAnswers,
+              problems: problems,
+              explanations: explanations,
+            ),
+          ),
+        );
+      }
+    } catch (e, stackTrace) {
+      print('Error in goToNextQuestion: $e');
+      print('Stack trace: $stackTrace');
     }
   }
 }

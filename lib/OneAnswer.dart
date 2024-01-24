@@ -1,4 +1,4 @@
-import 'dart:async';
+//import 'dart:js';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
@@ -163,7 +163,7 @@ class _AnswersPageState extends State<OneAnswer> {
             SizedBox(height: 20),
             _buildExplanationBox(explanation, screenWidth),
             SizedBox(height: 20),
-            _buildSubmitAnswerButton(screenWidth),
+            _buildSubmitAnswerButton(context, screenWidth),
           ],
         ),
       ),
@@ -171,19 +171,24 @@ class _AnswersPageState extends State<OneAnswer> {
   }
 }
 
-Widget _buildSubmitAnswerButton(double screenWidth) {
+Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth) {
   return GestureDetector(
-    onTap: () => goToNextAnswer(),
+    onTap: () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    },
     child: Container(
       width: 0.8 * screenWidth,
       height: 52,
       decoration: BoxDecoration(
-        color: Color(0xFF7B31F4), // Change the color to 7B31F4
+        color: Color(0xFF7B31F4),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
         child: Text(
-          'Next',
+          'Done',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w600,
