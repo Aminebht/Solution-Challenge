@@ -1,5 +1,6 @@
 //import 'dart:js';
 import 'dart:ui';
+import 'package:app_0/Done.dart';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
 
@@ -176,7 +177,13 @@ Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth) {
     onTap: () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(
+            builder: (context) => Done(
+                numberOfCorrectAnswers: 1,
+                numberOfTimeOut: 2,
+                numberOfIncorrectAnswers: 3,
+                selectedLesson: 'salem',
+                totalQuizDone: 5)),
       );
     },
     child: Container(
@@ -255,5 +262,3 @@ Widget _buildExplanationBox(String explanation, double screenWidth) {
     ),
   );
 }
-
-void goToNextAnswer() {}

@@ -2,7 +2,8 @@ import 'package:app_0/Home.dart';
 import 'package:app_0/SignUp.dart';
 import 'package:app_0/my_data.dart';
 import 'package:app_0/my_data_adapter.dart';
-
+import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -407,7 +408,7 @@ Future<UserCredential> signInWithEmailAndPassword(
     // If there is a user in the UserCredential, consider it a successful sign-in
     if (userCredential.user != null) {
       // Update the Hive database
-      await updateHiveDatabase(userCredential.user!.uid, keepSignedIn);
+      await updateScoresFromDjango(userCredential.user!.uid, keepSignedIn);
 
       // Print Hive database content for verification
       await printHiveDatabaseContent();
@@ -424,7 +425,64 @@ Future<UserCredential> signInWithEmailAndPassword(
   }
 }
 
-Future<void> updateHiveDatabase(String userId, bool keepMeSignedIn) async {
+Dio dio = Dio();
+
+Future<void> importUserFromFirebase(String userId, bool keepMeSignedIn) async {
+  try {
+    // Fetch user data from Firebase
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      print("User ID from Firebase:");
+      print(user.uid);
+      userId = user.uid;
+
+      // Fetch user scores from Firebase or another source
+
+      // Update the Hive database with the fetched user data
+      //await updateHiveDatabase(userId, keepMeSignedIn, userScores);
+
+      // Fetch scores from Django and update Hive
+      await updateScoresFromDjango(userId, keepMeSignedIn);
+    }
+  } catch (e) {
+    print("Exception during importing user from Firebase: $e");
+  }
+}
+
+Future<void> updateScoresFromDjango(String userId, bool keepMeSignedIn) async {
+  try {
+    // Replace the URL with your Django API endpoint
+    final response = await dio.get(
+      'http://127.0.0.1:8000/api/user/scores/?user_id=$userId&category=gain',
+    );
+
+    if (response.statusCode == 200) {
+      // Parse the JSON response
+      //Map<String, dynamic> jsonResponse = json.decode(response.data);
+      Map<String, int> myMap = {
+        'gain': 0,
+        'general': 50,
+        'probability': 10,
+        'geometry': 0,
+        'physics': 90,
+        'other': 70
+      };
+
+      // Update user scores in Hive
+      await updateHiveDatabase(userId, keepMeSignedIn, myMap);
+    } else {
+      // Handle API error
+      print('Failed to get scores from Django API');
+    }
+  } catch (e) {
+    // Handle exceptions
+    print('Exception during scores update: $e');
+  }
+}
+
+Future<void> updateHiveDatabase(
+    String userId, bool keepMeSignedIn, Map<String, dynamic> userScores) async {
   try {
     var box = await Hive.openBox('testBox');
     int existingIndex = -1;
@@ -441,42 +499,18 @@ Future<void> updateHiveDatabase(String userId, bool keepMeSignedIn) async {
     if (existingIndex != -1) {
       // User exists, delete the existing user
       box.deleteAt(existingIndex);
-
-      // Import the user from Firebase again
-      await importUserFromFirebase(userId, keepMeSignedIn);
-    } else {
-      // User does not exist, add the user to the database
-      MyData newData = MyData(
-        userId: userId,
-        userScores: {
-          'subject1': 0,
-          'subject2': 0,
-        },
-        keepMeSignedIn: keepMeSignedIn,
-      );
-      box.add(newData);
     }
+
+    // Add the user to the database with scores
+    MyData newData = MyData(
+      userId: userId,
+      userScores: userScores, // Use the provided scores
+      keepMeSignedIn: keepMeSignedIn,
+    );
+    print("Adding");
+    box.add(newData);
   } catch (e) {
     print("Exception during Hive database update: $e");
-  }
-}
-
-// Function to import the user from Firebase
-Future<void> importUserFromFirebase(String userId, bool keepMeSignedIn) async {
-  try {
-    // Fetch user data from Firebase
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        print("tawa bch nprintin user id  mel firebase :");
-        print(user.uid);
-        userId = user.uid;
-      }
-    });
-
-    // Update the Hive database with the fetched user data
-    await updateHiveDatabase(userId, keepMeSignedIn);
-  } catch (e) {
-    print("Exception during importing user from Firebase: $e");
   }
 }
 

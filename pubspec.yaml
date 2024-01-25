@@ -97,10 +97,10 @@ flutter:
     - images/sad.png
     - images/modify.png
     - images/plus_icon.png
-    - images/arrow.png
+    #- images/arrow.png
     - images/lock.png
     - images/email.png
-    - images/Arrow.png
+    #- images/Arrow.png
     - images/profile.png
     - images/out.png
     - images/bip.png

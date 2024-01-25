@@ -1,6 +1,9 @@
 import 'package:app_0/ChooseForm.dart';
 import 'package:app_0/ChooseSubject.dart';
+import 'package:app_0/my_data.dart';
+import 'package:app_0/questions.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +29,16 @@ class ChooseLesson extends StatefulWidget {
 
 class _ChooseLessonState extends State<ChooseLesson> {
   int selectedChoice = -1;
+  List<String> lessons = [
+    'algebra',
+    'gain',
+    'geometry',
+    'general',
+    'physics',
+    'static',
+    'probability',
+    'other',
+  ];
 
   void updateSelectedChoice(int choice) {
     setState(() {
@@ -105,7 +118,7 @@ class _ChooseLessonState extends State<ChooseLesson> {
                             width: double.infinity,
                             margin: EdgeInsets.symmetric(vertical: 8.0),
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (selectedChoice == -1) {
                                   // Show popup for not selecting a lesson
                                   showDialog(
@@ -149,10 +162,36 @@ class _ChooseLessonState extends State<ChooseLesson> {
                                   );
                                 } else {
                                   // Navigate to the next screen as the lesson is valid
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ChooseForm(
-                                        selectedChoice: selectedChoice),
-                                  ));
+                                  var box = await Hive.openBox('testBox');
+                                  print("Box is open: ${box.isOpen}");
+                                  print(
+                                      "Number of elements in box: ${box.length}");
+                                  MyData? userData = box.values.last;
+                                  print(userData?.userScores);
+                                  print(userData);
+                                  print(lessons);
+                                  print(selectedChoice);
+                                  print(userData?.userScores?[
+                                      lessons[selectedChoice - 1]]);
+                                  if (userData != null) {
+                                    if (userData.userScores[
+                                            lessons[selectedChoice]] ==
+                                        0) {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => Questions(
+                                            selectedChoice: selectedChoice),
+                                      ));
+                                    } else {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => ChooseForm(
+                                            selectedChoice: selectedChoice),
+                                      ));
+                                    }
+                                  } else {
+                                    print("Wohh");
+                                  }
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -210,7 +249,6 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
     'Probability',
     'Other',
   ];
-
   List<String> customImages = [
     'images/algebra.png',
     'images/gain.png',

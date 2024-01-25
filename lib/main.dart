@@ -2,7 +2,7 @@ import 'package:app_0/ChooseForm.dart';
 import 'package:app_0/ChooseSubject.dart';
 import 'package:app_0/SignIn.dart';
 import 'package:app_0/Home.dart';
-import 'package:app_0/Profile.dart';
+//import 'package:app_0/Profile.dart';
 import 'package:app_0/Questions.dart';
 import 'package:app_0/OneQuestion.dart';
 import 'package:app_0/my_data_adapter.dart';
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: keepMeSignedIn ? Home() : SignIn(),
+        home: keepMeSignedIn ? VisualizationWidget() : SignIn(),
       );
     }
   }

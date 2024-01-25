@@ -1,7 +1,7 @@
 // my_data.dart
 class MyData {
   final String userId;
-  final Map<String, int> userScores;
+  final Map<String, dynamic> userScores;
   bool keepMeSignedIn; // Remove the final keyword
 
   MyData({

@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
 import 'package:app_0/Answers.dart';
+import 'package:app_0/my_data.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:hive/hive.dart';
 
 class Questions extends StatefulWidget {
   final int selectedChoice;
@@ -21,12 +23,12 @@ class _QuestionsPageState extends State<Questions> {
   List<String> stuserAnswers = [];
   List<String> explanations = [];
   List<String> problems = [];
-  late int difficulty;
+  late int difficulty = 0;
   late String correctAnswer;
   double screenHeight = 0.0;
   double screenWidth = 0.0;
   int numberOfQuestions = 1;
-  int timerSeconds = 5;
+  int timerSeconds = 90;
   int selectedAnswer = -1;
   bool isError = false;
   bool isLoading = true;
@@ -36,7 +38,17 @@ class _QuestionsPageState extends State<Questions> {
   List<int?> userAnswers = List.filled(6, null);
   late Timer _timer = Timer(Duration.zero, () {});
   bool isTimerPaused = false;
-
+  late int score;
+  List<String> lessons = [
+    'algebra',
+    'gain',
+    'geometry',
+    'general',
+    'physics',
+    'static',
+    'probability',
+    'other'
+  ];
   @override
   void initState() {
     super.initState();
@@ -53,27 +65,28 @@ class _QuestionsPageState extends State<Questions> {
   void fetchQuestionsFromAPI() async {
     final String baseUrl = "http://127.0.0.1:8000";
     final String path = "/api/problem-search/";
-    List<String> lessons = [
-      'algebra',
-      'gain',
-      'geometry',
-      'general',
-      'physics',
-      'static',
-      'probability',
-      'other'
-    ];
 
     final Map<String, dynamic> queryParams = {
       'count': '6',
       'category': lessons[widget.selectedChoice],
-      'score': '20',
+      'score': '0',
       'new': '0',
     };
+    var box = await Hive.openBox('testBox');
+    MyData? userData = box.values.last;
+    if (userData != null &&
+        userData.userScores.containsKey(lessons[widget.selectedChoice])) {
+      queryParams['score'] =
+          userData.userScores[lessons[widget.selectedChoice]].toString();
+    }
 
+    if (queryParams['score'] == '0') {
+      queryParams['new'] = '1';
+    }
+    print(queryParams);
     final Uri uri =
         Uri.parse(baseUrl + path).replace(queryParameters: queryParams);
-
+    print(uri.toString());
     try {
       final Response response = await dio.get(uri.toString());
 
@@ -612,6 +625,7 @@ class _QuestionsPageState extends State<Questions> {
               stcorrectAnswers: stcorrectAnswers,
               problems: problems,
               explanations: explanations,
+              lesson: lessons[widget.selectedChoice],
             ),
           ),
         );

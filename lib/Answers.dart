@@ -2,18 +2,23 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
+import 'package:app_0/Done.dart';
 
 class Answers extends StatefulWidget {
   final List<String> stuserAnswers;
   final List<String> stcorrectAnswers;
   final List<String> problems;
   final List<String> explanations;
+  final String lesson;
+  // final int score;
 
   Answers({
     required this.stuserAnswers,
     required this.stcorrectAnswers,
     required this.problems,
     required this.explanations,
+    required this.lesson,
+    //required this.score,
   });
   @override
   _AnswersPageState createState() => _AnswersPageState();
@@ -23,7 +28,9 @@ class _AnswersPageState extends State<Answers> {
   double screenHeight = 0.0;
   double screenWidth = 0.0;
   int numberOfQuestions = 1;
+  int numTimerout = 0;
   int average = 0;
+  int correctCount = 0;
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -100,8 +107,24 @@ class _AnswersPageState extends State<Answers> {
       });
       // Restart the timer for the new questions
     } else {
+      int countTimeouts =
+          widget.stuserAnswers.where((answer) => answer == 'Timer Out').length;
+      print('Number of timeouts: $countTimeouts');
+      print("Score: $widget.score");
       // Navigate to the next page or perform the final action
-      // For now, print the user answers and questions to the console
+      {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Done(
+                  numberOfCorrectAnswers: correctCount,
+                  numberOfTimeOut: countTimeouts,
+                  numberOfIncorrectAnswers: 6 - correctCount - countTimeouts,
+                  selectedLesson: widget.lesson,
+                  totalQuizDone: 5)),
+        );
+      }
+      ;
 
       // You can add navigation or other logic here
     }
@@ -113,13 +136,14 @@ class _AnswersPageState extends State<Answers> {
   }
 
   void calculateAverage() {
-    int correctCount = 0;
     for (int i = 0; i < widget.stuserAnswers.length; i++) {
       if (widget.stuserAnswers[i] == widget.stcorrectAnswers[i]) {
         correctCount++;
       }
     }
-
+    setState(() {
+      // Trigger a rebuild when correctCount changes
+    });
     print("Number of correct answers: $correctCount");
   }
 
