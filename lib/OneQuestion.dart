@@ -1,8 +1,10 @@
 import 'package:app_0/OneAnswer.dart';
+import 'package:app_0/my_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
 
 class OneQuestion extends StatefulWidget {
   final int selectedChoice;
@@ -248,13 +250,22 @@ class _QuestionsPageState extends State<OneQuestion> {
       'other'
     ];
     print(lessons[widget.selectedChoice]);
+
     final Map<String, dynamic> queryParams = {
       'count': '1',
       'category': lessons[widget.selectedChoice],
-      'score': '12',
+      'score': '0',
       'new': '0',
     };
+    var box = await Hive.openBox('testBox');
+    MyData? userData = box.values.last;
+    if (userData != null &&
+        userData.userScores.containsKey(lessons[widget.selectedChoice])) {
+      queryParams['score'] =
+          userData.userScores[lessons[widget.selectedChoice]].toString();
+    }
 
+    print(queryParams);
     final Uri uri =
         Uri.parse(baseUrl + path).replace(queryParameters: queryParams);
 
@@ -342,6 +353,7 @@ class _QuestionsPageState extends State<OneQuestion> {
     } else {
       stSelectedAnswer = options[selectedAnswer - 1];
     }
+    _timer.cancel();
     Navigator.push(
       context,
       MaterialPageRoute(

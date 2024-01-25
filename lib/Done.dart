@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app_0/Home.dart';
 
 class Done extends StatelessWidget {
   final int numberOfCorrectAnswers;
@@ -19,8 +20,8 @@ class Done extends StatelessWidget {
   Widget build(BuildContext context) {
     double accuracy = (numberOfCorrectAnswers / 6 * 100).truncateToDouble();
     String chaine;
-    int score= 5;
-    accuracy >= 50 ? chaine = 'Encreased' : chaine = 'decreased';
+    int score = 5;
+    accuracy >= 50 ? chaine = 'Increased' : chaine = 'decreased';
 
     return SingleChildScrollView(
       child: Column(
@@ -59,7 +60,7 @@ class Done extends StatelessWidget {
                     Container(
                       width: 290,
                       child: Text(
-                        'Your Score in $selectedLesson $chaine with $score%',
+                        'Your Score in "$selectedLesson" $chaine with $score%',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -91,10 +92,12 @@ class Done extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center, // Center horizontally
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Center horizontally
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildInfoElement('CORRECT ANSWER', '$numberOfCorrectAnswers'),
+                      _buildInfoElement(
+                          'CORRECT ANSWER', '$numberOfCorrectAnswers'),
                       SizedBox(width: 130),
                       _buildInfoElement('ACCURACY', '$accuracy%'),
                       SizedBox(width: 55),
@@ -102,19 +105,26 @@ class Done extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center, // Center horizontally
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Center horizontally
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildInfoElement('TIMER OUT', '$numberOfTimeOut'),
                       SizedBox(width: 170),
-                      _buildInfoElement('INCORRECT ANSWER', '$numberOfIncorrectAnswers'),
+                      _buildInfoElement(
+                          'INCORRECT ANSWER', '$numberOfIncorrectAnswers'),
                     ],
                   ),
                   SizedBox(height: 50),
                   ElevatedButton(
                     onPressed: () {
                       // Navigate back to the Home page
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xFF7B31F4),
