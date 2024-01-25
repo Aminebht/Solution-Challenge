@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
-import 'package:app_0/Done.dart';
+import 'package:app_0/DoneQuestions.dart';
 
 class Answers extends StatefulWidget {
   final List<String> stuserAnswers;
@@ -109,14 +109,13 @@ class _AnswersPageState extends State<Answers> {
     } else {
       int countTimeouts =
           widget.stuserAnswers.where((answer) => answer == 'Timer Out').length;
-      print('Number of timeouts: $countTimeouts');
-      print("Score: $widget.score");
+
       // Navigate to the next page or perform the final action
       {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => Done(
+              builder: (context) => DoneQuestions(
                   numberOfCorrectAnswers: correctCount,
                   numberOfTimeOut: countTimeouts,
                   numberOfIncorrectAnswers: 6 - correctCount - countTimeouts,

@@ -180,7 +180,8 @@ class _ChooseLessonState extends State<ChooseLesson> {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
                                         builder: (context) => Questions(
-                                            selectedChoice: selectedChoice),
+                                            selectedChoice: selectedChoice,
+                                            lnew: 1),
                                       ));
                                     } else {
                                       Navigator.of(context)

@@ -9,7 +9,8 @@ import 'package:hive/hive.dart';
 
 class Questions extends StatefulWidget {
   final int selectedChoice;
-  Questions({required this.selectedChoice});
+  final int lnew;
+  Questions({required this.selectedChoice, required this.lnew});
   @override
   _QuestionsPageState createState() => _QuestionsPageState();
 }
@@ -23,6 +24,7 @@ class _QuestionsPageState extends State<Questions> {
   List<String> stuserAnswers = [];
   List<String> explanations = [];
   List<String> problems = [];
+  List<int> ldifficulty = [];
   late int difficulty = 0;
   late String correctAnswer;
   double screenHeight = 0.0;
@@ -125,7 +127,10 @@ class _QuestionsPageState extends State<Questions> {
                 .add(question['options'][correctAnswers[i].codeUnitAt(0) - 97]);
             explanations.add((question['rationale'] as String));
             problems.add(question['problem'] as String);
+            ldifficulty.add(question['difficulty'] as int);
             difficulty = (question['difficulty'] as int);
+            print("Difficulties list");
+            print(ldifficulty);
             print(difficulty);
             if (difficulty >= 73) {
               timerSeconds = 180;
@@ -146,6 +151,7 @@ class _QuestionsPageState extends State<Questions> {
           isError = true;
         });
       }
+      await box.close();
     } catch (error, stackTrace) {
       if (error is DioError) {
         print('DioError during the HTTP request: ${error.message}');
@@ -614,9 +620,25 @@ class _QuestionsPageState extends State<Questions> {
             stuserAnswers.add('Timer Out');
           }
         }
-        print(stuserAnswers);
+        print("stuser Answers $stuserAnswers");
+        print("stcorrect Answers $stcorrectAnswers");
 
         // Navigate to the answers page or perform final action
+
+        //kenou new setscore kenou kdim update
+        print("new: \n");
+        print(widget.lnew);
+
+        if (widget.lnew == 1) {
+          //jdid
+          print("Awel mara");
+          setscore(stuserAnswers, stcorrectAnswers);
+        } else {
+          //gdim
+          print("Update 3adi");
+          updateScore(ldifficulty, stuserAnswers, stcorrectAnswers);
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -633,6 +655,140 @@ class _QuestionsPageState extends State<Questions> {
     } catch (e, stackTrace) {
       print('Error in goToNextQuestion: $e');
       print('Stack trace: $stackTrace');
+    }
+  }
+
+  Future<void> updateScore(
+    List<int> difficultyList,
+    List<String> userAnswers,
+    List<String> correctAnswers,
+  ) async {
+    int correctCount = 0;
+    int upRate = 1;
+
+    // Calculate average difficulty
+    double averageDifficulty =
+        difficultyList.reduce((value, element) => value + element) /
+            difficultyList.length;
+    print(averageDifficulty);
+
+    // Check correctness of each answer
+    for (int i = 0; i < userAnswers.length; i++) {
+      if (userAnswers[i] == correctAnswers[i]) {
+        correctCount++;
+      }
+    }
+
+    // Fetch user data from Hive
+    var box = await Hive.openBox('testBox');
+    MyData? userData = box.values.last;
+
+    // Ensure userData and the selected category exist before proceeding
+    if (userData != null) {
+      String selectedCategory = lessons[widget.selectedChoice];
+
+      // Update user score locally in the Hive box
+      int newScore = userData.userScores[selectedCategory] + upRate;
+      userData.userScores[selectedCategory] = newScore;
+      box.put(userData.userId, userData); // Assuming userId is unique
+
+      // Make API request to update the score on the server
+      final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
+      Dio dio = Dio();
+      Map<String, dynamic> requestBody = {
+        "user_id": userData.userId,
+        "category": selectedCategory,
+        "new_score": newScore,
+      };
+
+      try {
+        Response response = await dio.patch(
+          apiUrl,
+          data: requestBody,
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          print("Category $selectedCategory updated successfully.");
+        } else {
+          print(
+              "Failed to update category $selectedCategory. Status code: ${response.statusCode}");
+          print("Response data: ${response.data}");
+        }
+      } catch (e) {
+        print("Error during the PATCH request: $e");
+      }
+    } else {
+      print("User data not available");
+    }
+  }
+
+  Future<void> setscore(
+      List<String> stuserAnswers, List<String> stcorrectAnswers) async {
+    List<int> result = [];
+    List<int> coeffs = [1, 3, 4, 6, 7, 9];
+    dynamic s = 0;
+    for (int i = 0; i < stuserAnswers.length; i++) {
+      if (stuserAnswers[i] == stcorrectAnswers[i]) {
+        result.add(1);
+        print(coeffs[i]);
+        s = s + coeffs[i];
+      } else {
+        result.add(0);
+      }
+    }
+    print(result);
+    s = ((s * 7) / 3) + 10;
+    s = s.round();
+    print("escore ejdid mteek  : $s");
+    var box = await Hive.openBox('testBox');
+    MyData? userData = box.values.last;
+
+    // Ensure userData and the selected category exist before proceeding
+    if (userData != null) {
+      String selectedCategory = lessons[widget.selectedChoice];
+
+      // Update user score locally in the Hive box
+      int newScore = s;
+      userData.userScores[selectedCategory] = newScore;
+      box.put(userData.userId, userData); // Assuming userId is unique
+
+      // Make API request to update the score on the server
+      final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
+      Dio dio = Dio();
+      Map<String, dynamic> requestBody = {
+        "user_id": userData.userId,
+        "category": selectedCategory,
+        "new_score": newScore,
+      };
+
+      try {
+        Response response = await dio.patch(
+          apiUrl,
+          data: requestBody,
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          print("Category $selectedCategory updated successfully.");
+        } else {
+          print(
+              "Failed to update category $selectedCategory. Status code: ${response.statusCode}");
+          print("Response data: ${response.data}");
+        }
+      } catch (e) {
+        print("Error during the PATCH request: $e");
+      }
+    } else {
+      print("User data not available");
     }
   }
 }

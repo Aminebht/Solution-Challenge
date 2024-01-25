@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:app_0/Home.dart';
 
-class Done extends StatelessWidget {
-  final int numberOfCorrectAnswers;
-  final int numberOfTimeOut;
-  final int numberOfIncorrectAnswers;
+class DoneOneQuestion extends StatelessWidget {
   final String selectedLesson;
-  final int totalQuizDone;
 
-  Done({
-    required this.numberOfCorrectAnswers,
-    required this.numberOfTimeOut,
-    required this.numberOfIncorrectAnswers,
+  final bool correctAnswer;
+
+  DoneOneQuestion({
     required this.selectedLesson,
-    required this.totalQuizDone,
+    required this.correctAnswer,
   });
 
   @override
   Widget build(BuildContext context) {
-    double accuracy = (numberOfCorrectAnswers / 6 * 100).truncateToDouble();
     String chaine;
     int score = 5;
-    accuracy >= 50 ? chaine = 'Increased' : chaine = 'decreased';
+
+    correctAnswer ? chaine = 'Increased' : chaine = 'Decreased';
 
     return SingleChildScrollView(
       child: Column(
@@ -31,7 +25,7 @@ class Done extends StatelessWidget {
             children: [
               SizedBox(height: 40),
               Text(
-                accuracy >= 50 ? 'Good Job!' : 'Not Bad!',
+                correctAnswer ? 'Good Job!' : 'Not Bad!',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 22,
@@ -39,7 +33,7 @@ class Done extends StatelessWidget {
                   decoration: TextDecoration.none,
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Container(
                 width: 0.8 * MediaQuery.of(context).size.width,
                 height: 0.5 * MediaQuery.of(context).size.height,
@@ -47,12 +41,12 @@ class Done extends StatelessWidget {
                   color: Color(0xFFF78AB1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      accuracy >= 50 ? 'images/cup.png' : 'images/sad.png',
+                      correctAnswer ? 'images/cup.png' : 'images/sad.png',
                       height: 173.6,
                       width: 150,
                     ),
@@ -61,7 +55,7 @@ class Done extends StatelessWidget {
                       width: 290,
                       child: Text(
                         'Your Score in "$selectedLesson" $chaine with $score%',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.w100,
@@ -73,17 +67,7 @@ class Done extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 50),
-              Text(
-                'You Did +$totalQuizDone Quiz',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.none,
-                ),
-              ),
-              SizedBox(height: 40),
+              const SizedBox(height: 50),
             ],
           ),
           Center(
@@ -91,41 +75,8 @@ class Done extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Center horizontally
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInfoElement(
-                          'CORRECT ANSWER', '$numberOfCorrectAnswers'),
-                      SizedBox(width: 130),
-                      _buildInfoElement('ACCURACY', '$accuracy%'),
-                      SizedBox(width: 55),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Center horizontally
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInfoElement('TIMER OUT', '$numberOfTimeOut'),
-                      SizedBox(width: 170),
-                      _buildInfoElement(
-                          'INCORRECT ANSWER', '$numberOfIncorrectAnswers'),
-                    ],
-                  ),
-                  SizedBox(height: 50),
                   ElevatedButton(
-                    onPressed: () {
-                      // Navigate back to the Home page
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Home(),
-                        ),
-                      );
-                    },
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xFF7B31F4),
                       shape: RoundedRectangleBorder(
@@ -136,7 +87,7 @@ class Done extends StatelessWidget {
                       width: 0.8 * MediaQuery.of(context).size.width,
                       height: 60,
                       padding: EdgeInsets.symmetric(vertical: 15),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Done',
                           style: TextStyle(
@@ -173,10 +124,10 @@ class Done extends StatelessWidget {
             ),
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold,

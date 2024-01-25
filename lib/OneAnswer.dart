@@ -1,6 +1,6 @@
 //import 'dart:js';
 import 'dart:ui';
-import 'package:app_0/Done.dart';
+import 'package:app_0/DoneOneQuestion.dart';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
 
@@ -9,12 +9,14 @@ class OneAnswer extends StatefulWidget {
   final String correctAnswer;
   final String question;
   final String explanation;
+  final String lesson;
 
   OneAnswer({
     required this.selectedAnswer,
     required this.correctAnswer,
     required this.question,
     required this.explanation,
+    required this.lesson,
   });
   @override
   _AnswersPageState createState() => _AnswersPageState();
@@ -178,12 +180,10 @@ Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => Done(
-                numberOfCorrectAnswers: 1,
-                numberOfTimeOut: 2,
-                numberOfIncorrectAnswers: 3,
-                selectedLesson: 'salem',
-                totalQuizDone: 5)),
+            builder: (context) => DoneOneQuestion(
+                  selectedLesson: 'salem',
+                  correctAnswer: true,
+                )),
       );
     },
     child: Container(

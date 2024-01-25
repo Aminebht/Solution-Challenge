@@ -8,7 +8,6 @@ import 'package:app_0/OneQuestion.dart';
 import 'package:app_0/my_data_adapter.dart';
 import 'package:app_0/my_data.dart';
 import 'package:app_0/SignUp.dart';
-import 'package:app_0/Done.dart';
 import 'package:app_0/visualization.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';

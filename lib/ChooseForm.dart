@@ -101,7 +101,8 @@ class ChooseForm extends StatelessWidget {
                                 } else if (selectedOption == 1) {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => Questions(
-                                        selectedChoice: selectedChoice),
+                                        selectedChoice: selectedChoice,
+                                        lnew: 0),
                                   ));
                                 }
                               } else {
