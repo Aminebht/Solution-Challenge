@@ -1,6 +1,8 @@
 //import 'dart:js';
+//import 'dart:js';
 import 'dart:ui';
-import 'package:app_0/Done.dart';
+import 'package:app_0/DoneOneQuestion.dart';
+import 'package:app_0/DoneQuestions.dart';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
 
@@ -9,13 +11,16 @@ class OneAnswer extends StatefulWidget {
   final String correctAnswer;
   final String question;
   final String explanation;
+  final String lesson;
 
   OneAnswer({
     required this.selectedAnswer,
     required this.correctAnswer,
     required this.question,
     required this.explanation,
+    required this.lesson,
   });
+  
   @override
   _AnswersPageState createState() => _AnswersPageState();
 }
@@ -23,8 +28,8 @@ class OneAnswer extends StatefulWidget {
 class _AnswersPageState extends State<OneAnswer> {
   double screenHeight = 0.0;
   double screenWidth = 0.0;
-  List<List<String>> questionsMatrix =
-      List.generate(6, (index) => List.filled(6, ""));
+  List<List<String>> questionsMatrix = List.generate(6, (index) => List.filled(6, ""));
+  bool verif = false; // Define your boolean variable
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +37,9 @@ class _AnswersPageState extends State<OneAnswer> {
     print('Correct Answer: ${widget.correctAnswer}');
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
+
+    // Initialize 'var' based on selectedAnswer and correctAnswer
+    verif = (widget.selectedAnswer == widget.correctAnswer);
 
     return Scaffold(
       backgroundColor: Color(0xFF7B31F4),
@@ -59,8 +67,13 @@ class _AnswersPageState extends State<OneAnswer> {
                   ],
                 ),
               ),
-              _buildBottomBox(screenHeight, screenWidth, widget.correctAnswer,
-                  widget.correctAnswer, widget.explanation),
+              _buildBottomBox(
+                screenHeight,
+                screenWidth,
+                widget.correctAnswer,
+                widget.correctAnswer, // Corrected: Pass the correct answer here
+                widget.explanation,
+              ),
             ],
           ),
         ),
@@ -82,89 +95,10 @@ class _AnswersPageState extends State<OneAnswer> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(height: 20),
-            // Question
-            Text(
-              '${widget.question}',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'SELECTED ANSWER',
-                    style: TextStyle(
-                      color: Color(0xFF979797),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.1,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-
-            if (widget.selectedAnswer == widget.correctAnswer)
-              _buildAnswerBox(widget.selectedAnswer, Colors.white,
-                  Color(0xFF53DF83), screenWidth)
-            else
-              _buildAnswerBox(widget.selectedAnswer, Colors.white,
-                  Color(0xFFE33629), screenWidth),
+            // ... (existing code)
 
             SizedBox(height: 20),
-            Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'CORRECT ANSWER',
-                    style: TextStyle(
-                      color: Color(0xFF979797),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.1,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            _buildAnswerBox(correctAnswer, Color(0xFF53DF83), Color(0xFF53DF83),
-                screenWidth),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'EXPLANATION',
-                    style: TextStyle(
-                      color: Color(0xFF979797),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.1,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            _buildExplanationBox(explanation, screenWidth),
-            SizedBox(height: 20),
-            _buildSubmitAnswerButton(context, screenWidth),
+            _buildSubmitAnswerButton(context, screenWidth,verif),
           ],
         ),
       ),
@@ -172,18 +106,18 @@ class _AnswersPageState extends State<OneAnswer> {
   }
 }
 
-Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth) {
+Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth,bool verif) {
   return GestureDetector(
     onTap: () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => Done(
-                numberOfCorrectAnswers: 1,
-                numberOfTimeOut: 2,
-                numberOfIncorrectAnswers: 3,
-                selectedLesson: 'salem',
-                totalQuizDone: 5)),
+          builder: (context) => DoneOneQuestion(
+            selectedLesson: '', // Replace with your selected lesson
+            totalQuizDone: 30, // Replace with your total quiz done
+            correctAnswer: verif, // Replace with your correct answer
+          ),
+        ),
       );
     },
     child: Container(
@@ -205,6 +139,11 @@ Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth) {
     ),
   );
 }
+
+// ... (rest of your existing code)
+
+
+
 
 Widget _buildAnswerBox(
     String answer, Color color1, Color color2, double screenWidth) {

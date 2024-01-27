@@ -33,6 +33,16 @@ class _QuestionsPageState extends State<OneQuestion> {
   bool isError = false;
   int difficulty = 0;
   late String stSelectedAnswer;
+  List<String> lessons = [
+    'algebra',
+    'gain',
+    'geometry',
+    'general',
+    'physics',
+    'static',
+    'probability',
+    'other'
+  ];
   @override
   void initState() {
     super.initState();
@@ -361,7 +371,8 @@ class _QuestionsPageState extends State<OneQuestion> {
             selectedAnswer: stSelectedAnswer,
             correctAnswer: stcorrectAnswer,
             question: problem,
-            explanation: explanation),
+            explanation: explanation,
+            lesson: lessons[widget.selectedChoice],),
       ),
     );
   }

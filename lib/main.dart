@@ -1,7 +1,5 @@
 import 'package:app_0/ChooseForm.dart';
 import 'package:app_0/ChooseSubject.dart';
-import 'package:app_0/Done.dart';
-import 'package:app_0/Profile.dart';
 import 'package:app_0/SignIn.dart';
 import 'package:app_0/Home.dart';
 //import 'package:app_0/Profile.dart';
@@ -10,7 +8,6 @@ import 'package:app_0/OneQuestion.dart';
 import 'package:app_0/my_data_adapter.dart';
 import 'package:app_0/my_data.dart';
 import 'package:app_0/SignUp.dart';
-import 'package:app_0/Done.dart';
 import 'package:app_0/visualization.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -47,7 +44,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home:SignIn() ,
+        home: SignIn(),
       );
     } else {
       // Box is not empty, get the value of keepMeSignedIn for the first user
