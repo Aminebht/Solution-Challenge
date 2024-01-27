@@ -2,7 +2,6 @@
 //import 'dart:js';
 import 'dart:ui';
 import 'package:app_0/DoneOneQuestion.dart';
-import 'package:app_0/DoneQuestions.dart';
 import 'package:app_0/Home.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +11,7 @@ class OneAnswer extends StatefulWidget {
   final String question;
   final String explanation;
   final String lesson;
+  final int up;
 
   OneAnswer({
     required this.selectedAnswer,
@@ -19,6 +19,7 @@ class OneAnswer extends StatefulWidget {
     required this.question,
     required this.explanation,
     required this.lesson,
+    required this.up,
   });
   
   @override
@@ -104,40 +105,40 @@ class _AnswersPageState extends State<OneAnswer> {
       ),
     );
   }
-}
 
-Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth,bool verif) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DoneOneQuestion(
-            selectedLesson: '', // Replace with your selected lesson
-            totalQuizDone: 30, // Replace with your total quiz done
-            correctAnswer: verif, // Replace with your correct answer
+  Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth) {
+    return GestureDetector(
+      onTap: () {
+        print("Men page l anwer printit l uprate");
+        print(widget.up);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DoneOneQuestion(
+                    selectedLesson: widget.lesson,
+                    uprate: widget.up,
+                  )),
+        );
+      },
+      child: Container(
+        width: 0.8 * screenWidth,
+        height: 52,
+        decoration: BoxDecoration(
+          color: Color(0xFF7B31F4),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+          child: Text(
+            'Done',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
-      );
-    },
-    child: Container(
-      width: 0.8 * screenWidth,
-      height: 52,
-      decoration: BoxDecoration(
-        color: Color(0xFF7B31F4),
-        borderRadius: BorderRadius.circular(15),
       ),
-      child: Center(
-        child: Text(
-          'Done',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-    ),
-  );
+    );
+  }
 }
 
 // ... (rest of your existing code)

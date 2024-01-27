@@ -354,7 +354,7 @@ class _QuestionsPageState extends State<OneQuestion> {
     );
   }
 
-  void goToNextQuestion() {
+  Future<void> goToNextQuestion() async {
     //timerSeconds = 60;
     print('Selected Choice in OneQuestion: ${widget.selectedChoice}');
     print('Selected Answer in OneQuestion: ${selectedAnswer}');
@@ -364,6 +364,7 @@ class _QuestionsPageState extends State<OneQuestion> {
       stSelectedAnswer = options[selectedAnswer - 1];
     }
     _timer.cancel();
+    int up = await updateScore(difficulty, stSelectedAnswer, stcorrectAnswer);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -372,9 +373,91 @@ class _QuestionsPageState extends State<OneQuestion> {
             correctAnswer: stcorrectAnswer,
             question: problem,
             explanation: explanation,
-            lesson: lessons[widget.selectedChoice],),
+            lesson: lessons[widget.selectedChoice],
+            up: up),
       ),
     );
+  }
+
+  Future<int> updateScore(
+    int difficulty,
+    String user,
+    String correct,
+  ) async {
+    int correctCount = user == correct ? 4 : 0;
+    int upRate = correctCount == 4 ? 1 : -1;
+
+    try {
+      var box = await Hive.openBox('testBox');
+      MyData? userData = box.values.last;
+
+      if (userData != null) {
+        String selectedCategory = lessons[widget.selectedChoice];
+
+        // Update user score locally in the Hive box
+        int newScore = userData.userScores[selectedCategory] + upRate;
+        userData.userScores[selectedCategory] = newScore;
+        box.put(userData.userId, userData); // Assuming userId is unique
+
+        // Make API request to update the score on the server
+        final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
+        final String apiUrl1 = 'http://127.0.0.1:8000/api/user/history/';
+
+        final Map<String, dynamic> requestBody = {
+          "user_id": userData.userId,
+          "category": selectedCategory,
+          "new_score": newScore,
+        };
+
+        final Map<String, dynamic> requestBody1 = {
+          "user_id": userData.userId,
+          "category": selectedCategory,
+          "new_history": 15,
+        };
+
+        // Update score
+        Response response = await Dio().patch(
+          apiUrl,
+          data: requestBody,
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          print("Category $selectedCategory updated successfully.");
+        } else {
+          print(
+              "Failed to update category $selectedCategory. Status code: ${response.statusCode}");
+          print("Response data: ${response.data}");
+        }
+
+        // Update history
+        Response response1 = await Dio1().patch(
+          apiUrl1,
+          data: requestBody1,
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+        );
+
+        if (response1.statusCode == 200) {
+          print("History updated successfully.");
+        } else {
+          print(
+              "Failed to update history. Status code: ${response1.statusCode}");
+          print("Response data: ${response1.data}");
+        }
+
+        return upRate;
+      } else {
+        print("User data not available");
+        return 0;
+      }
+    } catch (e) {
+      print("Error during the updateScore operation: $e");
+      return 0;
+    }
   }
 }
 

@@ -1,24 +1,21 @@
+import 'package:app_0/home.dart';
 import 'package:flutter/material.dart';
-import 'package:app_0/Home.dart';
 
 class DoneOneQuestion extends StatelessWidget {
   final String selectedLesson;
-  final int totalQuizDone;
-  final bool correctAnswer;
+  final int uprate;
 
   DoneOneQuestion({
     required this.selectedLesson,
-    required this.totalQuizDone,
-    required this.correctAnswer,
-    
+    required this.uprate,
   });
 
   @override
   Widget build(BuildContext context) {
     String chaine;
-    int score = 5;
-    
-    correctAnswer ? chaine = 'Increased' : chaine = 'decreased';
+    int score = uprate;
+
+    score >= 0 ? chaine = 'Increased' : chaine = 'Decreased';
 
     return SingleChildScrollView(
       child: Column(
@@ -28,7 +25,7 @@ class DoneOneQuestion extends StatelessWidget {
             children: [
               SizedBox(height: 40),
               Text(
-                correctAnswer ? 'Good Job!' : 'Not Bad!',
+                score >= 0 ? 'Good Job!' : 'Not Bad!',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 22,
@@ -36,7 +33,7 @@ class DoneOneQuestion extends StatelessWidget {
                   decoration: TextDecoration.none,
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Container(
                 width: 0.8 * MediaQuery.of(context).size.width,
                 height: 0.5 * MediaQuery.of(context).size.height,
@@ -44,14 +41,12 @@ class DoneOneQuestion extends StatelessWidget {
                   color: Color(0xFFF78AB1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      correctAnswer
-                          ? 'images/cup.png'
-                          : 'images/sad.png',
+                      score >= 0 ? 'images/cup.png' : 'images/sad.png',
                       height: 173.6,
                       width: 150,
                     ),
@@ -60,7 +55,7 @@ class DoneOneQuestion extends StatelessWidget {
                       width: 290,
                       child: Text(
                         'Your Score in "$selectedLesson" $chaine with $score%',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.w100,
@@ -72,17 +67,7 @@ class DoneOneQuestion extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 50),
-              Text(
-                'You Did +$totalQuizDone Quiz',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.none,
-                ),
-              ),
-              SizedBox(height: 40),
+              const SizedBox(height: 50),
             ],
           ),
           Center(
@@ -90,27 +75,6 @@ class DoneOneQuestion extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInfoElement('CORRECT ANSWER', '0'), // Replace '0' with the correct value
-                      SizedBox(width: 130),
-                      _buildInfoElement('ACCURACY', '0%'), // Replace '0%' with the correct value
-                      SizedBox(width: 55),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInfoElement('TIMER OUT', '0'), // Replace '0' with the correct value
-                      SizedBox(width: 170),
-                      _buildInfoElement('INCORRECT ANSWER', '0'), // Replace '0' with the correct value
-                    ],
-                  ),
-                  SizedBox(height: 50),
                   ElevatedButton(
                     onPressed: () {
                       // Navigate back to the Home page
@@ -131,7 +95,7 @@ class DoneOneQuestion extends StatelessWidget {
                       width: 0.8 * MediaQuery.of(context).size.width,
                       height: 60,
                       padding: EdgeInsets.symmetric(vertical: 15),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Done',
                           style: TextStyle(
@@ -168,10 +132,10 @@ class DoneOneQuestion extends StatelessWidget {
             ),
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold,

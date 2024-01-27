@@ -1,26 +1,29 @@
+import 'package:app_0/home.dart';
+import 'package:app_0/main.dart';
 import 'package:flutter/material.dart';
-import 'package:app_0/Home.dart';
 
-class Done extends StatelessWidget {
+class DoneQuestions extends StatelessWidget {
   final int numberOfCorrectAnswers;
   final int numberOfTimeOut;
   final int numberOfIncorrectAnswers;
   final String selectedLesson;
   final int totalQuizDone;
+  final int uprate;
 
-  Done({
+  DoneQuestions({
     required this.numberOfCorrectAnswers,
     required this.numberOfTimeOut,
     required this.numberOfIncorrectAnswers,
     required this.selectedLesson,
     required this.totalQuizDone,
+    required this.uprate,
   });
 
   @override
   Widget build(BuildContext context) {
     double accuracy = (numberOfCorrectAnswers / 6 * 100).truncateToDouble();
     String chaine;
-    int score = 5;
+    int score = uprate;
     accuracy >= 50 ? chaine = 'Increased' : chaine = 'decreased';
 
     return SingleChildScrollView(
@@ -60,7 +63,7 @@ class Done extends StatelessWidget {
                     Container(
                       width: 290,
                       child: Text(
-                        'Your Score in "$selectedLesson" $chaine with $score%',
+                        'Your Score in "$selectedLesson" $chaine with  $score%',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
