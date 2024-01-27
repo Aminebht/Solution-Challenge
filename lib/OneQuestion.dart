@@ -409,47 +409,68 @@ class _QuestionsPageState extends State<OneQuestion> {
           "new_score": newScore,
         };
 
-        final Map<String, dynamic> requestBody1 = {
-          "user_id": userData.userId,
-          "category": selectedCategory,
-          "new_history": 15,
-        };
-
-        // Update score
-        Response response = await Dio().patch(
-          apiUrl,
-          data: requestBody,
-          options: Options(
-            headers: {'Content-Type': 'application/json'},
-          ),
-        );
-
-        if (response.statusCode == 200) {
-          print("Category $selectedCategory updated successfully.");
-        } else {
-          print(
-              "Failed to update category $selectedCategory. Status code: ${response.statusCode}");
-          print("Response data: ${response.data}");
-        }
-
-        // Update history
-        Response response1 = await Dio1().patch(
+        // Fetch user history
+        Response historyResponse = await Dio().get(
           apiUrl1,
-          data: requestBody1,
+          queryParameters: {
+            'user_id': userData.userId,
+            'category': 'total_$selectedCategory',
+          },
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ),
         );
 
-        if (response1.statusCode == 200) {
-          print("History updated successfully.");
+        if (historyResponse.statusCode == 200) {
+          int currentHistory = historyResponse.data;
+
+          final Map<String, dynamic> requestBody1 = {
+            "user_id": userData.userId,
+            "category": "total_$selectedCategory",
+            "new_history": currentHistory + 1,
+          };
+
+          // Update score
+          Response response = await Dio().patch(
+            apiUrl,
+            data: requestBody,
+            options: Options(
+              headers: {'Content-Type': 'application/json'},
+            ),
+          );
+
+          if (response.statusCode == 200) {
+            print("Category $selectedCategory updated successfully.");
+          } else {
+            print(
+                "Failed to update category $selectedCategory. Status code: ${response.statusCode}");
+            print("Response data: ${response.data}");
+          }
+
+          // Update history
+          Response response1 = await Dio().patch(
+            apiUrl1,
+            data: requestBody1,
+            options: Options(
+              headers: {'Content-Type': 'application/json'},
+            ),
+          );
+
+          if (response1.statusCode == 200) {
+            print("History updated successfully.");
+          } else {
+            print(
+                "Failed to update history. Status code: ${response1.statusCode}");
+            print("Response data: ${response1.data}");
+          }
+
+          return upRate;
         } else {
           print(
-              "Failed to update history. Status code: ${response1.statusCode}");
-          print("Response data: ${response1.data}");
+              'Failed to fetch user history. Status code: ${historyResponse.statusCode}');
+          print('Response data: ${historyResponse.data}');
+          return 0;
         }
-
-        return upRate;
       } else {
         print("User data not available");
         return 0;

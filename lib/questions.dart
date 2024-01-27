@@ -664,69 +664,110 @@ class _QuestionsPageState extends State<Questions> {
     List<String> userAnswers,
     List<String> correctAnswers,
   ) async {
-    int correctCount = 0;
-    int upRate = 1;
+    try {
+      // Calculate average difficulty
+      double averageDifficulty =
+          difficultyList.reduce((value, element) => value + element) /
+              difficultyList.length;
 
-    // Calculate average difficulty
-    double averageDifficulty =
-        difficultyList.reduce((value, element) => value + element) /
-            difficultyList.length;
-    //print(averageDifficulty);
-
-    // Check correctness of each answer
-    for (int i = 0; i < userAnswers.length; i++) {
-      if (userAnswers[i] == correctAnswers[i]) {
-        correctCount++;
+      // Check correctness of each answer
+      int correctCount = 0;
+      for (int i = 0; i < userAnswers.length; i++) {
+        if (userAnswers[i] == correctAnswers[i]) {
+          correctCount++;
+        }
       }
-    }
 
-    // Fetch user data from Hive
-    var box = await Hive.openBox('testBox');
-    MyData? userData = box.values.last;
+      // Fetch user data from Hive
+      var box = await Hive.openBox('testBox');
+      MyData? userData = box.values.last;
 
-    // Ensure userData and the selected category exist before proceeding
-    if (userData != null) {
-      String selectedCategory = lessons[widget.selectedChoice];
+      // Ensure userData and the selected category exist before proceeding
+      if (userData != null) {
+        String selectedCategory = lessons[widget.selectedChoice];
 
-      // Update user score locally in the Hive box
-      int newScore = userData.userScores[selectedCategory] + upRate;
-      userData.userScores[selectedCategory] = newScore;
-      box.put(userData.userId, userData); // Assuming userId is unique
+        // Update user score locally in the Hive box
+        int newScore = userData.userScores[selectedCategory] + 1;
+        userData.userScores[selectedCategory] = newScore;
+        box.put(userData.userId, userData); // Assuming userId is unique
 
-      // Make API request to update the score on the server
-      final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
-      Dio dio = Dio();
-      Map<String, dynamic> requestBody = {
-        "user_id": userData.userId,
-        "category": selectedCategory,
-        "new_score": newScore,
-      };
+        // Make API request to update the score on the server
+        final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
+        final String apiUrl1 = 'http://127.0.0.1:8000/api/user/history/';
 
-      try {
-        Response response = await dio.patch(
-          apiUrl,
-          data: requestBody,
-          options: Options(
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          ),
+        Dio dio = Dio();
+
+        // Fetch user history
+        Response historyResponse = await dio.get(
+          'http://127.0.0.1:8000/api/user/history/',
+          queryParameters: {
+            'user_id': userData.userId,
+            'category': 'total_gain',
+          },
         );
+        int userHistory;
+        if (historyResponse.statusCode == 200) {
+          if (historyResponse.data is int) {
+            userHistory = historyResponse.data;
+          } else {
+            // Handle the case where the data is not an integer
+            print('Unexpected format for history data');
+            return 0;
+          }
+          print('User history fetched successfully: $userHistory');
 
-        if (response.statusCode == 200) {
+          // Build request bodies
+          Map<String, dynamic> requestBody = {
+            "user_id": userData.userId,
+            "category": selectedCategory,
+            "new_score": newScore,
+          };
+
+          Map<String, dynamic> requestBody1 = {
+            "user_id": userData.userId,
+            "category": "total_$selectedCategory",
+            "new_history": userHistory + 6,
+          };
+
+          // Update score
+          await dio.patch(
+            apiUrl,
+            data: requestBody,
+            options: Options(
+              headers: {'Content-Type': 'application/json'},
+            ),
+          );
+
+          // Update history
+          await dio.patch(
+            apiUrl1,
+            data: requestBody1,
+            options: Options(
+              headers: {'Content-Type': 'application/json'},
+            ),
+          );
+
           print("Category $selectedCategory updated successfully.");
+          return 1; // Returning upRate (1) as specified in the original code
         } else {
           print(
-              "Failed to update category $selectedCategory. Status code: ${response.statusCode}");
-          print("Response data: ${response.data}");
+              'Failed to fetch user history. Status code: ${historyResponse.statusCode}');
+          print('Response data: ${historyResponse.data}');
+          return 0;
         }
-        return upRate;
-      } catch (e) {
-        print("Error during the PATCH request: $e");
+      } else {
+        print("User data not available");
         return 0;
       }
-    } else {
-      print("User data not available");
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print("DioError: ${e.response!.statusCode} - ${e.response!.data}");
+      } else {
+        print("DioError: ${e.message}");
+      }
+      return 0;
+    } catch (e) {
+      print("Error during the updateScore operation: $e");
       return 0;
     }
   }

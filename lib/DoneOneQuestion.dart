@@ -54,7 +54,7 @@ class DoneOneQuestion extends StatelessWidget {
                     Container(
                       width: 290,
                       child: Text(
-                        'Your Score in "$selectedLesson" $chaine with $score%',
+                        'Your Score in "$selectedLesson" $chaine with ${score.abs()}%',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,
