@@ -8,6 +8,7 @@ class DoneQuestions extends StatelessWidget {
   final int numberOfIncorrectAnswers;
   final String selectedLesson;
   final int totalQuizDone;
+  final int uprate;
 
   DoneQuestions({
     required this.numberOfCorrectAnswers,
@@ -15,13 +16,14 @@ class DoneQuestions extends StatelessWidget {
     required this.numberOfIncorrectAnswers,
     required this.selectedLesson,
     required this.totalQuizDone,
+    required this.uprate,
   });
 
   @override
   Widget build(BuildContext context) {
     double accuracy = (numberOfCorrectAnswers / 6 * 100).truncateToDouble();
     String chaine;
-    int score = 5;
+    int score = uprate;
     accuracy >= 50 ? chaine = 'Increased' : chaine = 'decreased';
 
     return SingleChildScrollView(
@@ -61,7 +63,7 @@ class DoneQuestions extends StatelessWidget {
                     Container(
                       width: 290,
                       child: Text(
-                        'Your Score in "$selectedLesson" $chaine with $score%',
+                        'Your Score in "$selectedLesson" $chaine with  $score%',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,

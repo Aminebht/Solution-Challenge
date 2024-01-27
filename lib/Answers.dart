@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:app_0/DoneQuestions.dart';
 
@@ -10,6 +11,7 @@ class Answers extends StatefulWidget {
   final List<String> problems;
   final List<String> explanations;
   final String lesson;
+  final int uprate;
   // final int score;
 
   Answers({
@@ -18,7 +20,7 @@ class Answers extends StatefulWidget {
     required this.problems,
     required this.explanations,
     required this.lesson,
-    //required this.score,
+    required this.uprate,
   });
   @override
   _AnswersPageState createState() => _AnswersPageState();
@@ -99,8 +101,7 @@ class _AnswersPageState extends State<Answers> {
     );
   }
 
-  void goToNextAnswer() {
-    // Move to the next question or submit answers if it's the last question
+  void goToNextAnswer() async {
     if (numberOfQuestions < 6) {
       setState(() {
         numberOfQuestions++;
@@ -110,22 +111,56 @@ class _AnswersPageState extends State<Answers> {
       int countTimeouts =
           widget.stuserAnswers.where((answer) => answer == 'Timer Out').length;
 
-      // Navigate to the next page or perform the final action
-      {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => DoneQuestions(
-                  numberOfCorrectAnswers: correctCount,
-                  numberOfTimeOut: countTimeouts,
-                  numberOfIncorrectAnswers: 6 - correctCount - countTimeouts,
-                  selectedLesson: widget.lesson,
-                  totalQuizDone: 5)),
-        );
-      }
-      ;
+      // Prepare data for the Dio request
+      Map<String, dynamic> requestData = {
+        'user_id': '8qaXEQQVQmMfeVaFGWanlVNzyAX2',
+        'category': 'total_gain',
+        // Add any other necessary data
+      };
 
-      // You can add navigation or other logic here
+      // Create Dio instance
+      Dio dio = Dio();
+
+      try {
+        // Make the Dio request
+        Response response = await dio.get(
+          'http://127.0.0.1:8000/api/user/history/',
+          queryParameters: requestData,
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+        );
+
+        // Check if the request was successful (status code 200)
+        if (response.statusCode == 200) {
+          // Parse the response if needed
+          dynamic responseData = response.data;
+
+          // Navigate to the next page or perform the final action
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DoneQuestions(
+                numberOfCorrectAnswers: correctCount,
+                numberOfTimeOut: countTimeouts,
+                numberOfIncorrectAnswers: 6 - correctCount - countTimeouts,
+                selectedLesson: widget.lesson,
+                totalQuizDone: responseData,
+                uprate: widget.uprate,
+                // Pass any additional data from the response if needed
+              ),
+            ),
+          );
+        } else {
+          // Handle the case where the request was not successful
+          print('Error: ${response.statusCode}');
+        }
+      } catch (error) {
+        // Handle any Dio errors
+        print('Dio error: $error');
+      }
     }
   }
 

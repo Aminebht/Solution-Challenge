@@ -35,7 +35,8 @@ dependencies:
 
   http: 1.2.0
   dio: ^5.4.0
-
+  simple_fontellico_progress_dialog: ^0.3.0
+  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -97,7 +98,7 @@ flutter:
     - images/sad.png
     - images/modify.png
     - images/plus_icon.png
-    #- images/arrow.png
+    - images/arrow.png
     - images/lock.png
     - images/email.png
     #- images/Arrow.png

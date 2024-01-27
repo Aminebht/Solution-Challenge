@@ -10,6 +10,7 @@ import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class _SignInState extends State<SignIn> {
   bool keepSignedIn = false;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  late SimpleFontelicoProgressDialog _progressDialog;
   Map<String, dynamic> apiResponse = {};
   @override
   void dispose() {
@@ -30,6 +32,9 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    // Initialize _progressDialog here
+    _progressDialog = SimpleFontelicoProgressDialog(context: context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -190,14 +195,14 @@ class _SignInState extends State<SignIn> {
                           // Get email and password from text fields
                           String email = _emailController.text;
                           String password = _passwordController.text;
-
+                          _progressDialog.show(message: 'Signing in...');
                           try {
                             // Perform sign-in
 
                             print(keepSignedIn);
                             bool updated = await signInWithEmailAndPassword(
                                 email, password, keepSignedIn);
-
+                            _progressDialog.hide();
                             // Check if sign-in is successful
                             if (updated != false) {
                               // If sign-in is successful, navigate to the home page
@@ -206,7 +211,7 @@ class _SignInState extends State<SignIn> {
                               prefs.setBool('keepSignedIn', keepSignedIn);
 
                               // Print Hive database content for verification
-                              await printHiveDatabaseContent();
+                              //await printHiveDatabaseContent();
 
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => Home(),

@@ -1,21 +1,21 @@
+import 'package:app_0/home.dart';
 import 'package:flutter/material.dart';
 
 class DoneOneQuestion extends StatelessWidget {
   final String selectedLesson;
-
-  final bool correctAnswer;
+  final int uprate;
 
   DoneOneQuestion({
     required this.selectedLesson,
-    required this.correctAnswer,
+    required this.uprate,
   });
 
   @override
   Widget build(BuildContext context) {
     String chaine;
-    int score = 5;
+    int score = uprate;
 
-    correctAnswer ? chaine = 'Increased' : chaine = 'Decreased';
+    score >= 0 ? chaine = 'Increased' : chaine = 'Decreased';
 
     return SingleChildScrollView(
       child: Column(
@@ -25,7 +25,7 @@ class DoneOneQuestion extends StatelessWidget {
             children: [
               SizedBox(height: 40),
               Text(
-                correctAnswer ? 'Good Job!' : 'Not Bad!',
+                score >= 0 ? 'Good Job!' : 'Not Bad!',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 22,
@@ -46,7 +46,7 @@ class DoneOneQuestion extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      correctAnswer ? 'images/cup.png' : 'images/sad.png',
+                      score >= 0 ? 'images/cup.png' : 'images/sad.png',
                       height: 173.6,
                       width: 150,
                     ),
@@ -76,7 +76,15 @@ class DoneOneQuestion extends StatelessWidget {
               child: Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // Navigate back to the Home page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xFF7B31F4),
                       shape: RoundedRectangleBorder(

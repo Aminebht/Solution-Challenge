@@ -10,6 +10,7 @@ class OneAnswer extends StatefulWidget {
   final String question;
   final String explanation;
   final String lesson;
+  final int up;
 
   OneAnswer({
     required this.selectedAnswer,
@@ -17,6 +18,7 @@ class OneAnswer extends StatefulWidget {
     required this.question,
     required this.explanation,
     required this.lesson,
+    required this.up,
   });
   @override
   _AnswersPageState createState() => _AnswersPageState();
@@ -172,38 +174,40 @@ class _AnswersPageState extends State<OneAnswer> {
       ),
     );
   }
-}
 
-Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => DoneOneQuestion(
-                  selectedLesson: 'salem',
-                  correctAnswer: true,
-                )),
-      );
-    },
-    child: Container(
-      width: 0.8 * screenWidth,
-      height: 52,
-      decoration: BoxDecoration(
-        color: Color(0xFF7B31F4),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Center(
-        child: Text(
-          'Done',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
+  Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth) {
+    return GestureDetector(
+      onTap: () {
+        print("Men page l anwer printit l uprate");
+        print(widget.up);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DoneOneQuestion(
+                    selectedLesson: widget.lesson,
+                    uprate: widget.up,
+                  )),
+        );
+      },
+      child: Container(
+        width: 0.8 * screenWidth,
+        height: 52,
+        decoration: BoxDecoration(
+          color: Color(0xFF7B31F4),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+          child: Text(
+            'Done',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 Widget _buildAnswerBox(

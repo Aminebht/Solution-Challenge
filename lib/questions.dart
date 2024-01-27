@@ -588,7 +588,8 @@ class _QuestionsPageState extends State<Questions> {
     print('Initialized Timer: $timerSeconds seconds');
   }
 
-  void goToNextQuestion(int difficulty) {
+  Future<void> goToNextQuestion(int difficulty) async {
+    int up;
     try {
       if (timerSeconds == 0) {
         userAnswers[numberOfQuestions - 1] = -1;
@@ -632,23 +633,23 @@ class _QuestionsPageState extends State<Questions> {
         if (widget.lnew == 1) {
           //jdid
           print("Awel mara");
-          setscore(stuserAnswers, stcorrectAnswers);
+          up = await setscore(stuserAnswers, stcorrectAnswers);
         } else {
           //gdim
           print("Update 3adi");
-          updateScore(ldifficulty, stuserAnswers, stcorrectAnswers);
+          up = await updateScore(ldifficulty, stuserAnswers, stcorrectAnswers);
         }
 
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => Answers(
-              stuserAnswers: stuserAnswers,
-              stcorrectAnswers: stcorrectAnswers,
-              problems: problems,
-              explanations: explanations,
-              lesson: lessons[widget.selectedChoice],
-            ),
+                stuserAnswers: stuserAnswers,
+                stcorrectAnswers: stcorrectAnswers,
+                problems: problems,
+                explanations: explanations,
+                lesson: lessons[widget.selectedChoice],
+                uprate: up),
           ),
         );
       }
@@ -658,7 +659,7 @@ class _QuestionsPageState extends State<Questions> {
     }
   }
 
-  Future<void> updateScore(
+  Future<int> updateScore(
     List<int> difficultyList,
     List<String> userAnswers,
     List<String> correctAnswers,
@@ -670,7 +671,7 @@ class _QuestionsPageState extends State<Questions> {
     double averageDifficulty =
         difficultyList.reduce((value, element) => value + element) /
             difficultyList.length;
-    print(averageDifficulty);
+    //print(averageDifficulty);
 
     // Check correctness of each answer
     for (int i = 0; i < userAnswers.length; i++) {
@@ -719,15 +720,18 @@ class _QuestionsPageState extends State<Questions> {
               "Failed to update category $selectedCategory. Status code: ${response.statusCode}");
           print("Response data: ${response.data}");
         }
+        return upRate;
       } catch (e) {
         print("Error during the PATCH request: $e");
+        return 0;
       }
     } else {
       print("User data not available");
+      return 0;
     }
   }
 
-  Future<void> setscore(
+  Future<int> setscore(
       List<String> stuserAnswers, List<String> stcorrectAnswers) async {
     List<int> result = [];
     List<int> coeffs = [1, 3, 4, 6, 7, 9];
@@ -779,16 +783,20 @@ class _QuestionsPageState extends State<Questions> {
 
         if (response.statusCode == 200) {
           print("Category $selectedCategory updated successfully.");
+          return s;
         } else {
           print(
               "Failed to update category $selectedCategory. Status code: ${response.statusCode}");
           print("Response data: ${response.data}");
+          return 0;
         }
       } catch (e) {
         print("Error during the PATCH request: $e");
+        return 0;
       }
     } else {
       print("User data not available");
+      return 0;
     }
   }
 }
