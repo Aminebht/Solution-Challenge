@@ -4,12 +4,13 @@ import 'package:app_0/OneQuestion.dart';
 import 'package:app_0/Questions.dart';
 import 'package:flutter/material.dart';
 
+
 class ChooseForm extends StatelessWidget {
   final int selectedChoice;
   late int savedChoice;
   int? selectedOption; // New variable to store the selected option
 
-  ChooseForm({required this.selectedChoice}) {
+  ChooseForm({super.key, required this.selectedChoice}) {
     savedChoice = selectedChoice;
     print('Selected Choice: $selectedChoice');
     print('Saved Choice: $savedChoice');
@@ -20,13 +21,13 @@ class ChooseForm extends StatelessWidget {
     return Scaffold(
       appBar: null,
       body: Container(
-        color: Color.fromRGBO(123, 49, 244, 1.0),
+        color: const Color.fromRGBO(123, 49, 244, 1.0),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 40.0,
                 ),
                 Padding(
@@ -37,7 +38,7 @@ class ChooseForm extends StatelessWidget {
                         Navigator.of(context).pop();
                       },
                       child: Container(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Image.asset(
                           'images/back.png',
                           width: 24.0,
@@ -71,7 +72,7 @@ class ChooseForm extends StatelessWidget {
                 ),
                 Card(
                   color: Colors.white,
-                  margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
+                  margin: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -84,12 +85,17 @@ class ChooseForm extends StatelessWidget {
                             selectedOption = option;
                           },
                         ),
-                        SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
                         Container(
                           width: double.infinity,
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
                           child: ElevatedButton(
                             onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Questions(
+                                        selectedChoice: selectedChoice,
+                                        lnew: 0),
+                                  ));
                               if (selectedOption != null) {
                                 print(
                                     'Next button pressed. Selected Choice: $selectedChoice, Selected Option: $selectedOption');
@@ -112,7 +118,7 @@ class ChooseForm extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: Color.fromRGBO(123, 49, 244, 1.0),
+                              backgroundColor: const Color.fromRGBO(123, 49, 244, 1.0),
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 24.0,
                                 vertical: 24.0,
@@ -210,7 +216,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                         width: 0.4*screenWidth,
                         height: 0.4*screenWidth,
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(255, 255, 255, 0.5),
+                          color: const Color.fromRGBO(255, 255, 255, 0.5),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
@@ -219,14 +225,14 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                             style: TextStyle(
                               color: selectedChoice == index
                                   ? Colors.white
-                                  : Color.fromRGBO(123, 49, 244, 1.0),
+                                  : const Color.fromRGBO(123, 49, 244, 1.0),
                               fontSize: fontSize + 40.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 30.0),
+                      const SizedBox(height: 30.0),
                       Text(
                         customTexts[index],
                         style: TextStyle(

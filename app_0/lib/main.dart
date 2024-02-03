@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Stats(),
+        home: SignIn(),
       );
     } else {
       // Box is not empty, get the value of keepMeSignedIn for the first user

@@ -65,7 +65,7 @@ class _QuestionsPageState extends State<Questions> {
   }
 
   void fetchQuestionsFromAPI() async {
-    const String baseUrl = "http://10.0.2.2:8000";
+    const String baseUrl = "http://127.0.0.1:8000";
     const String path = "/api/problem-search/";
 
     final Map<String, dynamic> queryParams = {
@@ -694,14 +694,14 @@ class _QuestionsPageState extends State<Questions> {
         box.put(userData.userId, userData); // Assuming userId is unique
 
         // Make API request to update the score on the server
-        const String apiUrl = 'http://10.0.2.2:8000/api/user/scores/';
-        const String apiUrl1 = 'http://10.0.2.2:8000/api/user/history/';
+        const String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
+        const String apiUrl1 = 'http://127.0.0.1:8000/api/user/history/';
 
         Dio dio = Dio();
 
         // Fetch user history
         Response historyResponse = await dio.get(
-          'http://10.0.2.2:8000/api/user/history/',
+          'http://127.0.0.1:8000/api/user/history/',
           queryParameters: {
             'user_id': userData.userId,
             'category': "total_$selectedCategory",
@@ -805,7 +805,7 @@ class _QuestionsPageState extends State<Questions> {
       box.put(userData.userId, userData); // Assuming userId is unique
 
       // Make API request to update the score on the server
-      const String apiUrl = 'http://10.0.2.2:8000/api/user/scores/';
+      const String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
       Dio dio = Dio();
       Map<String, dynamic> requestBody = {
         "user_id": userData.userId,

@@ -247,8 +247,8 @@ class _QuestionsPageState extends State<OneQuestion> {
   void fetchData() async {
     print(isUserSignedIn());
     print(widget.selectedChoice);
-    const String baseUrl = "http://10.0.2.2:8000";
-    const String path = "/api/problem-search/";
+    final String baseUrl = "http://127.0.0.1:8000";
+    final String path = "/api/problem-search/";
     List<String> lessons = [
       'algebra',
       'gain',
@@ -402,8 +402,8 @@ class _QuestionsPageState extends State<OneQuestion> {
         box.put(userData.userId, userData); // Assuming userId is unique
 
         // Make API request to update the score on the server
-        const String apiUrl = 'http://10.0.2.2:8000/api/user/scores/';
-        const String apiUrl1 = 'http://10.0.2.2:8000/api/user/history/';
+        const String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
+        const String apiUrl1 = 'http://127.0.0.1:8000/api/user/history/';
 
         final Map<String, dynamic> requestBody = {
           "user_id": userData.userId,
