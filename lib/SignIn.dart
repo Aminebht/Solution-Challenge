@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:app_0/Home.dart';
+import 'package:app_0/Home1.dart';
 import 'package:app_0/SignUp.dart';
 import 'package:app_0/my_data.dart';
 import 'package:app_0/my_data_adapter.dart';
@@ -192,94 +195,65 @@ class _SignInState extends State<SignIn> {
                       height: 49,
                       child: ElevatedButton(
                         onPressed: () async {
-                          // Get email and password from text fields
-                          String email = _emailController.text;
-                          String password = _passwordController.text;
-                          _progressDialog.show(message: 'Signing in...');
                           try {
                             // Perform sign-in
-
+                            // Get email and password from text fields
+                            String email = _emailController.text;
+                            String password = _passwordController.text;
+                            //_progressDialog.show(message: 'Signing in...');
                             print(keepSignedIn);
-                            bool updated = await signInWithEmailAndPassword(
+                            int updated = await signInWithEmailAndPassword(
                                 email, password, keepSignedIn);
+                            print("Taw nrmlmnt yhidi");
+
                             _progressDialog.hide();
+
+                            print('cbn hide zah');
+                            print("\n");
+                            print(updated);
+                            print("\n");
                             // Check if sign-in is successful
-                            if (updated != false) {
-                              // If sign-in is successful, navigate to the home page
+                            if (updated == 0) {
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
                               prefs.setBool('keepSignedIn', keepSignedIn);
 
-                              // Print Hive database content for verification
-                              //await printHiveDatabaseContent();
-
                               Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Home(),
+                                builder: (context) => Home1(),
                               ));
                             } else {
-                              // Handle sign-in failure
-                              if (!updated) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text('Sign-in Failed'),
-                                      content: Text(
-                                          'Check your internet connection.'),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .pop(); // Close the dialog
-                                          },
-                                          child: Text('OK'),
-                                        ),
-                                      ],
-                                    );
-                                  },
+                              if (updated == 2) {
+                                showErrorDialog(
+                                  context,
+                                  'Sign-in Failed',
+                                  'Check your email and password.',
                                 );
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text('Sign-in Failed'),
-                                      content: Text(
-                                          'Check your email and password.'),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .pop(); // Close the dialog
-                                          },
-                                          child: Text('OK'),
-                                        ),
-                                      ],
-                                    );
-                                  },
+                              }
+                              if (updated == 1) {
+                                showErrorDialog(
+                                  context,
+                                  'Connection Error',
+                                  'Check your internet connection.',
                                 );
                               }
                             }
+                          } on DioError catch (e) {
+                            _progressDialog.hide();
+                            showErrorDialog(
+                              context,
+                              'Connection Error',
+                              'Check your internet connection.',
+                            );
+                          } on FirebaseAuthException catch (e) {
+                            _progressDialog.hide();
+                            showErrorDialog(context, 'Authentication Error',
+                                e.message ?? '');
                           } catch (e) {
-                            // Handle exceptions
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Sign-in Failed'),
-                                  content:
-                                      Text('Check your email and password.'),
-                                  actions: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pop(); // Close the dialog
-                                      },
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              },
+                            _progressDialog.hide();
+                            showErrorDialog(
+                              context,
+                              'Sign-in Failed',
+                              'An unexpected error occurred.',
                             );
                           }
                         },
@@ -416,13 +390,12 @@ class _SignInState extends State<SignIn> {
   }
 }
 
-Future<bool> signInWithEmailAndPassword(
-    String email, String password, bool keepSignedIn) async {
+Future<int> signInWithEmailAndPassword(
+  String email,
+  String password,
+  bool keepSignedIn,
+) async {
   try {
-    print('login');
-    print(email);
-    print(password);
-    print(keepSignedIn);
     await Firebase.initializeApp();
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -430,24 +403,38 @@ Future<bool> signInWithEmailAndPassword(
       password: password,
     );
 
-    // If there is a user in the UserCredential, consider it a successful sign-in
     if (userCredential.user != null) {
-      // Update the Hive database
-      Future<bool> updated =
-          updateScoresFromDjango(userCredential.user!.uid, keepSignedIn);
+      bool scoresUpdated =
+          await updateScoresFromDjango(userCredential.user!.uid, keepSignedIn);
 
-      // Print Hive database content for verification
-      await printHiveDatabaseContent();
-
-      return updated; // Return the UserCredential
+      print("scoes are updated $scoresUpdated");
+      if (scoresUpdated)
+        return 0;
+      else
+        return 1; // Only return true if scores were successfully updated
     } else {
-      // Handle sign-in failure
-      throw Exception('Sign-in failed');
+      return 1;
     }
+  } on DioError catch (e) {
+    // Handle DioException separately
+    // Check if it's a connection error
+    if (e.error is SocketException) {
+      print('Connection error during scores update: $e');
+      return 1;
+    } else {
+      // It's another Dio error
+      print('Dio error during scores update: $e');
+      return 1;
+    }
+  } on FirebaseAuthException catch (e) {
+    // Handle FirebaseAuthException
+    print('FirebaseAuthException during sign-in: $e');
+    return 2;
   } catch (e) {
-    print(e.toString());
-    // Handle exceptions
-    throw Exception('Sign-in failed');
+    // Handle other exceptions
+
+    print('Exception during sign-in: $e');
+    return 2;
   }
 }
 
@@ -476,26 +463,43 @@ Future<void> importUserFromFirebase(String userId, bool keepMeSignedIn) async {
   }
 }
 
+void showErrorDialog(BuildContext context, String title, String message) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 Future<bool> updateScoresFromDjango(String userId, bool keepMeSignedIn) async {
+  print('Before API call');
   final url =
       'http://127.0.0.1:8000/api/user/stats/?type=score&user_id=$userId';
+  print('API URL: $url');
+
+  print('After API call');
   try {
+    print("Dkhalt fi try fi django");
     // Replace the URL with your Django API endpoint
     final response = await dio.get(url);
-
+    print("kamalt l api call get");
     if (response.statusCode == 200) {
       // Parse the JSON response
       final Map<String, dynamic> data = response.data;
 
       print(data);
-      Map<String, int> myMap = {
-        'gain': 0,
-        'general': 50,
-        'probability': 10,
-        'geometry': 0,
-        'physics': 90,
-        'other': 70
-      };
 
       // Update user scores in Hive
       await updateHiveDatabase(userId, keepMeSignedIn, data);
@@ -505,8 +509,12 @@ Future<bool> updateScoresFromDjango(String userId, bool keepMeSignedIn) async {
       print('Failed to get scores from Django API');
       return false;
     }
+  } on DioError catch (e) {
+    // Print the Dio error message
+    print('Dio error during scores update: ${e.message}');
+    return false;
   } catch (e) {
-    // Handle exceptions
+    // Handle other exceptions
     print('Exception during scores update: $e');
     return false;
   }
@@ -516,21 +524,8 @@ Future<void> updateHiveDatabase(
     String userId, bool keepMeSignedIn, Map<String, dynamic> userScores) async {
   try {
     var box = await Hive.openBox('testBox');
-    int existingIndex = -1;
 
-    // Check if the user already exists in the Hive database
-    for (var i = 0; i < box.length; i++) {
-      MyData userData = box.getAt(i) as MyData;
-      if (userData.userId == userId) {
-        existingIndex = i;
-        break;
-      }
-    }
-    print(existingIndex);
-    if (existingIndex != -1) {
-      // User exists, delete the existing user
-      box.deleteAt(existingIndex);
-    }
+    box.clear();
 
     // Add the user to the database with scores
     MyData newData = MyData(
