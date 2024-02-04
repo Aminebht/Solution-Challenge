@@ -15,13 +15,15 @@ class Subject {
 }
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Center(
         child: Stats(),
       ),
@@ -30,7 +32,10 @@ class MyApp extends StatelessWidget {
 }
 
 class Stats extends StatefulWidget {
+  const Stats({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _StatsState createState() => _StatsState();
 }
 
@@ -75,7 +80,7 @@ class _StatsState extends State<Stats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF7B31F4),
+      backgroundColor: const Color(0xFF7B31F4),
       body: Padding(
         padding: const EdgeInsets.only(top: 25.0),
         child: SingleChildScrollView(
@@ -88,13 +93,14 @@ class _StatsState extends State<Stats> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center, // Center elements horizontally
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Center elements horizontally
                 children: [
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   Positioned(
                     top: 50,
                     left: (MediaQuery.of(context).size.width - 140) / 2,
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
                       backgroundImage: AssetImage('images/cup.png'),
@@ -102,8 +108,8 @@ class _StatsState extends State<Stats> {
                   ),
                   Column(
                     children: [
-                      SizedBox(height: 30),
-                      Text(
+                      const SizedBox(height: 30),
+                      const Text(
                         'John Doe',
                         style: TextStyle(
                           color: Colors.black,
@@ -111,18 +117,18 @@ class _StatsState extends State<Stats> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       Container(
                         width: 0.84 * MediaQuery.of(context).size.width,
                         height: 400 / 2,
                         decoration: BoxDecoration(
-                          color: Color(0xFFE5D4FF),
+                          color: const Color(0xFFE5D4FF),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Column(
                           children: [
-                            SizedBox(height: 30),
-                            Text(
+                            const SizedBox(height: 30),
+                            const Text(
                               'SELECT A SUBJECT',
                               style: TextStyle(
                                 color: Color(0xFF572CB2),
@@ -130,26 +136,28 @@ class _StatsState extends State<Stats> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: List.generate(
                                 4,
                                 (index) => buildSelectableBox(
                                   index,
-                                  width: 0.84 * MediaQuery.of(context).size.width,
+                                  width:
+                                      0.84 * MediaQuery.of(context).size.width,
                                   height: 400 / 2,
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: List.generate(
                                 4,
                                 (index) => buildSelectableBox(
                                   index + 4,
-                                  width: 0.84 * MediaQuery.of(context).size.width,
+                                  width:
+                                      0.84 * MediaQuery.of(context).size.width,
                                   height: 400 / 2,
                                 ),
                               ),
@@ -159,20 +167,20 @@ class _StatsState extends State<Stats> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   Container(
                     width: 0.84 * MediaQuery.of(context).size.width,
                     height: 596,
                     decoration: BoxDecoration(
-                      color: Color(0xFF7B31F4),
+                      color: const Color(0xFF7B31F4),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Center(
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
                             child: Text(
                               'YOUR LEVEL BY LESSON',
                               style: TextStyle(
@@ -182,94 +190,98 @@ class _StatsState extends State<Stats> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 10),
-                                Container(
-                                  width: double.infinity,
-                                  height: 489,
-                                  child: Stack(
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 489,
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 2),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 2),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            buildDashedIndicator('0%'),
-                                            buildDashedIndicator('25%'),
-                                            buildDashedIndicator('50%'),
-                                            buildDashedIndicator('75%'),
-                                            buildDashedIndicator('100%'),
-                                          ],
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: 0,
-                                        bottom: 60,
-                                        left: 0,
-                                        right: 0,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: List.generate(
-                                            8,
-                                            (index) => Expanded(
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                children: [
-                                                  Row(
-                                                   
-                                                    children: [
-                                                      Row(
-                                                        
-                                                        children :[
-                                                      Container(
-                                                        width: 6,
-                                                        height: 6,
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          shape: BoxShape.circle,
-                                                        ),
-                                                      ),
-                                                      SizedBox(width: 4),
-                                                      Text(
-                                                        'Lesson ${index + 1}',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 10,
-                                                          fontWeight: FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                      ],
-                                                      ),
-                                                      SizedBox(width: 4),
-                                                      Container(
-                                                        width: (3.8 / 5) * (0.84 * MediaQuery.of(context).size.width),
-                                                        height: 27,
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      buildDashedIndicator('0%'),
+                                      buildDashedIndicator('25%'),
+                                      buildDashedIndicator('50%'),
+                                      buildDashedIndicator('75%'),
+                                      buildDashedIndicator('100%'),
                                     ],
                                   ),
                                 ),
-
-
-
-                       
+                                Positioned(
+                                  top: 0,
+                                  bottom: 60,
+                                  left: 0,
+                                  right: 0,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: List.generate(
+                                      8,
+                                      (index) => Expanded(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      width: 6,
+                                                      height: 6,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Colors.white,
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 4),
+                                                    Text(
+                                                      'Lesson ${index + 1}',
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(width: 4),
+                                                Container(
+                                                  width: (3.8 / 5) *
+                                                      (0.84 *
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width),
+                                                  height: 27,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                     
                   ),
                   // Dashed Indicators below all rows
-                 
                 ],
               ),
 
@@ -281,9 +293,12 @@ class _StatsState extends State<Stats> {
     );
   }
 
-  Widget buildSelectableBox(int index, {required double width, required double height}) {
-    double boxWidth = width * 0.2; // Adjusted width based on the container's dimensions
-    double boxHeight = height * 0.25; // Adjusted height based on the container's dimensions
+  Widget buildSelectableBox(int index,
+      {required double width, required double height}) {
+    double boxWidth =
+        width * 0.2; // Adjusted width based on the container's dimensions
+    double boxHeight =
+        height * 0.25; // Adjusted height based on the container's dimensions
 
     return GestureDetector(
       onTap: () {
@@ -302,14 +317,18 @@ class _StatsState extends State<Stats> {
         width: boxWidth,
         height: boxHeight,
         decoration: BoxDecoration(
-          color: selectedBoxIndex == index ? Color(0xFFF78AB1) : Colors.white.withOpacity(0.8),
+          color: selectedBoxIndex == index
+              ? const Color(0xFFF78AB1)
+              : Colors.white.withOpacity(0.8),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
           child: Text(
             subjects[index].name,
             style: TextStyle(
-              color: selectedBoxIndex == index ? Colors.white : Color(0xFF7B31F4),
+              color: selectedBoxIndex == index
+                  ? Colors.white
+                  : const Color(0xFF7B31F4),
               fontSize: 10,
               fontWeight: FontWeight.w600,
             ),
@@ -320,34 +339,34 @@ class _StatsState extends State<Stats> {
   }
 
   Widget buildDashedIndicator(String label) {
-  return Column(
-    children: [
-      Container(
-        width: 1,
-        height: 440,
-        child: Column(
-          children: List.generate(
-           70, // Adjust the number of dashes as needed
-            (index) => Container(
-              width: 1,
-              height: 2, // Adjust the height of each dash
-              margin: EdgeInsets.symmetric(vertical: 2), // Adjust the spacing between dashes
-              color: Colors.white,
+    return Column(
+      children: [
+        SizedBox(
+          width: 1,
+          height: 440,
+          child: Column(
+            children: List.generate(
+              70, // Adjust the number of dashes as needed
+              (index) => Container(
+                width: 1,
+                height: 2, // Adjust the height of each dash
+                margin: const EdgeInsets.symmetric(
+                    vertical: 2), // Adjust the spacing between dashes
+                color: Colors.white,
+              ),
             ),
           ),
         ),
-      ),
-      SizedBox(height: 4),
-      Text(
-        label,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 10,
-          fontWeight: FontWeight.w600,
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-      ),
-    ],
-  );
-}
-
+      ],
+    );
+  }
 }

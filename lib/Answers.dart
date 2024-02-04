@@ -12,7 +12,6 @@ class Answers extends StatefulWidget {
   final List<String> explanations;
   final String lesson;
   final int uprate;
-  // final int score;
 
   Answers({
     required this.stuserAnswers,
@@ -39,7 +38,7 @@ class _AnswersPageState extends State<Answers> {
     screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Color(0xFF7B31F4),
+      backgroundColor: const Color(0xFF7B31F4),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -49,7 +48,7 @@ class _AnswersPageState extends State<Answers> {
                   top: 0.04 * screenHeight,
                   bottom: 0.05 * screenHeight,
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -85,13 +84,13 @@ class _AnswersPageState extends State<Answers> {
         width: 0.8 * screenWidth,
         height: 52,
         decoration: BoxDecoration(
-          color: Color(0xFF7B31F4), // Change the color to 7B31F4
+          color: const Color(0xFF7B31F4), // Change the color to 7B31F4
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
           child: Text(
             numberOfQuestions < 6 ? 'Next' : 'Submit',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,
             ),
@@ -124,7 +123,7 @@ class _AnswersPageState extends State<Answers> {
       try {
         // Make the Dio request
         Response response = await dio.get(
-          'http://127.0.0.1:8000/api/user/history/',
+          'http://10.0.2.2:8000/api/user/history/',
           queryParameters: requestData,
           options: Options(
             headers: {
@@ -139,6 +138,7 @@ class _AnswersPageState extends State<Answers> {
           dynamic responseData = response.data;
 
           // Navigate to the next page or perform the final action
+          // ignore: use_build_context_synchronously
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -194,7 +194,7 @@ class _AnswersPageState extends State<Answers> {
     return SingleChildScrollView(
       child: Container(
         width: 0.9 * screenWidth,
-        padding: EdgeInsets.all(30),
+        padding: const EdgeInsets.all(30),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -207,10 +207,10 @@ class _AnswersPageState extends State<Answers> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    'QUESTION ${numberOfQuestions} OF 6',
-                    style: TextStyle(
+                    'QUESTION $numberOfQuestions OF 6',
+                    style: const TextStyle(
                       color: Color(0xFF979797),
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -220,18 +220,18 @@ class _AnswersPageState extends State<Answers> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Question
             Text(
-              '${question}',
-              style: TextStyle(
+              question,
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20),
-            Row(
+            const SizedBox(height: 20),
+            const Row(
               mainAxisAlignment:
                   MainAxisAlignment.start, // Align to the start (left)
               children: [
@@ -249,16 +249,16 @@ class _AnswersPageState extends State<Answers> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             if (selectedAnswer == correctAnswer)
-              _buildAnswerBox(
-                  selectedAnswer, Colors.white, Color(0xFF53DF83), screenWidth)
+              _buildAnswerBox(selectedAnswer, Colors.white,
+                  const Color(0xFF53DF83), screenWidth)
             else
-              _buildAnswerBox(
-                  selectedAnswer, Colors.white, Color(0xFFE33629), screenWidth),
+              _buildAnswerBox(selectedAnswer, Colors.white,
+                  const Color(0xFFE33629), screenWidth),
 
-            SizedBox(height: 20),
-            Row(
+            const SizedBox(height: 20),
+            const Row(
               mainAxisAlignment:
                   MainAxisAlignment.start, // Align to the start (left)
               children: [
@@ -276,11 +276,11 @@ class _AnswersPageState extends State<Answers> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            _buildAnswerBox(correctAnswer, Color(0xFF53DF83), Color(0xFF53DF83),
-                screenWidth),
-            SizedBox(height: 20),
-            Row(
+            const SizedBox(height: 20),
+            _buildAnswerBox(correctAnswer, const Color(0xFF53DF83),
+                const Color(0xFF53DF83), screenWidth),
+            const SizedBox(height: 20),
+            const Row(
               mainAxisAlignment:
                   MainAxisAlignment.start, // Align to the start (left)
               children: [
@@ -298,9 +298,9 @@ class _AnswersPageState extends State<Answers> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildExplanationBox(explanation, screenWidth),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildSubmitAnswerButton(screenWidth, numberOfQuestions),
           ],
         ),
@@ -311,17 +311,18 @@ class _AnswersPageState extends State<Answers> {
 
 Widget _buildAnswerBox(
     String answer, Color color1, Color color2, double screenWidth) {
-  Color textColor = (color1 == Colors.white && color2 == Color(0xFF53DF83))
-      ? Color(0xFF53DF83)
-      : (color1 == Colors.white && color2 == Color(0xFFE33629))
-          ? Color(0xFFE33629)
-          : Colors.white;
+  Color textColor =
+      (color1 == Colors.white && color2 == const Color(0xFF53DF83))
+          ? const Color(0xFF53DF83)
+          : (color1 == Colors.white && color2 == const Color(0xFFE33629))
+              ? const Color(0xFFE33629)
+              : Colors.white;
   String imagePath =
-      (color2 == Color(0xFFE33629)) ? 'images/no.png' : 'images/tick.png';
+      (color2 == const Color(0xFFE33629)) ? 'images/no.png' : 'images/tick.png';
 
   return Container(
     width: 0.75 * screenWidth,
-    padding: EdgeInsets.only(left: 20, top: 20, bottom: 20, right: 30.0),
+    padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20, right: 30.0),
     decoration: BoxDecoration(
       color: color1,
       borderRadius: BorderRadius.circular(15),
@@ -350,13 +351,13 @@ Widget _buildAnswerBox(
 Widget _buildExplanationBox(String explanation, double screenWidth) {
   return Container(
     width: 0.9 * screenWidth,
-    padding: EdgeInsets.all(20),
-    decoration: BoxDecoration(
+    padding: const EdgeInsets.all(20),
+    decoration: const BoxDecoration(
       color: Colors.white,
     ),
     child: Text(
       explanation,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
         color: Colors.black,

@@ -1,6 +1,5 @@
 import 'package:app_0/Home.dart';
 import 'package:app_0/chooseLesson.dart';
-import 'package:app_0/visualization.dart';
 import 'package:flutter/material.dart';
 
 class ChooseSubject extends StatefulWidget {
@@ -17,14 +16,14 @@ class _ChooseSubjectState extends State<ChooseSubject> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Subject Not Selected'),
-          content: Text('Please select a subject before proceeding.'),
+          title: const Text('Subject Not Selected'),
+          content: const Text('Please select a subject before proceeding.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -37,15 +36,15 @@ class _ChooseSubjectState extends State<ChooseSubject> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Subject Unavailable'),
-          content: Text(
+          title: const Text('Subject Unavailable'),
+          content: const Text(
               'Sorry, lessons for this subject are not available at the moment.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -57,13 +56,13 @@ class _ChooseSubjectState extends State<ChooseSubject> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromRGBO(123, 49, 244, 1.0),
+        color: const Color.fromRGBO(123, 49, 244, 1.0),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 40.0,
                 ),
                 Padding(
@@ -76,7 +75,7 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                         ));
                       },
                       child: Container(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Image.asset(
                           'images/back.png',
                           width: 24.0,
@@ -86,7 +85,7 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                     ),
                   ),
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CircleIndicator(isPink: true),
@@ -96,8 +95,8 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                     CircleIndicator(),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: Text(
                     'Choose a Subject',
                     style: TextStyle(
@@ -110,7 +109,7 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                 ),
                 Card(
                   color: Colors.white,
-                  margin: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
+                  margin: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -119,7 +118,7 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                     child: Column(
                       children: [
                         RadioSelectGrid(
-                          customTexts: [
+                          customTexts: const [
                             'Math',
                             'Physics',
                             'Science',
@@ -137,10 +136,10 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                             });
                           },
                         ),
-                        SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
                         Container(
                           width: double.infinity,
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
                           child: ElevatedButton(
                             onPressed: () {
                               // Check if a radio button is selected
@@ -166,9 +165,10 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: Color.fromRGBO(123, 49, 244, 1.0),
-                              onPrimary: Colors.white,
-                              padding: EdgeInsets.symmetric(
+                              foregroundColor: Colors.white,
+                              backgroundColor:
+                                  const Color.fromRGBO(123, 49, 244, 1.0),
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: 24.0,
                                 vertical: 24.0,
                               ),
@@ -176,7 +176,7 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               'Next',
                               style: TextStyle(
                                 fontSize: 18.0,
@@ -234,7 +234,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
       children: [
         GridView.builder(
           shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 25.0,
             crossAxisSpacing: 25.0,
@@ -255,8 +255,8 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
               child: Container(
                 decoration: BoxDecoration(
                   color: selectedChoice == index
-                      ? Color.fromRGBO(247, 138, 177, 1.0)
-                      : Color.fromRGBO(229, 212, 255, 1.0),
+                      ? const Color.fromRGBO(247, 138, 177, 1.0)
+                      : const Color.fromRGBO(229, 212, 255, 1.0),
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Padding(
@@ -265,10 +265,10 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 75,
-                        height: 75,
+                        width: 0.17 * screenWidth,
+                        height: 0.17 * screenWidth,
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(255, 255, 255, 0.5),
+                          color: const Color.fromRGBO(255, 255, 255, 0.5),
                           borderRadius: BorderRadius.circular(18),
                         ),
                         child: Center(
@@ -279,13 +279,13 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 4.0),
+                      const SizedBox(height: 4.0),
                       Text(
                         widget.customTexts[index],
                         style: TextStyle(
                           color: selectedChoice == index
                               ? Colors.white
-                              : Color.fromRGBO(123, 49, 244, 1.0),
+                              : const Color.fromRGBO(123, 49, 244, 1.0),
                           fontSize: fontSize,
                           fontWeight: FontWeight.bold,
                         ),
