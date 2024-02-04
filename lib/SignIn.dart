@@ -525,7 +525,18 @@ Future<void> updateHiveDatabase(
   try {
     var box = await Hive.openBox('testBox');
 
-    box.clear();
+    // Check if the box is not empty
+    if (box.isNotEmpty) {
+      // Get the index of the last item
+      final lastIndex = box.length - 1;
+
+      // Delete the last item
+      await box.deleteAt(lastIndex);
+      print("Deleted last row in box");
+    }
+
+    // Close the box
+    //await box.close();
 
     // Add the user to the database with scores
     MyData newData = MyData(

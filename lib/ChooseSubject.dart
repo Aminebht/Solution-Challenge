@@ -1,5 +1,6 @@
 import 'package:app_0/Home.dart';
 import 'package:app_0/chooseLesson.dart';
+import 'package:app_0/visualization.dart';
 import 'package:flutter/material.dart';
 
 class ChooseSubject extends StatefulWidget {
