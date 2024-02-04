@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:app_0/SignIn.dart';
@@ -251,10 +253,12 @@ class SignUp extends StatelessWidget {
                             // Get values from text fields
                             String email = emailController.text;
                             String password = passwordController.text;
+                            String firstName = firstNameController.text;
+                            String lastName = lastNameController.text;
 
                             // Call the registration function with email and password
                             registerWithEmailAndPassword(
-                                context, email, password);
+                                context, email, password, firstName, lastName);
 
                             // Navigate or perform other actions...
                             Navigator.of(context).push(MaterialPageRoute(
@@ -318,7 +322,9 @@ class SignUp extends StatelessWidget {
     // Add validation logic for required fields
     if (emailController.text.isEmpty ||
         passwordController.text.isEmpty ||
-        confirmPasswordController.text.isEmpty) {
+        confirmPasswordController.text.isEmpty ||
+        firstNameController.text.isEmpty ||
+        lastNameController.text.isEmpty) {
       // Show an error message or handle it as needed
       _showErrorPopup(context, 'Please fill in all required fields.');
       return false;
@@ -369,8 +375,8 @@ class SignUp extends StatelessWidget {
     );
   }
 
-  Future<void> registerWithEmailAndPassword(
-      BuildContext context, String email, String password) async {
+  Future<void> registerWithEmailAndPassword(BuildContext context, String email,
+      String password, String firstName, String lastName) async {
     bool isFirebaseUserCreated = false;
 
     try {
@@ -390,9 +396,14 @@ class SignUp extends StatelessWidget {
 
       // If Firebase registration is successful, send user data to your server
       final User? user = authResult.user;
+      String displayName = firstName + " " + lastName;
+      await user?.updateDisplayName(displayName);
+
+      print('User registration successful with display name: $displayName');
+
       if (user != null) {
         // Replace 'https://your-api-endpoint.com/create_user' with your actual API endpoint
-        final String apiUrl = 'http://10.0.2.2:8000/api/user/scores/';
+        final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
 
         // Replace this with the actual data you want to send to your server
         final Map<String, dynamic> userData = {

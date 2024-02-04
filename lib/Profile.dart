@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app_0/Home1.dart';
 import 'package:app_0/SignIn.dart';
 import 'package:app_0/my_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -219,14 +220,20 @@ class _ProfileState extends State<Profile> {
   List<Widget> pages = [Home1(), Profile(), Profile()];
   late ImagePicker _imagePicker;
   late File _pickedFile;
-  String name = 'Ayoub mkadmi';
+  User? user = FirebaseAuth.instance.currentUser;
+  String name = 'No Display Name';
   String email = 'mkadmi@gmail.com';
-
   @override
   void initState() {
     super.initState();
     _imagePicker = ImagePicker();
     _pickedFile = File('');
+    if (user != null) {
+      name = user?.displayName ?? 'No Display Name';
+      print('Display Name: $name');
+    } else {
+      print('User not signed in');
+    }
   }
 
   @override
@@ -545,10 +552,39 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void updateName(String newName) {
-    setState(() {
-      name = newName;
-    });
+  Future<void> updateName(String newName) async {
+    try {
+      if (user != null) {
+        await user?.updateDisplayName(newName);
+        setState(() {
+          name = newName;
+        });
+
+        // Display a dialog to inform the user about the name update
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Name Updated'),
+              content: Text('Display Name updated to: $newName'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+
+        print('Display Name updated to: $newName');
+      }
+    } catch (e) {
+      print('Error updating display name: $e');
+      // Handle error accordingly
+    }
   }
 
   void updateEmail(String newEmail) {
