@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
+import 'package:app_0/my_data.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:app_0/DoneQuestions.dart';
+import 'package:hive/hive.dart';
 
 class Answers extends StatefulWidget {
   final List<String> stuserAnswers;
@@ -12,6 +14,7 @@ class Answers extends StatefulWidget {
   final List<String> explanations;
   final String lesson;
   final int uprate;
+  final int lnew;
 
   Answers({
     required this.stuserAnswers,
@@ -20,6 +23,7 @@ class Answers extends StatefulWidget {
     required this.explanations,
     required this.lesson,
     required this.uprate,
+    required this.lnew,
   });
   @override
   _AnswersPageState createState() => _AnswersPageState();
@@ -43,6 +47,31 @@ class _AnswersPageState extends State<Answers> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(
+                height: 40.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      if (numberOfQuestions > 1) {
+                        setState(() {
+                          numberOfQuestions--;
+                        });
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'images/back.png',
+                        width: 24.0,
+                        height: 24.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.only(
                   top: 0.04 * screenHeight,
@@ -109,11 +138,17 @@ class _AnswersPageState extends State<Answers> {
     } else {
       int countTimeouts =
           widget.stuserAnswers.where((answer) => answer == 'Timer Out').length;
+      var box = await Hive.openBox('testBox');
+      MyData? userData = box.values.last;
+
+      // Ensure userData and the selected category exist before proceeding
+
+      String user = userData!.userId;
 
       // Prepare data for the Dio request
       Map<String, dynamic> requestData = {
-        'user_id': '8qaXEQQVQmMfeVaFGWanlVNzyAX2',
-        'category': 'total_gain',
+        'user_id': user,
+        'category': "total_" + widget.lesson,
         // Add any other necessary data
       };
 
@@ -123,7 +158,7 @@ class _AnswersPageState extends State<Answers> {
       try {
         // Make the Dio request
         Response response = await dio.get(
-          'http://10.0.2.2:8000/api/user/history/',
+          'http://127.0.0.1:8000/api/user/history/',
           queryParameters: requestData,
           options: Options(
             headers: {
@@ -149,7 +184,7 @@ class _AnswersPageState extends State<Answers> {
                 selectedLesson: widget.lesson,
                 totalQuizDone: responseData,
                 uprate: widget.uprate,
-                // Pass any additional data from the response if needed
+                lnew: widget.lnew,
               ),
             ),
           );

@@ -2,7 +2,10 @@
 import 'dart:ui';
 import 'package:app_0/DoneOneQuestion.dart';
 import 'package:app_0/Home.dart';
+import 'package:app_0/my_data.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class OneAnswer extends StatefulWidget {
   final String selectedAnswer;
@@ -177,18 +180,60 @@ class _AnswersPageState extends State<OneAnswer> {
 
   Widget _buildSubmitAnswerButton(BuildContext context, double screenWidth) {
     return GestureDetector(
-      onTap: () {
-        print("Men page l anwer printit l uprate");
-        print(widget.up);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => DoneOneQuestion(
-                    selectedLesson: widget.lesson,
-                    uprate: widget.up,
-                    totalQuizDone: 40,
-                  )),
-        );
+      onTap: () async {
+        var box = await Hive.openBox('testBox');
+        MyData? userData = box.values.last;
+
+        // Ensure userData and the selected category exist before proceeding
+
+        String user = userData!.userId;
+
+        // Prepare data for the Dio request
+        Map<String, dynamic> requestData = {
+          'user_id': user,
+          'category': "total_" + widget.lesson,
+          // Add any other necessary data
+        };
+
+        // Create Dio instance
+        Dio dio = Dio();
+
+        try {
+          // Make the Dio request
+          Response response = await dio.get(
+            'http://127.0.0.1:8000/api/user/history/',
+            queryParameters: requestData,
+            options: Options(
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            ),
+          );
+
+          // Check if the request was successful (status code 200)
+          if (response.statusCode == 200) {
+            // Parse the response if needed
+            dynamic responseData = response.data;
+
+            // Navigate to the next page or perform the final action
+            // ignore: use_build_context_synchronously
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DoneOneQuestion(
+                        selectedLesson: widget.lesson,
+                        uprate: widget.up,
+                        totalQuizDone: responseData,
+                      )),
+            );
+          } else {
+            // Handle the case where the request was not successful
+            print('Error: ${response.statusCode}');
+          }
+        } catch (error) {
+          // Handle any Dio errors
+          print('Dio error: $error');
+        }
       },
       child: Container(
         width: 0.8 * screenWidth,

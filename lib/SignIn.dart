@@ -200,7 +200,7 @@ class _SignInState extends State<SignIn> {
                             // Get email and password from text fields
                             String email = _emailController.text;
                             String password = _passwordController.text;
-                            //_progressDialog.show(message: 'Signing in...');
+                            _progressDialog.show(message: 'Signing in...');
                             print(keepSignedIn);
                             int updated = await signInWithEmailAndPassword(
                                 email, password, keepSignedIn);

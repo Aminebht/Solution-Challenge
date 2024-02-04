@@ -1,4 +1,5 @@
 import 'package:app_0/Home.dart';
+import 'package:app_0/Home1.dart';
 import 'package:app_0/chooseLesson.dart';
 import 'package:flutter/material.dart';
 
@@ -71,7 +72,7 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Home(),
+                          builder: (context) => Home1(),
                         ));
                       },
                       child: Container(

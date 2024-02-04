@@ -1,3 +1,4 @@
+import 'package:app_0/Home1.dart';
 import 'package:app_0/home.dart';
 import 'package:flutter/material.dart';
 
@@ -97,7 +98,7 @@ class DoneOneQuestion extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Home(),
+                            builder: (context) => Home1(),
                           ),
                         );
                       },

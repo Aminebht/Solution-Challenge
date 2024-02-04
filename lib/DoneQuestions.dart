@@ -1,3 +1,4 @@
+import 'package:app_0/Home1.dart';
 import 'package:app_0/home.dart';
 import 'package:app_0/main.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ class DoneQuestions extends StatelessWidget {
   final String selectedLesson;
   final int totalQuizDone;
   final int uprate;
-
+  final int lnew;
   DoneQuestions({
     required this.numberOfCorrectAnswers,
     required this.numberOfTimeOut,
@@ -17,6 +18,7 @@ class DoneQuestions extends StatelessWidget {
     required this.selectedLesson,
     required this.totalQuizDone,
     required this.uprate,
+    required this.lnew,
   });
 
   @override
@@ -24,8 +26,13 @@ class DoneQuestions extends StatelessWidget {
     double accuracy = (numberOfCorrectAnswers / 6 * 100).truncateToDouble();
     String chaine;
     int score = uprate;
-    accuracy >= 50 ? chaine = 'Increased' : chaine = 'decreased';
 
+    ;
+    lnew == 1
+        ? chaine = 'is Set to'
+        : accuracy >= 50
+            ? chaine = 'Increased with'
+            : chaine = 'decreased with';
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -63,7 +70,7 @@ class DoneQuestions extends StatelessWidget {
                     Container(
                       width: 290,
                       child: Text(
-                        'Your Score in "$selectedLesson" $chaine with  $score%',
+                        'Your Score in "$selectedLesson" $chaine $score%',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -78,7 +85,7 @@ class DoneQuestions extends StatelessWidget {
               ),
               SizedBox(height: 50),
               Text(
-                'You Did +$totalQuizDone Quiz',
+                'You Did +${totalQuizDone} Quiz',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
@@ -125,7 +132,7 @@ class DoneQuestions extends StatelessWidget {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Home(),
+                          builder: (context) => Home1(),
                         ),
                       );
                     },

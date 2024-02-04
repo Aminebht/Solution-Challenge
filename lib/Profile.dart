@@ -2,6 +2,7 @@ import 'dart:io' if (dart.library.html) 'dart:html' as html;
 import 'dart:io';
 import 'package:app_0/Home1.dart';
 import 'package:app_0/SignIn.dart';
+import 'package:app_0/Stats.dart';
 import 'package:app_0/my_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -127,6 +128,11 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                     onPressed: () {
                       // Perform your stats logic here
                       Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => Stats(),
+                        ),
+                      );
                     },
                     child: Text('Your Stats'),
                   ),

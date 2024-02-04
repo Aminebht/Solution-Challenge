@@ -1,5 +1,6 @@
 import 'package:app_0/ChooseForm.dart';
 import 'package:app_0/ChooseSubject.dart';
+import 'package:app_0/SignIn.dart';
 import 'package:app_0/my_data.dart';
 import 'package:app_0/questions.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,29 @@ class _ChooseLessonState extends State<ChooseLesson> {
     setState(() {
       selectedChoice = choice;
     });
+  }
+
+  void showErrorDialog(BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SignIn(),
+                ));
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -176,6 +200,11 @@ class _ChooseLessonState extends State<ChooseLesson> {
                                       }
                                     } else {
                                       print("Error: Hive box is empty");
+                                      showErrorDialog(
+                                        context,
+                                        'Error',
+                                        'User not Signed In correctly..\nPlease Sign In again',
+                                      );
                                     }
                                   }
                                 } catch (e) {

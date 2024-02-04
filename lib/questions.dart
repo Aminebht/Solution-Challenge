@@ -649,7 +649,8 @@ class _QuestionsPageState extends State<Questions> {
                 problems: problems,
                 explanations: explanations,
                 lesson: lessons[widget.selectedChoice],
-                uprate: up),
+                uprate: up,
+                lnew: widget.lnew),
           ),
         );
       }
