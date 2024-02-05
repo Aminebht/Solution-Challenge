@@ -154,7 +154,7 @@ class _HomeState extends State<Home1> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
+        //shape: const CircularNotchedRectangle(),
         child: SafeArea(
           child: Container(
             height: 60.0,

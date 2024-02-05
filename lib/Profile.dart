@@ -127,16 +127,15 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                   ElevatedButton(
                     onPressed: () {
                       // Perform your stats logic here
-                      Navigator.of(context).pop();
+                      /* Navigator.of(context).pop();
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => Stats(),
+                          builder: (context) => Stats(url:_pickedFile.path,name:name),
                         ),
-                      );
+                      );*/
                     },
                     child: Text('Your Stats'),
                   ),
-                // if (widget.name == 'Your Stats') {/*go to stats page*/},
               ],
             ),
           ),
@@ -227,7 +226,7 @@ class _ProfileState extends State<Profile> {
   late ImagePicker _imagePicker;
   late File _pickedFile;
   User? user = FirebaseAuth.instance.currentUser;
-  String name = 'No Display Name';
+  String Username = 'No Display Name';
   String email = 'mkadmi@gmail.com';
   @override
   void initState() {
@@ -235,8 +234,8 @@ class _ProfileState extends State<Profile> {
     _imagePicker = ImagePicker();
     _pickedFile = File('');
     if (user != null) {
-      name = user?.displayName ?? 'No Display Name';
-      print('Display Name: $name');
+      Username = user?.displayName ?? 'No Display Name';
+      print('Display Name: $Username');
     } else {
       print('User not signed in');
     }
@@ -310,7 +309,7 @@ class _ProfileState extends State<Profile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '$name',
+                          '$Username',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -448,6 +447,12 @@ class _ProfileState extends State<Profile> {
         } else if (name == 'Your Stats') {
           // Perform your stats logic here
           Navigator.of(context).pop();
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) =>
+                  Stats(url: _pickedFile.path, name: Username),
+            ),
+          );
         }
       },
       child: Container(
@@ -563,7 +568,7 @@ class _ProfileState extends State<Profile> {
       if (user != null) {
         await user?.updateDisplayName(newName);
         setState(() {
-          name = newName;
+          Username = newName;
         });
 
         // Display a dialog to inform the user about the name update
