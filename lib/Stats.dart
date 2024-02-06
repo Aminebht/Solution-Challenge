@@ -1,4 +1,5 @@
 // Data model classes
+import 'package:app_0/Home1.dart';
 import 'package:app_0/my_data.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -145,82 +146,232 @@ class _StatsState extends State<Stats> {
     return Scaffold(
       backgroundColor: const Color(0xFF7B31F4),
       body: Padding(
-        padding: const EdgeInsets.only(top: 25.0),
+        padding: const EdgeInsets.only(top: 10.0),
         child: SingleChildScrollView(
-          child: Center(
-            child: Container(
-              width: 0.92 * MediaQuery.of(context).size.width,
-              height: 1100,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 50),
-                  Positioned(
-                    top: 50,
-                    left: (MediaQuery.of(context).size.width - 140) / 2,
-                    child: const CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage('images/cup.png'),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home1(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'images/back.png',
+                        width: 24.0,
+                        height: 24.0,
+                      ),
                     ),
                   ),
-                  Column(
+                ),
+              ),
+              SizedBox(height: 20),
+              Center(
+                child: Container(
+                  width: 0.92 * MediaQuery.of(context).size.width,
+                  height: 1100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 30),
-                      const Text(
-                        'John Doe',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      const SizedBox(height: 50),
+                      Positioned(
+                        top: 50,
+                        left: (MediaQuery.of(context).size.width - 140) / 2,
+                        child: const CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.white,
+                          backgroundImage: AssetImage('images/cup.png'),
                         ),
                       ),
-                      const SizedBox(height: 30),
+                      Column(
+                        children: [
+                          const SizedBox(height: 30),
+                          const Text(
+                            'John Doe',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          Container(
+                            width: 0.84 * MediaQuery.of(context).size.width,
+                            height: 400 / 2,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE5D4FF),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 30),
+                                const Text(
+                                  'SELECT A SUBJECT',
+                                  style: TextStyle(
+                                    color: Color(0xFF572CB2),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: List.generate(
+                                    4,
+                                    (index) => buildSelectableBox(
+                                      index,
+                                      width: 0.84 *
+                                          MediaQuery.of(context).size.width,
+                                      height: 400 / 2,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: List.generate(
+                                    4,
+                                    (index) => buildSelectableBox(
+                                      index + 4,
+                                      width: 0.84 *
+                                          MediaQuery.of(context).size.width,
+                                      height: 400 / 2,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 40),
                       Container(
+                        padding: EdgeInsets.all(30),
                         width: 0.84 * MediaQuery.of(context).size.width,
-                        height: 400 / 2,
+                        height: 596,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE5D4FF),
+                          color: const Color(0xFF7B31F4),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Column(
+                        child: Stack(
                           children: [
-                            const SizedBox(height: 30),
-                            const Text(
-                              'SELECT A SUBJECT',
-                              style: TextStyle(
-                                color: Color(0xFF572CB2),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                bottom: 30,
                               ),
-                            ),
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: List.generate(
-                                4,
-                                (index) => buildSelectableBox(
-                                  index,
-                                  width:
-                                      0.84 * MediaQuery.of(context).size.width,
-                                  height: 400 / 2,
+                              child: Text(
+                                'YOUR LEVEL BY LESSON',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: List.generate(
-                                4,
-                                (index) => buildSelectableBox(
-                                  index + 4,
-                                  width:
-                                      0.84 * MediaQuery.of(context).size.width,
-                                  height: 400 / 2,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 60),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  buildDashedIndicator('0%'),
+                                  buildDashedIndicator('25%'),
+                                  buildDashedIndicator('50%'),
+                                  buildDashedIndicator('75%'),
+                                  buildDashedIndicator('100%'),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 489,
+                              child: Positioned(
+                                top: 0,
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: List.generate(
+                                        8,
+                                        (index) => Expanded(
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  width: 6,
+                                                  height: 6,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Colors.white,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 4),
+                                                Text(
+                                                  '${subjects[0].lessons[index].name}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ]),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: List.generate(
+                                        8,
+                                        (index) => Expanded(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: (3.3 / 5) *
+                                                    (0.84 *
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width) *
+                                                    scores[index] /
+                                                    100,
+                                                height: 27,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: rectangleColors[index],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -229,125 +380,9 @@ class _StatsState extends State<Stats> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 40),
-                  Container(
-                    padding: EdgeInsets.all(30),
-                    width: 0.84 * MediaQuery.of(context).size.width,
-                    height: 596,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF7B31F4),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 30,
-                          ),
-                          child: Text(
-                            'YOUR LEVEL BY LESSON',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 60),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              buildDashedIndicator('0%'),
-                              buildDashedIndicator('25%'),
-                              buildDashedIndicator('50%'),
-                              buildDashedIndicator('75%'),
-                              buildDashedIndicator('100%'),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 489,
-                          child: Positioned(
-                            top: 0,
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: List.generate(
-                                    8,
-                                    (index) => Expanded(
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              width: 6,
-                                              height: 6,
-                                              decoration: const BoxDecoration(
-                                                color: Colors.white,
-                                                shape: BoxShape.circle,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 4),
-                                            Text(
-                                              '${subjects[0].lessons[index].name}',
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                          ]),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: List.generate(
-                                    8,
-                                    (index) => Expanded(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            width: (3.3 / 5) *
-                                                (0.84 *
-                                                    MediaQuery.of(context)
-                                                        .size
-                                                        .width) *
-                                                scores[index] /
-                                                100,
-                                            height: 27,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: rectangleColors[index],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

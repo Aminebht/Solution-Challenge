@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
 import 'package:app_0/Answers.dart';
+import 'package:app_0/Home1.dart';
 import 'package:app_0/my_data.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -65,7 +66,7 @@ class _QuestionsPageState extends State<Questions> {
   }
 
   void fetchQuestionsFromAPI() async {
-    final String baseUrl = "http://10.0.2.2:8000";
+    final String baseUrl = "http://127.0.0.1:8000";
     final String path = "/api/problem-search/";
 
     final Map<String, dynamic> queryParams = {
@@ -310,8 +311,9 @@ class _QuestionsPageState extends State<Questions> {
         if (choice == 'Pause Timer') {
           pauseTimer();
         } else if (choice == 'Exit') {
+          _timer.cancel();
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Home(),
+            builder: (context) => Home1(),
           ));
         }
       },
@@ -693,14 +695,14 @@ class _QuestionsPageState extends State<Questions> {
         box.put(userData.userId, userData); // Assuming userId is unique
 
         // Make API request to update the score on the server
-        final String apiUrl = 'http://10.0.2.2:8000/api/user/scores/';
-        final String apiUrl1 = 'http://10.0.2.2:8000/api/user/history/';
+        final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
+        final String apiUrl1 = 'http://127.0.0.1:8000/api/user/history/';
 
         Dio dio = Dio();
 
         // Fetch user history
         Response historyResponse = await dio.get(
-          'http://10.0.2.2:8000/api/user/history/',
+          'http://127.0.0.1:8000/api/user/history/',
           queryParameters: {
             'user_id': userData.userId,
             'category': "total_$selectedCategory",

@@ -227,7 +227,7 @@ class _ProfileState extends State<Profile> {
   late File _pickedFile;
   User? user = FirebaseAuth.instance.currentUser;
   String Username = 'No Display Name';
-  String email = 'mkadmi@gmail.com';
+  String email = 'Not Signed In';
   @override
   void initState() {
     super.initState();
@@ -235,6 +235,7 @@ class _ProfileState extends State<Profile> {
     _pickedFile = File('');
     if (user != null) {
       Username = user?.displayName ?? 'No Display Name';
+      email = user?.email ?? 'Not Signed In';
       print('Display Name: $Username');
     } else {
       print('User not signed in');

@@ -11,8 +11,9 @@ class Home1 extends StatefulWidget {
 
 class _HomeState extends State<Home1> {
   int _currentIndex = 0;
+  List<String> lasts = ['salem2', 'salem2', 'salem2'];
 
-  List<Widget> pages = [Profile(), Profile(), Profile()];
+  List<Widget> pages = [Home1(), Profile(), Profile()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,45 +106,21 @@ class _HomeState extends State<Home1> {
                     ),
                     SizedBox(
                       height: 140,
-                      child: ListView(
+                      child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          QuizItem(
-                            title: 'Title 1',
-                            imageUrl: 'https://example.com/your_image_url1.png',
-                            subtitle: 'Subtitle 1',
-                          ),
-                          QuizItem(
-                            title: 'Title 2',
-                            imageUrl: 'https://example.com/your_image_url2.png',
-                            subtitle: 'Subtitle 2',
-                          ),
-                          QuizItem(
-                            title: 'Title 2',
-                            imageUrl: 'https://example.com/your_image_url2.png',
-                            subtitle: 'Subtitle 2',
-                          ),
-                          QuizItem(
-                            title: 'Title 2',
-                            imageUrl: 'https://example.com/your_image_url2.png',
-                            subtitle: 'Subtitle 2',
-                          ),
-                          QuizItem(
-                            title: 'Title 2',
-                            imageUrl: 'https://example.com/your_image_url2.png',
-                            subtitle: 'Subtitle 2',
-                          ),
-                          QuizItem(
-                            title: 'Title 2',
-                            imageUrl: 'https://example.com/your_image_url2.png',
-                            subtitle: 'Subtitle 2',
-                          ),
-                          QuizItem(
-                            title: 'Title 2',
-                            imageUrl: 'https://example.com/your_image_url2.png',
-                            subtitle: 'Subtitle 2',
-                          ),
-                        ],
+                        itemCount:
+                            lasts.length, // Dynamically set the number of items
+                        itemBuilder: (BuildContext context, int index) {
+                          return QuizItem(
+                            title: lasts[index],
+                            imageUrl:
+                                'https://example.com/your_image_url$index.png',
+                            subtitle: 'Subtitle $index',
+                            onTap: () {
+                              print('QuizItem $index tapped!');
+                            },
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -209,57 +186,64 @@ class QuizItem extends StatelessWidget {
   final String title;
   final String imageUrl;
   final String subtitle;
+  final VoidCallback onTap;
 
   QuizItem(
-      {required this.title, required this.imageUrl, required this.subtitle});
+      {required this.title,
+      required this.imageUrl,
+      required this.subtitle,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 174,
-      decoration: BoxDecoration(
-        color: const Color(0xFFE5D4FF),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      margin: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Color(0xFF572CB2),
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Container(
-            width: 39,
-            height: 39,
-            decoration: BoxDecoration(
-              color: const Color(0xFF7B31F4).withOpacity(0.5),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Center(
-              child: Image.asset(
-                'images/gain.png',
-                width: 16,
-                height: 16,
+    return GestureDetector(
+      onTap: onTap, // Call the onTap callback when the item is tapped
+      child: Container(
+        width: 174,
+        decoration: BoxDecoration(
+          color: const Color(0xFFE5D4FF),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                color: Color(0xFF572CB2),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
               ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              color: Color(0xFF572CB2),
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+            const SizedBox(height: 8),
+            Container(
+              width: 39,
+              height: 39,
+              decoration: BoxDecoration(
+                color: const Color(0xFF7B31F4).withOpacity(0.5),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Image.asset(
+                  'images/gain.png',
+                  width: 16,
+                  height: 16,
+                ),
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 8),
+            Text(
+              subtitle,
+              style: const TextStyle(
+                color: Color(0xFF572CB2),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
