@@ -27,7 +27,9 @@ class DoneQuestions extends StatelessWidget {
     int score = uprate;
     accuracy >= 50 ? chaine = 'Increased' : chaine = 'decreased';
 
-    return SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: const Color(0xFFFEF6FF),
+      body:SingleChildScrollView( 
       child: Column(
         children: [
           Column(
@@ -169,6 +171,7 @@ class DoneQuestions extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 

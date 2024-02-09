@@ -486,7 +486,7 @@ void showErrorDialog(BuildContext context, String title, String message) {
 Future<bool> updateScoresFromDjango(String userId, bool keepMeSignedIn) async {
   print('Before API call');
   final url =
-      'http://127.0.0.1:8000/api/user/stats/?type=score&user_id=$userId';
+      'http://10.0.2.2:8000/api/user/stats/?type=score&user_id=$userId';
   print('API URL: $url');
 
   print('After API call');

@@ -200,7 +200,7 @@ class _AnswersPageState extends State<OneAnswer> {
         try {
           // Make the Dio request
           Response response = await dio.get(
-            'http://127.0.0.1:8000/api/user/history/',
+            'http://10.0.2.2:8000/api/user/history/',
             queryParameters: requestData,
             options: Options(
               headers: {
