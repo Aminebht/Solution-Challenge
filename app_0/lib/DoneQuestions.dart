@@ -24,8 +24,8 @@ class DoneQuestions extends StatelessWidget {
     double accuracy = (numberOfCorrectAnswers / 6 * 100).truncateToDouble();
     String chaine;
     int score = uprate;
-    (lnew == 1)
-        ? chaine = 'Is set to'
+    lnew == 1
+        ? chaine = 'is Set to'
         : accuracy >= 50
             ? chaine = 'Increased with'
             : chaine = 'decreased with';
@@ -61,9 +61,11 @@ class DoneQuestions extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        accuracy >= 50
+                        lnew == 1
                             ? 'images/good.png'
-                            : 'images/not_bad.png',
+                            : accuracy >= 50
+                                ? 'images/good.png'
+                                : 'images/not_bad.png',
                         height: 173.6,
                         width: 150,
                       ),
@@ -223,16 +225,12 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-  title: Text('How was the difficulty?', style: TextStyle(fontSize: 18)),
-  content: Container(
-    width: 300, // Set the width to maximum
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Stack(
-          alignment: Alignment.center,
+      title: Text('How was the difficulty?', style: TextStyle(fontSize: 18)),
+      content: Container(
+        width: 300, // Set the width to maximum
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-<<<<<<< HEAD
             Stack(
               alignment: Alignment.center,
               children: [
@@ -299,65 +297,5 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
             BorderRadius.circular(15.0), // Set BorderRadius for AlertDialog
       ),
     );
-=======
-            Slider(
-              value: difficultyValue,
-              min: -1,
-              max: 1,
-              divisions: 4,
-              onChanged: (value) {
-                setState(() {
-                  difficultyValue = value;
-                });
-              },
-              activeColor: Color(0xFF7B31F4),
-              label: difficultyValue.toString(),
-            ),
-            Positioned(
-              top: 35,
-              left: 12,
-              child: Text('Easy', style: TextStyle(color: Colors.grey, fontSize: 12)),
-            ),
-            Positioned(
-              top: 35,
-              left: 122,
-              child: Text('Suits Me', style: TextStyle(color: Colors.grey, fontSize: 12)),
-            ),
-            Positioned(
-              top: 35,
-              right: 0,
-              child: Text('Very Hard', style: TextStyle(color: Colors.grey, fontSize: 12)),
-            ),
-          ],
-        ),
-        SizedBox(height: 20),
-        Align(
-          alignment: Alignment.center,
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => Home(),
-                ),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF7B31F4), // Set button color to match slider
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0), // Set BorderRadius
-              ),
-            ),
-            child: Text('Submit'),
-          ),
-        ),
-      ],
-    ),
-  ),
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(15.0), // Set BorderRadius for AlertDialog
-  ),
-);
-
->>>>>>> 0153df2134670e7998aefc68867bda2791726278
   }
 }
