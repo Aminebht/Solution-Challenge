@@ -1,6 +1,7 @@
 //import 'dart:js';
 import 'dart:ui';
 import 'package:app_0/DoneOneQuestion.dart';
+import 'package:app_0/api_urls.dart';
 import 'package:app_0/my_data.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class _AnswersPageState extends State<OneAnswer> {
       String selectedAnswer, String correctAnswer, String explanation) {
     return SingleChildScrollView(
       child: Container(
-        width:  screenWidth,
+        width: screenWidth,
         padding: const EdgeInsets.all(30),
         decoration: BoxDecoration(
           color: Color(0xFFFEF6FF),
@@ -200,7 +201,7 @@ class _AnswersPageState extends State<OneAnswer> {
         try {
           // Make the Dio request
           Response response = await dio.get(
-            'http://10.0.2.2:8000/api/user/history/',
+            '${APIUrls.userhistoryURL}',
             queryParameters: requestData,
             options: Options(
               headers: {

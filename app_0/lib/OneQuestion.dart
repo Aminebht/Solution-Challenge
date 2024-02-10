@@ -1,4 +1,5 @@
 import 'package:app_0/OneAnswer.dart';
+import 'package:app_0/api_urls.dart';
 import 'package:app_0/my_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -100,42 +101,41 @@ class _QuestionsPageState extends State<OneQuestion> {
   Widget _buildBottomBox(double screenHeight, double screenWidth) {
     String question = problem;
     //double boxHeight = screenHeight * 0.7;
-    double boxWidth = screenWidth ;
+    double boxWidth = screenWidth;
 
     return Container(
-        width: boxWidth,
-        padding: EdgeInsets.all(30),
-        decoration: BoxDecoration(
-          color: Color(0xFFFEF6FF),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _buildTimer(),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.0),
-              child: Container(
-                // Wrap the Text widget with Container
-                margin:
-                    EdgeInsets.only(bottom: 10), // Adjust the margin as needed
-                child: Text(
-                  '$question',
-                  style: TextStyle(
-                    color: Color(0xFF1F1926),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.justify,
+      width: boxWidth,
+      padding: EdgeInsets.all(30),
+      decoration: BoxDecoration(
+        color: Color(0xFFFEF6FF),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _buildTimer(),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 20.0),
+            child: Container(
+              // Wrap the Text widget with Container
+              margin:
+                  EdgeInsets.only(bottom: 10), // Adjust the margin as needed
+              child: Text(
+                '$question',
+                style: TextStyle(
+                  color: Color(0xFF1F1926),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.justify,
               ),
             ),
-            _buildSelectableBoxes(),
-            _buildSubmitAnswerButton(),
-          ],
-        ),
-      );
-    
+          ),
+          _buildSelectableBoxes(),
+          _buildSubmitAnswerButton(),
+        ],
+      ),
+    );
   }
 
   Widget _buildTimer() {
@@ -198,7 +198,8 @@ class _QuestionsPageState extends State<OneQuestion> {
         width: 0.9 * screenWidth,
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: selectedAnswer == index ? Color(0xFFE5D4FF) : Color(0xFFFEF6FF),
+          color:
+              selectedAnswer == index ? Color(0xFFE5D4FF) : Color(0xFFFEF6FF),
           border: Border.all(color: Color(0xFFD7D7D7)),
           borderRadius: BorderRadius.circular(15),
         ),
@@ -246,8 +247,8 @@ class _QuestionsPageState extends State<OneQuestion> {
   void fetchData() async {
     print(isUserSignedIn());
     print(widget.selectedChoice);
-    final String baseUrl = "http://10.0.2.2:8000";
-    final String path = "/api/problem-search/";
+    final String baseUrl = '${APIUrls.baseUrl}';
+    final String path = '${APIUrls.problemsearchURL}';
     List<String> lessons = [
       'algebra',
       'gain',
@@ -399,8 +400,8 @@ class _QuestionsPageState extends State<OneQuestion> {
         box.put(userData.userId, userData); // Assuming userId is unique
 
         // Make API request to update the score on the server
-        final String apiUrl = 'http://10.0.2.2:8000/api/user/scores/';
-        final String apiUrl1 = 'http://10.0.2.2:8000/api/user/history/';
+        final String apiUrl = '${APIUrls.userscoresURL}';
+        final String apiUrl1 = '${APIUrls.userhistoryURL}';
 
         final Map<String, dynamic> requestBody = {
           "user_id": userData.userId,

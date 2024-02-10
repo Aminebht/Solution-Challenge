@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:app_0/api_urls.dart';
 
 import 'package:app_0/Home.dart';
 import 'package:app_0/SignUp.dart';
@@ -485,8 +486,8 @@ void showErrorDialog(BuildContext context, String title, String message) {
 
 Future<bool> updateScoresFromDjango(String userId, bool keepMeSignedIn) async {
   print('Before API call');
-  final url =
-      'http://10.0.2.2:8000/api/user/stats/?type=score&user_id=$userId';
+  //final url = 'http://10.0.2.2:8000/api/user/stats/?type=score&user_id=$userId';
+  final url = '${APIUrls.userstatsURL}+/?type=score&user_id=$userId';
   print('API URL: $url');
 
   print('After API call');

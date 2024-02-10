@@ -1,3 +1,4 @@
+import 'package:app_0/api_urls.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -404,7 +405,7 @@ class SignUp extends StatelessWidget {
 
       if (user != null) {
         // Replace 'https://your-api-endpoint.com/create_user' with your actual API endpoint
-        final String apiUrl = 'http://10.0.2.2:8000/api/user/scores/';
+        final String apiUrl = '${APIUrls.userstatsURL}';
 
         // Replace this with the actual data you want to send to your server
         final Map<String, dynamic> userData = {

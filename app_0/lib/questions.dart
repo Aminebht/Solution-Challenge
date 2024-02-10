@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
 import 'package:app_0/Answers.dart';
+import 'package:app_0/api_urls.dart';
 import 'package:app_0/my_data.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -65,8 +66,8 @@ class _QuestionsPageState extends State<Questions> {
   }
 
   void fetchQuestionsFromAPI() async {
-    final String baseUrl = "http://10.0.2.2:8000";
-    final String path = "/api/problem-search/";
+    final String baseUrl = '${APIUrls.baseUrl}';
+    final String path = '${APIUrls.problemsearchURL}';
 
     final Map<String, dynamic> queryParams = {
       'count': '6',
@@ -421,7 +422,7 @@ class _QuestionsPageState extends State<Questions> {
     String question = questions[numberOfQuestions - 1]['problem'];
 
     return Container(
-      width:  screenWidth,
+      width: screenWidth,
       padding: EdgeInsets.all(30),
       decoration: BoxDecoration(
         color: Color(0xFFFEF6FF),
@@ -694,14 +695,14 @@ class _QuestionsPageState extends State<Questions> {
         box.put(userData.userId, userData); // Assuming userId is unique
 
         // Make API request to update the score on the server
-        final String apiUrl = 'http://10.0.2.2:8000/api/user/scores/';
-        final String apiUrl1 = 'http://10.0.2.2:8000/api/user/history/';
+        final String apiUrl = '${APIUrls.userscoresURL}';
+        final String apiUrl1 = '${APIUrls.userhistoryURL}';
 
         Dio dio = Dio();
 
         // Fetch user history
         Response historyResponse = await dio.get(
-          'http://10.0.2.2:8000/api/user/history/',
+          '${APIUrls.userhistoryURL}',
           queryParameters: {
             'user_id': userData.userId,
             'category': "total_$selectedCategory",
@@ -805,7 +806,7 @@ class _QuestionsPageState extends State<Questions> {
       box.put(userData.userId, userData); // Assuming userId is unique
 
       // Make API request to update the score on the server
-      final String apiUrl = 'http://10.0.2.2:8000/api/user/scores/';
+      final String apiUrl = '${APIUrls.userscoresURL}';
       Dio dio = Dio();
       Map<String, dynamic> requestBody = {
         "user_id": userData.userId,

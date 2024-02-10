@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:app_0/Home.dart';
+import 'package:app_0/api_urls.dart';
 import 'package:app_0/my_data.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -158,7 +159,7 @@ class _AnswersPageState extends State<Answers> {
       try {
         // Make the Dio request
         Response response = await dio.get(
-          'http://10.0.2.2:8000/api/user/history/',
+          '${APIUrls.userhistoryURL}',
           queryParameters: requestData,
           options: Options(
             headers: {
@@ -228,7 +229,7 @@ class _AnswersPageState extends State<Answers> {
         .problems[numberOfQuestions - 1]; // Retrieve question from the matrix
     return SingleChildScrollView(
       child: Container(
-        width:screenWidth,
+        width: screenWidth,
         padding: const EdgeInsets.all(30),
         decoration: BoxDecoration(
           color: Colors.white,
