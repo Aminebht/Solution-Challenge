@@ -67,7 +67,10 @@ class _QuestionsPageState extends State<Questions> {
 
   void fetchQuestionsFromAPI() async {
     final String baseUrl = '${APIUrls.baseUrl}';
+    //final String baseUrl = 'http://127.0.0.1:8000/api';
+
     final String path = '${APIUrls.problemsearchURL}';
+    //final String path = '/problem-search/';
 
     final Map<String, dynamic> queryParams = {
       'count': '6',
@@ -806,7 +809,7 @@ class _QuestionsPageState extends State<Questions> {
       box.put(userData.userId, userData); // Assuming userId is unique
 
       // Make API request to update the score on the server
-      final String apiUrl = '${APIUrls.userscoresURL}';
+      final String apiUrl = '${APIUrls.userscoresURL}/';
       Dio dio = Dio();
       Map<String, dynamic> requestBody = {
         "user_id": userData.userId,

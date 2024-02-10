@@ -94,15 +94,15 @@ class DoneOneQuestion extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                       /*if (totalQuizDone % 30 == 0) {
+                        /*if (totalQuizDone % 30 == 0) {
                                 // Show the feedback popup*/
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return FeedbackPopup();
-                                  },
-                                );
-                              /*} else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return FeedbackPopup();
+                          },
+                        );
+                        /*} else {
                                 // Navigate to Home page
                                 Navigator.pushReplacement(
                                   context,
@@ -176,7 +176,8 @@ class DoneOneQuestion extends StatelessWidget {
     );
   }
 }
- class FeedbackPopup extends StatefulWidget {
+
+class FeedbackPopup extends StatefulWidget {
   @override
   _FeedbackPopupState createState() => _FeedbackPopupState();
 }
@@ -212,48 +213,51 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
                 Positioned(
                   top: 35,
                   left: 12,
-                  child: Text('Easy', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                  child: Text('Easy',
+                      style: TextStyle(color: Colors.grey, fontSize: 12)),
                 ),
                 Positioned(
                   top: 35,
                   left: 122,
-                  child: Text('Suits Me', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                  child: Text('Suits Me',
+                      style: TextStyle(color: Colors.grey, fontSize: 12)),
                 ),
                 Positioned(
                   top: 35,
                   right: 0,
-                  child: Text('Very Hard', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                  child: Text('Very Hard',
+                      style: TextStyle(color: Colors.grey, fontSize: 12)),
                 ),
               ],
             ),
             SizedBox(height: 20),
-            Row (
-            children :[
-
-            ElevatedButton(
-              onPressed: () {
-               Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => Home(),
-                                    ),
-                                  );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF7B31F4), // Set button color to match slider
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0), // Set BorderRadius
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Home(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Color(0xFF7B31F4), // Set button color to match slider
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(15.0), // Set BorderRadius
+                  ),
                 ),
+                child: Text('Submit'),
               ),
-              child: Text('Submit'),
-            ),
-            /*here*/
-            ],
             ),
           ],
         ),
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0), // Set BorderRadius for AlertDialog
+        borderRadius:
+            BorderRadius.circular(15.0), // Set BorderRadius for AlertDialog
       ),
     );
   }
