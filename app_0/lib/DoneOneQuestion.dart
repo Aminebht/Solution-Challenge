@@ -187,74 +187,71 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('How was the difficulty?', style: TextStyle(fontSize: 18)),
-      content: Container(
-        width: 300, // Set the width to maximum
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+  title: Text('How was the difficulty?', style: TextStyle(fontSize: 18)),
+  content: Container(
+    width: 300, // Set the width to maximum
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          alignment: Alignment.center,
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Slider(
-                  value: difficultyValue,
-                  min: -1,
-                  max: 1,
-                  divisions: 4,
-                  onChanged: (value) {
-                    setState(() {
-                      difficultyValue = value;
-                    });
-                  },
-                  activeColor: Color(0xFF7B31F4),
-                  label: difficultyValue.toString(),
-                ),
-                Positioned(
-                  top: 35,
-                  left: 12,
-                  child: Text('Easy', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                ),
-                Positioned(
-                  top: 35,
-                  left: 122,
-                  child: Text('Suits Me', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                ),
-                Positioned(
-                  top: 35,
-                  right: 0,
-                  child: Text('Very Hard', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Row (
-            children :[
-
-            ElevatedButton(
-              onPressed: () {
-               Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => Home(),
-                                    ),
-                                  );
+            Slider(
+              value: difficultyValue,
+              min: -1,
+              max: 1,
+              divisions: 4,
+              onChanged: (value) {
+                setState(() {
+                  difficultyValue = value;
+                });
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF7B31F4), // Set button color to match slider
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0), // Set BorderRadius
-                ),
-              ),
-              child: Text('Submit'),
+              activeColor: Color(0xFF7B31F4),
+              label: difficultyValue.toString(),
             ),
-            /*here*/
-            ],
+            Positioned(
+              top: 35,
+              left: 12,
+              child: Text('Easy', style: TextStyle(color: Colors.grey, fontSize: 12)),
+            ),
+            Positioned(
+              top: 35,
+              left: 122,
+              child: Text('Suits Me', style: TextStyle(color: Colors.grey, fontSize: 12)),
+            ),
+            Positioned(
+              top: 35,
+              right: 0,
+              child: Text('Very Hard', style: TextStyle(color: Colors.grey, fontSize: 12)),
             ),
           ],
         ),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0), // Set BorderRadius for AlertDialog
-      ),
-    );
+        SizedBox(height: 20),
+        Align(
+          alignment: Alignment.center,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Home(),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF7B31F4), // Set button color to match slider
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0), // Set BorderRadius
+              ),
+            ),
+            child: Text('Submit'),
+          ),
+        ),
+      ],
+    ),
+  ),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(15.0), // Set BorderRadius for AlertDialog
+  ),
+);
   }
 }
