@@ -1,4 +1,4 @@
-import 'package:app_0/api_urls.dart';
+import 'package:EducationALL/api_urls.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,9 +7,9 @@ import 'package:firebase_database/firebase_database.dart';
 
 import 'package:dio/dio.dart';
 import 'dart:convert';
-import 'package:app_0/SignIn.dart';
-import 'package:app_0/my_data.dart';
-import 'package:app_0/my_data_adapter.dart';
+import 'package:EducationALL/SignIn.dart';
+import 'package:EducationALL/my_data.dart';
+import 'package:EducationALL/my_data_adapter.dart';
 import 'package:hive/hive.dart';
 
 class SignUp extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:app_0/api_urls.dart';
+import 'package:EducationALL/api_urls.dart';
 
-import 'package:app_0/Home.dart';
-import 'package:app_0/SignUp.dart';
-import 'package:app_0/my_data.dart';
-import 'package:app_0/my_data_adapter.dart';
+import 'package:EducationALL/Home.dart';
+import 'package:EducationALL/SignUp.dart';
+import 'package:EducationALL/my_data.dart';
+import 'package:EducationALL/my_data_adapter.dart';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';

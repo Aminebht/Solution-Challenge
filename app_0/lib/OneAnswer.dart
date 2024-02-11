@@ -1,8 +1,8 @@
 //import 'dart:js';
 import 'dart:ui';
-import 'package:app_0/DoneOneQuestion.dart';
-import 'package:app_0/api_urls.dart';
-import 'package:app_0/my_data.dart';
+import 'package:EducationALL/DoneOneQuestion.dart';
+import 'package:EducationALL/api_urls.dart';
+import 'package:EducationALL/my_data.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';

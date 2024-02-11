@@ -1,6 +1,6 @@
 // Data model classes
-import 'package:app_0/home.dart';
-import 'package:app_0/my_data.dart';
+import 'package:EducationALL/home.dart';
+import 'package:EducationALL/my_data.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 

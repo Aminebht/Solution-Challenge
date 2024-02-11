@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:app_0/Home.dart';
-import 'package:app_0/api_urls.dart';
-import 'package:app_0/my_data.dart';
+import 'package:EducationALL/Home.dart';
+import 'package:EducationALL/api_urls.dart';
+import 'package:EducationALL/my_data.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:app_0/DoneQuestions.dart';
+import 'package:EducationALL/DoneQuestions.dart';
 import 'package:hive/hive.dart';
 
 class Answers extends StatefulWidget {

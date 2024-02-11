@@ -1,7 +1,7 @@
 // ChooseForm.dart
 
-import 'package:app_0/OneQuestion.dart';
-import 'package:app_0/Questions.dart';
+import 'package:EducationALL/OneQuestion.dart';
+import 'package:EducationALL/Questions.dart';
 import 'package:flutter/material.dart';
 
 class ChooseForm extends StatelessWidget {

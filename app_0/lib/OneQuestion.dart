@@ -1,6 +1,6 @@
-import 'package:app_0/OneAnswer.dart';
-import 'package:app_0/api_urls.dart';
-import 'package:app_0/my_data.dart';
+import 'package:EducationALL/OneAnswer.dart';
+import 'package:EducationALL/api_urls.dart';
+import 'package:EducationALL/my_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';

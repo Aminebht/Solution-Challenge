@@ -1,9 +1,9 @@
 import 'dart:io' if (dart.library.html) 'dart:html' as html;
 import 'dart:io';
-import 'package:app_0/Home.dart';
-import 'package:app_0/SignIn.dart';
-import 'package:app_0/Stats.dart';
-import 'package:app_0/my_data.dart';
+import 'package:EducationALL/Home.dart';
+import 'package:EducationALL/SignIn.dart';
+import 'package:EducationALL/Stats.dart';
+import 'package:EducationALL/my_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';

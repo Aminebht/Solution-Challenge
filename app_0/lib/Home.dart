@@ -1,6 +1,6 @@
-import 'package:app_0/ChooseSubject.dart';
-import 'package:app_0/Profile.dart';
-import 'package:app_0/Stats.dart';
+import 'package:EducationALL/ChooseSubject.dart';
+import 'package:EducationALL/Profile.dart';
+import 'package:EducationALL/Stats.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {

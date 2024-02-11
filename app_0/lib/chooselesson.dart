@@ -1,8 +1,8 @@
-import 'package:app_0/ChooseForm.dart';
-import 'package:app_0/ChooseSubject.dart';
-import 'package:app_0/SignIn.dart';
-import 'package:app_0/my_data.dart';
-import 'package:app_0/questions.dart';
+import 'package:EducationALL/ChooseForm.dart';
+import 'package:EducationALL/ChooseSubject.dart';
+import 'package:EducationALL/SignIn.dart';
+import 'package:EducationALL/my_data.dart';
+import 'package:EducationALL/questions.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
