@@ -58,7 +58,20 @@ class _ChooseLessonState extends State<ChooseLesson> {
     return MaterialApp(
       home: Scaffold(
         body: Container(
-          color: const Color(0xFF843AFD),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                const Color(0xFF843AFD),
+                Colors.white
+              ], // Purple to white gradient
+              stops: [
+                0.5,
+                0.5
+              ], // Adjust the position where the colors transition
+            ),
+          ),
           child: Center(
             child: SingleChildScrollView(
               child: Column(
@@ -106,7 +119,9 @@ class _ChooseLessonState extends State<ChooseLesson> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     decoration: BoxDecoration(
                       color: Color(0xFFFEF6FF),
@@ -361,7 +376,9 @@ class CircleIndicator extends StatelessWidget {
       height: 12.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isPink ? const Color.fromRGBO(247, 138, 177, 1.0) : Color(0xFFFEF6FF),
+        color: isPink
+            ? const Color.fromRGBO(247, 138, 177, 1.0)
+            : Color(0xFFFEF6FF),
       ),
     );
   }

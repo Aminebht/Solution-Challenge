@@ -809,7 +809,7 @@ class _QuestionsPageState extends State<Questions> {
       box.put(userData.userId, userData); // Assuming userId is unique
 
       // Make API request to update the score on the server
-      final String apiUrl = '${APIUrls.userscoresURL}/';
+      final String apiUrl = '${APIUrls.userscoresURL}';
       Dio dio = Dio();
       Map<String, dynamic> requestBody = {
         "user_id": userData.userId,

@@ -405,7 +405,8 @@ class SignUp extends StatelessWidget {
 
       if (user != null) {
         // Replace 'https://your-api-endpoint.com/create_user' with your actual API endpoint
-        final String apiUrl = '${APIUrls.userstatsURL}';
+        final String apiUrl = '${APIUrls.userscoresURL}';
+        //final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
 
         // Replace this with the actual data you want to send to your server
         final Map<String, dynamic> userData = {

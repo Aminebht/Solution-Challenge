@@ -63,20 +63,29 @@ class _QuestionsPageState extends State<OneQuestion> {
     screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Color(0xFF843AFD),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 50),
-              isLoading
-                  ? _buildLoadingIndicator()
-                  : isError
-                      ? _buildErrorUI()
-                      : _buildBottomBox(screenHeight, screenWidth),
-              SizedBox(height: 50),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [const Color(0xFF7B31F4), Color(0xFFFEF6FF)],
+            stops: [0.5, 0.5],
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 50),
+                isLoading
+                    ? _buildLoadingIndicator()
+                    : isError
+                        ? _buildErrorUI()
+                        : _buildBottomBox(screenHeight, screenWidth),
+                SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

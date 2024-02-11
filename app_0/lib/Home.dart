@@ -10,7 +10,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  List<String> lasts = ['salem2', 'salem2', 'salem2'];
+  List<String> lasts = ['Math', 'Robotics', 'Math', 'History'];
+  List<String> subtitles = ['Gain', 'Lesson', 'Probability', 'Time'];
 
   List<Widget> pages = [Home(), Profile(), Profile()];
   @override
@@ -114,7 +115,7 @@ class _HomeState extends State<Home> {
                             title: lasts[index],
                             imageUrl:
                                 'https://example.com/your_image_url$index.png',
-                            subtitle: 'Subtitle $index',
+                            subtitle: subtitles[index],
                             onTap: () {
                               print('QuizItem $index tapped!');
                             },

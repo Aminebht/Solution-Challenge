@@ -56,7 +56,20 @@ class _ChooseSubjectState extends State<ChooseSubject> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: const Color(0xFF843AFD),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              const Color(0xFF843AFD),
+              Colors.white
+            ], // Purple to white gradient
+            stops: [
+              0.5,
+              0.5
+            ], // Adjust the position where the colors transition
+          ),
+        ),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -107,9 +120,10 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
-                  
                   decoration: BoxDecoration(
                     color: const Color(0xFFFEF6FF),
                     borderRadius: BorderRadius.circular(30),
@@ -167,8 +181,7 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Color(0xFFFEF6FF),
-                              backgroundColor:
-                                  const Color(0xFF843AFD),
+                              backgroundColor: const Color(0xFF843AFD),
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 24.0,
                                 vertical: 24.0,

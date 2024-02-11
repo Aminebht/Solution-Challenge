@@ -43,64 +43,73 @@ class _AnswersPageState extends State<Answers> {
     screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF7B31F4),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 40.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      if (numberOfQuestions > 1) {
-                        setState(() {
-                          numberOfQuestions--;
-                        });
-                      }
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      child: Image.asset(
-                        'images/back.png',
-                        width: 24.0,
-                        height: 24.0,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [const Color(0xFF7B31F4), Colors.white],
+            stops: [0.5, 0.5],
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 40.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        if (numberOfQuestions > 1) {
+                          setState(() {
+                            numberOfQuestions--;
+                          });
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Image.asset(
+                          'images/back.png',
+                          width: 24.0,
+                          height: 24.0,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 0.04 * screenHeight,
-                  bottom: 0.05 * screenHeight,
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Answers Explanation',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        letterSpacing: 1.1,
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 0.04 * screenHeight,
+                    bottom: 0.05 * screenHeight,
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Answers Explanation',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          letterSpacing: 1.1,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              _buildBottomBox(
-                  screenHeight,
-                  screenWidth,
-                  numberOfQuestions,
-                  widget.stuserAnswers[numberOfQuestions - 1],
-                  widget.stcorrectAnswers[numberOfQuestions - 1],
-                  widget.explanations[numberOfQuestions - 1]),
-            ],
+                _buildBottomBox(
+                    screenHeight,
+                    screenWidth,
+                    numberOfQuestions,
+                    widget.stuserAnswers[numberOfQuestions - 1],
+                    widget.stcorrectAnswers[numberOfQuestions - 1],
+                    widget.explanations[numberOfQuestions - 1]),
+              ],
+            ),
           ),
         ),
       ),

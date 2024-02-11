@@ -231,28 +231,27 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
               ],
             ),
             SizedBox(height: 20),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => Home(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Color(0xFF7B31F4), // Set button color to match slider
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(15.0), // Set BorderRadius
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Home(),
                     ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Color(0xFF7B31F4), // Set button color to match slider
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(15.0), // Set BorderRadius
                   ),
-                  child: Text('Submit'),
                 ),
-                /*here*/
-              ],
+                child: Text('Submit',
+                    style: TextStyle(color: Colors.white, fontSize: 12)),
+              ),
             ),
           ],
         ),

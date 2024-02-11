@@ -286,7 +286,8 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
                         BorderRadius.circular(15.0), // Set BorderRadius
                   ),
                 ),
-                child: Text('Submit'),
+                child: Text('Submit',
+                    style: TextStyle(color: Colors.white, fontSize: 12)),
               ),
             ),
           ],

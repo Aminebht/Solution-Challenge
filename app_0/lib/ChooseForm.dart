@@ -20,7 +20,20 @@ class ChooseForm extends StatelessWidget {
     return Scaffold(
       appBar: null,
       body: Container(
-        color: Color(0xFF843AFD),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              const Color(0xFF843AFD),
+              Colors.white
+            ], // Purple to white gradient
+            stops: [
+              0.5,
+              0.5
+            ], // Adjust the position where the colors transition
+          ),
+        ),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -69,9 +82,11 @@ class ChooseForm extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
-                  decoration:BoxDecoration(
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     color: Color(0xFFFEF6FF),
                   ),
