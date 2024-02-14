@@ -55,23 +55,10 @@ class _ChooseSubjectState extends State<ChooseSubject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              const Color(0xFF843AFD),
-              Colors.white
-            ], // Purple to white gradient
-            stops: [
-              0.5,
-              0.5
-            ], // Adjust the position where the colors transition
-          ),
-        ),
-        child: Center(
-          child: SingleChildScrollView(
+      backgroundColor: const Color(0xFF843AFD),
+      body:SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -123,14 +110,15 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                 SizedBox(
                   height: 20,
                 ),
-                Container(
+                 Container(
                   decoration: BoxDecoration(
                     color: const Color(0xFFFEF6FF),
                     borderRadius: BorderRadius.circular(30),
                   ),
+                  
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Column(
+                      child:Column(
                       children: [
                         RadioSelectGrid(
                           customTexts: const [
@@ -142,6 +130,8 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                             'Computer Science',
                             'History',
                             'Geography',
+                            'Art',
+                            'Music',
                           ],
                           onSelected: (index, selectedSubject) {
                             // Update the selected choice and subject
@@ -200,11 +190,13 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                         ),
                       ],
                     ),
+                 
                   ),
-                ),
+                 ),
+                
               ],
             ),
-          ),
+          
         ),
       ),
     );
@@ -237,6 +229,8 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
     'lap.png',
     'history.png',
     'geography.png',
+    'geography.png',
+    'geography.png',
   ];
 
   @override
@@ -244,75 +238,72 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
     double screenWidth = MediaQuery.of(context).size.width;
     double fontSize = screenWidth * 0.04;
 
-    return Column(
-      children: [
-        GridView.builder(
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 25.0,
-            crossAxisSpacing: 25.0,
-            childAspectRatio: 1.20,
-          ),
-          itemCount: widget.customTexts.length,
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                setState(() {
-                  selectedChoice = index;
-                  widget.onSelected(
-                      index,
-                      widget.customTexts[
-                          index]); // Notify the parent about the selection
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: selectedChoice == index
-                      ? const Color.fromRGBO(247, 138, 177, 1.0)
-                      : const Color.fromRGBO(229, 212, 255, 1.0),
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 0.17 * screenWidth,
-                        height: 0.17 * screenWidth,
-                        decoration: BoxDecoration(
-                          color: const Color.fromRGBO(255, 255, 255, 0.5),
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            'images/${explicitImageNames[index]}',
-                            width: 70,
-                            height: 70,
+    return GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 25.0,
+              crossAxisSpacing: 25.0,
+              childAspectRatio: 1.20,
+            ),
+            itemCount: widget.customTexts.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  setState(() {
+                    selectedChoice = index;
+                    widget.onSelected(
+                        index,
+                        widget.customTexts[
+                            index]); // Notify the parent about the selection
+                  });
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: selectedChoice == index
+                        ? const Color.fromRGBO(247, 138, 177, 1.0)
+                        : const Color.fromRGBO(229, 212, 255, 1.0),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 0.17 * screenWidth,
+                          height: 0.17 * screenWidth,
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(255, 255, 255, 0.5),
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              'images/${explicitImageNames[index]}',
+                              width: 70,
+                              height: 70,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 4.0),
-                      Text(
-                        widget.customTexts[index],
-                        style: TextStyle(
-                          color: selectedChoice == index
-                              ? Color(0xFFFEF6FF)
-                              : const Color.fromRGBO(123, 49, 244, 1.0),
-                          fontSize: fontSize,
-                          fontWeight: FontWeight.bold,
+                        const SizedBox(height: 4.0),
+                        Text(
+                          widget.customTexts[index],
+                          style: TextStyle(
+                            color: selectedChoice == index
+                                ? Color(0xFFFEF6FF)
+                                : const Color.fromRGBO(123, 49, 244, 1.0),
+                            fontSize: fontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-        ),
-      ],
-    );
+              );
+            },
+          );
+   
   }
 }
