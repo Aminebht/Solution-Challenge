@@ -57,7 +57,7 @@ class _ChooseSubjectState extends State<ChooseSubject> {
     return Scaffold(
       backgroundColor: const Color(0xFF843AFD),
       body:SingleChildScrollView(
-          scrollDirection: Axis.vertical,
+          
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -130,8 +130,6 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                             'Computer Science',
                             'History',
                             'Geography',
-                            'Art',
-                            'Music',
                           ],
                           onSelected: (index, selectedSubject) {
                             // Update the selected choice and subject
@@ -229,8 +227,6 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
     'lap.png',
     'history.png',
     'geography.png',
-    'geography.png',
-    'geography.png',
   ];
 
   @override
@@ -239,6 +235,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
     double fontSize = screenWidth * 0.04;
 
     return GridView.builder(
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
