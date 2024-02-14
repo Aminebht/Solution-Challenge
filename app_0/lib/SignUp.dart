@@ -274,7 +274,7 @@ class SignUp extends StatelessWidget {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF7B31F4),
+                          backgroundColor: Color(0xFF7B31F4),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
@@ -451,6 +451,7 @@ class SignUp extends StatelessWidget {
       // Handle Firebase Authentication exceptions
       print("Firebase Exception: $firebaseException");
       _showErrorPopup(context, 'Firebase Exception: $firebaseException');
+    // ignore: deprecated_member_use
     } on DioError catch (dioError) {
       // Handle Dio exceptions (Django server request)
       print("Dio Exception: $dioError");

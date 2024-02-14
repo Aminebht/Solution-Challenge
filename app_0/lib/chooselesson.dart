@@ -58,20 +58,14 @@ class _ChooseLessonState extends State<ChooseLesson> {
     return MaterialApp(
       home: Scaffold(
         body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                const Color(0xFF843AFD),
-                Colors.white
-              ], // Purple to white gradient
-              stops: [
-                0.5,
-                0.5
-              ], // Adjust the position where the colors transition
-            ),
+          decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF7B31F4),Color(0xFFFEF6FF)],
+            stops: [0.5, 0.5],
           ),
+        ),
           child: Center(
             child: SingleChildScrollView(
               child: Column(

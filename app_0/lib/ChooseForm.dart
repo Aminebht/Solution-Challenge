@@ -20,18 +20,12 @@ class ChooseForm extends StatelessWidget {
     return Scaffold(
       appBar: null,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              const Color(0xFF843AFD),
-              Colors.white
-            ], // Purple to white gradient
-            stops: [
-              0.5,
-              0.5
-            ], // Adjust the position where the colors transition
+            colors: [Color(0xFF7B31F4),Color(0xFFFEF6FF)],
+            stops: [0.5, 0.5],
           ),
         ),
         child: Center(

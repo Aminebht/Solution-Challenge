@@ -55,146 +55,155 @@ class _ChooseSubjectState extends State<ChooseSubject> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF843AFD),
-      body:SingleChildScrollView(
-          
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 40.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Home(),
-                        ));
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(
-                          'images/back.png',
-                          width: 24.0,
-                          height: 24.0,
+      body:Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF7B31F4),Color(0xFFFEF6FF)],
+            stops: [0.5, 0.5],
+          ),
+        ),
+        child: SingleChildScrollView(
+            
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 40.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Home(),
+                          ));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            'images/back.png',
+                            width: 24.0,
+                            height: 24.0,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleIndicator(isPink: true),
-                    SizedBox(width: 8.0),
-                    CircleIndicator(),
-                    SizedBox(width: 8.0),
-                    CircleIndicator(),
-                  ],
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Choose a Subject',
-                    style: TextStyle(
-                      color: Color(0xFFFEF6FF),
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleIndicator(isPink: true),
+                      SizedBox(width: 8.0),
+                      CircleIndicator(),
+                      SizedBox(width: 8.0),
+                      CircleIndicator(),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'Choose a Subject',
+                      style: TextStyle(
+                        color: Color(0xFFFEF6FF),
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                 Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFEF6FF),
-                    borderRadius: BorderRadius.circular(30),
+                  SizedBox(
+                    height: 20,
                   ),
-                  
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                      child:Column(
-                      children: [
-                        RadioSelectGrid(
-                          customTexts: const [
-                            'Math',
-                            'Physics',
-                            'Science',
-                            'Chemistry',
-                            'Robotics',
-                            'Computer Science',
-                            'History',
-                            'Geography',
-                          ],
-                          onSelected: (index, selectedSubject) {
-                            // Update the selected choice and subject
-                            setState(() {
-                              selectedChoice = index;
-                              this.selectedSubject = selectedSubject;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 16.0),
-                        Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Check if a radio button is selected
-                              if (selectedChoice != -1) {
-                                // Check if the selected subject is "Math"
-                                if (selectedSubject.toLowerCase() == 'math') {
-                                  // Print or use the selected subject as needed
-                                  print('Selected Subject: $selectedSubject');
-
-                                  // Navigate to ChooseLesson when a button is pressed
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => ChooseLesson(),
-                                    ),
-                                  );
-                                } else {
-                                  // Show a message or perform some action when the subject is not "Math"
-                                  showUnavailableSubjectDialog();
-                                }
-                              } else {
-                                // Show a message or perform some action when no radio button is selected
-                                showSubjectNotSelectedDialog();
-                              }
+                   Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFEF6FF),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                        child:Column(
+                        children: [
+                          RadioSelectGrid(
+                            customTexts: const [
+                              'Math',
+                              'Physics',
+                              'Science',
+                              'Chemistry',
+                              'Robotics',
+                              'Computer Science',
+                              'History',
+                              'Geography',
+                            ],
+                            onSelected: (index, selectedSubject) {
+                              // Update the selected choice and subject
+                              setState(() {
+                                selectedChoice = index;
+                                this.selectedSubject = selectedSubject;
+                              });
                             },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Color(0xFFFEF6FF),
-                              backgroundColor: const Color(0xFF843AFD),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 24.0,
-                                vertical: 24.0,
+                          ),
+                          const SizedBox(height: 16.0),
+                          Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // Check if a radio button is selected
+                                if (selectedChoice != -1) {
+                                  // Check if the selected subject is "Math"
+                                  if (selectedSubject.toLowerCase() == 'math') {
+                                    // Print or use the selected subject as needed
+                                    print('Selected Subject: $selectedSubject');
+      
+                                    // Navigate to ChooseLesson when a button is pressed
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => ChooseLesson(),
+                                      ),
+                                    );
+                                  } else {
+                                    // Show a message or perform some action when the subject is not "Math"
+                                    showUnavailableSubjectDialog();
+                                  }
+                                } else {
+                                  // Show a message or perform some action when no radio button is selected
+                                  showSubjectNotSelectedDialog();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Color(0xFFFEF6FF),
+                                backgroundColor: const Color(0xFF843AFD),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24.0,
+                                  vertical: 24.0,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
-                            child: const Text(
-                              'Next',
-                              style: TextStyle(
-                                fontSize: 18.0,
+                              child: const Text(
+                                'Next',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                   
                     ),
-                 
-                  ),
-                 ),
-                
-              ],
-            ),
-          
+                   ),
+                  
+                ],
+              ),
+            
+          ),
         ),
       ),
     );

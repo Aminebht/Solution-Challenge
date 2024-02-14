@@ -111,7 +111,7 @@ class DoneQuestions extends StatelessWidget {
                       children: [
                         _buildInfoElement(
                             'CORRECT ANSWER', '$numberOfCorrectAnswers'),
-                        SizedBox(width: 130),
+                        SizedBox(width: 60),
                         _buildInfoElement('ACCURACY', '$accuracy%'),
                         SizedBox(width: 55),
                       ],
@@ -123,7 +123,7 @@ class DoneQuestions extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildInfoElement('TIMER OUT', '$numberOfTimeOut'),
-                        SizedBox(width: 170),
+                        SizedBox(width: 100),
                         _buildInfoElement(
                             'INCORRECT ANSWER', '$numberOfIncorrectAnswers'),
                       ],

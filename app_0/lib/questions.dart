@@ -214,33 +214,43 @@ class _QuestionsPageState extends State<Questions> {
     int choice = widget.selectedChoice;
     return Scaffold(
       backgroundColor: Color(0xFF843AFD),
-      body: Stack(
-        children: [
-          _buildBlurredBackground(),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 0.1 * screenHeight,
-                    bottom: 0.05 * screenHeight,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildIndicatorBox("${numberOfQuestions}/6"),
-                      SizedBox(width: 30),
-                      _buildEvolutionIndicator(numberOfQuestions),
-                      SizedBox(width: 30),
-                      _buildPopupMenuButton(),
-                    ],
-                  ),
-                ),
-                _buildBottomBox(screenHeight, screenWidth, numberOfQuestions),
-              ],
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF7B31F4),Color(0xFFFEF6FF)],
+            stops: [0.5, 0.5],
           ),
-        ],
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+          children: [
+            _buildBlurredBackground(),
+            Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 0.1 * screenHeight,
+                      bottom: 0.05 * screenHeight,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildIndicatorBox("${numberOfQuestions}/6"),
+                        SizedBox(width: 30),
+                        _buildEvolutionIndicator(numberOfQuestions),
+                        SizedBox(width: 30),
+                        _buildPopupMenuButton(),
+                      ],
+                    ),
+                  ),
+                  _buildBottomBox(screenHeight, screenWidth, numberOfQuestions),
+                ],
+              ),
+          ],
+          ),
+        ),
       ),
     );
   }

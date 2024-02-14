@@ -4,8 +4,6 @@ import 'package:EducationALL/api_urls.dart';
 import 'package:EducationALL/Home.dart';
 import 'package:EducationALL/SignUp.dart';
 import 'package:EducationALL/my_data.dart';
-import 'package:EducationALL/my_data_adapter.dart';
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -416,6 +414,7 @@ Future<int> signInWithEmailAndPassword(
     } else {
       return 1;
     }
+  // ignore: deprecated_member_use
   } on DioError catch (e) {
     // Handle DioException separately
     // Check if it's a connection error

@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 
 class Profile extends StatefulWidget {
   @override
@@ -526,37 +526,6 @@ class _ProfileState extends State<Profile> {
         _pickedFile = File(pickedFile.path);
       });
 
-      // Upload the picked image to Firebase Storage
-      final Reference storageRef = FirebaseStorage.instance
-          .ref()
-          .child('user_photos/${user!.uid}/profile_image.jpg');
-      UploadTask uploadTask = storageRef.putFile(_pickedFile);
-
-      try {
-        await uploadTask.whenComplete(() {});
-        print('Image uploaded successfully');
-
-        // Get the download URL of the uploaded image
-        final String downloadURL = await storageRef.getDownloadURL();
-
-        // Update the user's profile with the image URL
-        final User? updatedUser = FirebaseAuth.instance.currentUser;
-        if (updatedUser != null) {
-          try {
-            await updatedUser.updatePhotoURL(downloadURL);
-            // Reload the user to reflect the changes
-            await updatedUser.reload();
-            setState(() {
-              user = updatedUser;
-            });
-            print('Profile image updated successfully');
-          } catch (e) {
-            print('Error updating profile image: $e');
-          }
-        }
-      } catch (e) {
-        print('Error uploading image: $e');
-      }
     }
   }
 

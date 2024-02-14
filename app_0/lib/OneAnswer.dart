@@ -41,8 +41,15 @@ class _AnswersPageState extends State<OneAnswer> {
     screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF7B31F4),
-      body: Center(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF7B31F4),Color(0xFFFEF6FF)],
+            stops: [0.5, 0.5],
+          ),
+        ),
         child: SingleChildScrollView(
           child: Column(
             children: [

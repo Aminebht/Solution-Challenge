@@ -44,11 +44,11 @@ class _AnswersPageState extends State<Answers> {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [const Color(0xFF7B31F4), Colors.white],
+            colors: [Color(0xFF7B31F4),Color(0xFFFEF6FF)],
             stops: [0.5, 0.5],
           ),
         ),
