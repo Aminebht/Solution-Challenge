@@ -197,7 +197,7 @@ class _StatsState extends State<Stats> {
                         child: const CircleAvatar(
                           radius: 50,
                           backgroundColor: Color(0xFFFEF6FF),
-                          backgroundImage: AssetImage('images/cup.png'),
+                          backgroundImage: AssetImage('images/sss.png'),
                         ),
                       ),
                       Column(

@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
