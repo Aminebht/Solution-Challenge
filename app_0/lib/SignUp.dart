@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 
 import 'package:dio/dio.dart';
 import 'dart:convert';
@@ -21,9 +22,12 @@ class SignUp extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  late SimpleFontelicoProgressDialog _progressDialog;
 
   @override
   Widget build(BuildContext context) {
+    _progressDialog = SimpleFontelicoProgressDialog(context: context);
+
     return Scaffold(
       backgroundColor: const Color(0xFFFEF6FF),
       body: SingleChildScrollView(
@@ -259,10 +263,12 @@ class SignUp extends StatelessWidget {
                             String lastName = lastNameController.text;
 
                             // Call the registration function with email and password
+                            _progressDialog.show(message: 'Signing up...');
                             registerWithEmailAndPassword(
                                 context, email, password, firstName, lastName);
-
+                            _progressDialog.hide();
                             // Navigate or perform other actions...
+
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => SignIn()));
                           }

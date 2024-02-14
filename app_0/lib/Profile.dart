@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -517,14 +518,45 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _getImage() async {
-    final pickedFile = kIsWeb
-        ? await _imagePicker.pickImage(source: ImageSource.gallery)
-        : await _imagePicker.pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
         _pickedFile = File(pickedFile.path);
       });
+
+      // Upload the picked image to Firebase Storage
+      final Reference storageRef = FirebaseStorage.instance
+          .ref()
+          .child('user_photos/${user!.uid}/profile_image.jpg');
+      UploadTask uploadTask = storageRef.putFile(_pickedFile);
+
+      try {
+        await uploadTask.whenComplete(() {});
+        print('Image uploaded successfully');
+
+        // Get the download URL of the uploaded image
+        final String downloadURL = await storageRef.getDownloadURL();
+
+        // Update the user's profile with the image URL
+        final User? updatedUser = FirebaseAuth.instance.currentUser;
+        if (updatedUser != null) {
+          try {
+            await updatedUser.updatePhotoURL(downloadURL);
+            // Reload the user to reflect the changes
+            await updatedUser.reload();
+            setState(() {
+              user = updatedUser;
+            });
+            print('Profile image updated successfully');
+          } catch (e) {
+            print('Error updating profile image: $e');
+          }
+        }
+      } catch (e) {
+        print('Error uploading image: $e');
+      }
     }
   }
 
@@ -565,14 +597,37 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> updateName(String newName) async {
+    // Show loading indicator
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent users from dismissing the dialog
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Updating Name'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(), // Loading indicator
+              SizedBox(height: 16),
+              Text('Please wait...'), // Optional message
+            ],
+          ),
+        );
+      },
+    );
+
     try {
       if (user != null) {
+        // Perform name update operation
         await user?.updateDisplayName(newName);
         setState(() {
           Username = newName;
         });
 
-        // Display a dialog to inform the user about the name update
+        // Close the loading indicator dialog
+        Navigator.of(context).pop();
+
+        // Display a success dialog
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -582,7 +637,7 @@ class _ProfileState extends State<Profile> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
+                    Navigator.of(context).pop(); // Close the success dialog
                   },
                   child: Text('OK'),
                 ),
@@ -595,7 +650,27 @@ class _ProfileState extends State<Profile> {
       }
     } catch (e) {
       print('Error updating display name: $e');
-      // Handle error accordingly
+      // Close the loading indicator dialog
+      Navigator.of(context).pop();
+
+      // Display an error dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('An error occurred while updating the name.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the error dialog
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 

@@ -617,47 +617,52 @@ class _QuestionsPageState extends State<Questions> {
         print('Timer started: $timerSeconds seconds');
         startTimer(); // Restart the timer
       } else {
+        bool bpressed = true;
         // Navigate to the answers page or perform final action
         print('User Answers: $userAnswers');
-        for (int i = 0; i < 6; i++) {
-          if (userAnswers[i] != -1) {
-            stuserAnswers.add(questions[i]['options'][userAnswers[i]! - 1]);
-          } else {
-            stuserAnswers.add('Timer Out');
+        if (bpressed) {
+          bpressed = false;
+          for (int i = 0; i < 6; i++) {
+            if (userAnswers[i] != -1) {
+              stuserAnswers.add(questions[i]['options'][userAnswers[i]! - 1]);
+            } else {
+              stuserAnswers.add('Timer Out');
+            }
           }
+          print("stuser Answers $stuserAnswers");
+          print("stcorrect Answers $stcorrectAnswers");
+
+          // Navigate to the answers page or perform final action
+
+          //kenou new setscore kenou kdim update
+          print("new: \n");
+          print(widget.lnew);
+
+          if (widget.lnew == 1) {
+            //jdid
+            print("Awel mara");
+            up = await setscore(stuserAnswers, stcorrectAnswers);
+          } else {
+            //gdim
+            print("Update 3adi");
+            up =
+                await updateScore(ldifficulty, stuserAnswers, stcorrectAnswers);
+          }
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Answers(
+                  stuserAnswers: stuserAnswers,
+                  stcorrectAnswers: stcorrectAnswers,
+                  problems: problems,
+                  explanations: explanations,
+                  lesson: lessons[widget.selectedChoice],
+                  uprate: up,
+                  lnew: widget.lnew),
+            ),
+          );
         }
-        print("stuser Answers $stuserAnswers");
-        print("stcorrect Answers $stcorrectAnswers");
-
-        // Navigate to the answers page or perform final action
-
-        //kenou new setscore kenou kdim update
-        print("new: \n");
-        print(widget.lnew);
-
-        if (widget.lnew == 1) {
-          //jdid
-          print("Awel mara");
-          up = await setscore(stuserAnswers, stcorrectAnswers);
-        } else {
-          //gdim
-          print("Update 3adi");
-          up = await updateScore(ldifficulty, stuserAnswers, stcorrectAnswers);
-        }
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Answers(
-                stuserAnswers: stuserAnswers,
-                stcorrectAnswers: stcorrectAnswers,
-                problems: problems,
-                explanations: explanations,
-                lesson: lessons[widget.selectedChoice],
-                uprate: up,
-                lnew: widget.lnew),
-          ),
-        );
       }
     } catch (e, stackTrace) {
       print('Error in goToNextQuestion: $e');
