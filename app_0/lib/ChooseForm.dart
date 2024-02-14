@@ -192,6 +192,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
       children: [
         GridView.builder(
           shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 1,
             mainAxisSpacing: 25.0,
