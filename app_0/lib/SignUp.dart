@@ -68,25 +68,44 @@ class SignUp extends StatelessWidget {
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color(0xFFF9F5FF),
-                          hintText: 'Email',
-                          hintStyle: TextStyle(
-                            color: Color(0xFF5F5F5F),
-                            fontSize: 14,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                              color: Color(0xB2B2B2).withOpacity(0.25),
-                            ),
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFF9F5FF),
+                        hintText: 'Email',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF5F5F5F),
+                          fontSize: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: Color(0xB2B2B2).withOpacity(0.25),
                           ),
                         ),
-                        style: TextStyle(color: Color(0xFF1F1926)),
-                        keyboardType: TextInputType.emailAddress,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: Color(0xFF7B31F4),
+                            width: 2,
+                          ),
+                        ),
+                        suffix: emailController.text.isNotEmpty
+                            ? null
+                            : Container(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  '*',
+                                  style: TextStyle(
+                                    color: Colors.red, // Change this to your desired color
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
                       ),
+                      style: TextStyle(color: Color(0xFF1F1926)),
+                      keyboardType: TextInputType.emailAddress,
+                    )
                     ),
                     SizedBox(height: 8),
                     SizedBox(
@@ -115,6 +134,26 @@ class SignUp extends StatelessWidget {
                                       color: Color(0xB2B2B2).withOpacity(0.25),
                                     ),
                                   ),
+                                  focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            
+                            borderSide: BorderSide(
+                              color: Color(0xFF7B31F4),
+                              width: 2, // Change this to your desired color
+                            ),
+                           ),
+                           suffix: firstNameController.text.isNotEmpty
+                            ? null
+                            : Container(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  '*',
+                                  style: TextStyle(
+                                    color: Colors.red, // Change this to your desired color
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
                                 ),
                                 style: TextStyle(color: Color(0xFF1F1926)),
                               ),
@@ -143,6 +182,26 @@ class SignUp extends StatelessWidget {
                                       color: Color(0xB2B2B2).withOpacity(0.25),
                                     ),
                                   ),
+                                  focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            
+                            borderSide: BorderSide(
+                              color: Color(0xFF7B31F4),
+                              width: 2, // Change this to your desired color
+                            ),
+                           ),
+                           suffix: lastNameController.text.isNotEmpty
+                            ? null
+                            : Container(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  '*',
+                                  style: TextStyle(
+                                    color: Colors.red, // Change this to your desired color
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
                                 ),
                                 style: TextStyle(color: Color(0xFF1F1926)),
                               ),
@@ -170,6 +229,14 @@ class SignUp extends StatelessWidget {
                               color: Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            
+                            borderSide: BorderSide(
+                              color: Color(0xFF7B31F4),
+                              width: 2, // Change this to your desired color
+                            ),
+                           ),
                         ),
                         style: TextStyle(color: Color(0xFF1F1926)),
                       ),
@@ -193,6 +260,14 @@ class SignUp extends StatelessWidget {
                               color: Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            
+                            borderSide: BorderSide(
+                              color: Color(0xFF7B31F4),
+                              width: 2, // Change this to your desired color
+                            ),
+                           ),
                         ),
                         style: TextStyle(color: Color(0xFF1F1926)),
                         keyboardType: TextInputType.phone,
@@ -218,6 +293,26 @@ class SignUp extends StatelessWidget {
                               color: Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            
+                            borderSide: BorderSide(
+                              color: Color(0xFF7B31F4),
+                              width: 2, // Change this to your desired color
+                            ),
+                           ),
+                           suffix: passwordController.text.isNotEmpty
+                            ? null
+                            : Container(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  '*',
+                                  style: TextStyle(
+                                    color: Colors.red, // Change this to your desired color
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
                         ),
                         style: TextStyle(color: Color(0xFF1F1926)),
                       ),
@@ -242,6 +337,26 @@ class SignUp extends StatelessWidget {
                               color: Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            
+                            borderSide: BorderSide(
+                              color: Color(0xFF7B31F4),
+                              width: 2, // Change this to your desired color
+                            ),
+                           ),
+                         suffix: confirmPasswordController.text.isNotEmpty
+                            ? null
+                            : Container(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  '*',
+                                  style: TextStyle(
+                                    color: Colors.red, // Change this to your desired color
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),  
                         ),
                         style: TextStyle(color: Color(0xFF1F1926)),
                       ),
@@ -292,7 +407,7 @@ class SignUp extends StatelessWidget {
                       height: 3 * MediaQuery.of(context).size.height / 100,
                     ),
                     SizedBox(
-                      width: 203,
+                      width: 205,
                       child: RichText(
                         text: TextSpan(
                           text: "Already have an account? ",
@@ -300,7 +415,7 @@ class SignUp extends StatelessWidget {
                               TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
                           children: [
                             TextSpan(
-                              text: "Login",
+                              text: "Sign In",
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Color(0xFF7B31F4),

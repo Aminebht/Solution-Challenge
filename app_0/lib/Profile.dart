@@ -335,7 +335,7 @@ class _ProfileState extends State<Profile> {
               Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFFEF6FF),
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 height: 260,
                 width: 1 * MediaQuery.of(context).size.width,
@@ -365,7 +365,7 @@ class _ProfileState extends State<Profile> {
               Container(
                 decoration: BoxDecoration(
                   color: Color(0xFFFEF6FF),
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 height: 140,
                 width: 1 * MediaQuery.of(context).size.width,

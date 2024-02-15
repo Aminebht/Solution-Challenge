@@ -95,6 +95,14 @@ class _SignInState extends State<SignIn> {
                               color: Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            
+                            borderSide: BorderSide(
+                              color: Color(0xFF7B31F4),
+                              width: 2, // Change this to your desired color
+                            ),
+                           ),
                         ),
                         style: TextStyle(color: Color(0xFF1F1926)),
                       ),
@@ -122,7 +130,16 @@ class _SignInState extends State<SignIn> {
                               color: Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            
+                            borderSide: BorderSide(
+                              color: Color(0xFF7B31F4),
+                              width: 2, // Change this to your desired color
+                            ),
+                           ),
                         ),
+                        
                         style: TextStyle(color: Color(0xFF1F1926)),
                       ),
                     ),
@@ -134,36 +151,51 @@ class _SignInState extends State<SignIn> {
                       child: Row(
                         children: [
                           // Left side - Checkbox and text
-                          Container(
-                            width: 16,
-                            height: 16,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Color(0xFF1F1926),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Center(
-                                child: Checkbox(
-                                  value: keepSignedIn,
-                                  onChanged: (bool? value) {
+                          GestureDetector(
+                                  onTap: () {
                                     setState(() {
-                                      keepSignedIn = value ?? false;
+                                      keepSignedIn = !keepSignedIn;
                                     });
                                   },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 18,
+                                        height: 18,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Color(0xFF1F1926),
+                                          ),
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: Center(
+                                            child: Checkbox(
+                                              value: keepSignedIn,
+                                              onChanged: (bool? value) {
+                                                setState(() {
+                                                  keepSignedIn = value ?? false;
+                                                });
+                                              },
+                                              checkColor: Color(0xFFF9F5FF),
+                                              activeColor: Color(0xFF7B31F4),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        'Keep me signed in',
+                                        style: TextStyle(
+                                          color: Color(0xFF5F5F5F),
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            'Keep me signed in',
-                            style: TextStyle(
-                              color: Color(0xFF5F5F5F),
-                              fontSize: 12,
-                            ),
-                          ),
+
                           Spacer(),
                           // Right side - Forgot Your Password?
                           InkWell(

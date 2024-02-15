@@ -13,7 +13,7 @@ class _HomeState extends State<Home> {
   List<String> lasts = ['Math', 'Robotics', 'Math', 'History'];
   List<String> subtitles = ['Gain', 'Lesson', 'Probability', 'Time'];
 
-  List<Widget> pages = [Home(), Profile(), Profile()];
+  List<Widget> pages = [Home(),Profile(), Profile()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,40 +141,45 @@ class _HomeState extends State<Home> {
                   const BorderRadius.vertical(top: Radius.circular(20.0)),
             ),
             child: BottomNavigationBar(
-              backgroundColor: Colors.white,
-              selectedItemColor: const Color(0xFF572CB2),
-              unselectedItemColor: const Color(0xFF572CB2).withOpacity(0.52),
-              showSelectedLabels: true,
-              showUnselectedLabels: true,
-              type: BottomNavigationBarType.fixed,
-              currentIndex: _currentIndex,
-              onTap: (index) {
-                setState(() {
-                  print(index);
-                  _currentIndex = index;
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => pages[index],
-                    ),
-                  );
-                });
-              },
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite),
-                  label: 'Favorites',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profile',
-                ),
-              ],
-            ),
+  backgroundColor: Colors.white,
+  selectedItemColor: const Color(0xFF572CB2),
+  unselectedItemColor: const Color(0xFF572CB2).withOpacity(0.52),
+  showSelectedLabels: true,
+  showUnselectedLabels: true,
+  type: BottomNavigationBarType.fixed,
+  currentIndex: _currentIndex,
+  onTap: (index) {
+    setState(() {
+      print(index);
+      _currentIndex = index;
+    });
+
+    // Use a Future.delayed to allow the setState to complete before navigating
+    Future.delayed(Duration.zero, () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => pages[index],
+        ),
+      );
+    });
+  },
+  items: const [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      label: 'Home',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.favorite),
+      label: 'Favorites',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.person),
+      label: 'Profile',
+    ),
+  ],
+),
+
           ),
         ),
       ),

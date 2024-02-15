@@ -1,15 +1,10 @@
-import 'package:EducationALL/ChooseForm.dart';
-import 'package:EducationALL/ChooseSubject.dart';
-import 'package:EducationALL/Profile.dart';
+
 import 'package:EducationALL/SignIn.dart';
 import 'package:EducationALL/Home.dart';
 //import 'package:EducationALL/Profile.dart';
-import 'package:EducationALL/Questions.dart';
-import 'package:EducationALL/OneQuestion.dart';
+
 import 'package:EducationALL/my_data_adapter.dart';
-import 'package:EducationALL/my_data.dart';
-import 'package:EducationALL/SignUp.dart';
-import 'package:EducationALL/visualization.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive/hive.dart';
