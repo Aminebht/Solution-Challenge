@@ -23,7 +23,7 @@ class DoneQuestions extends StatelessWidget {
   Widget build(BuildContext context) {
     double accuracy = (numberOfCorrectAnswers / 6 * 100).truncateToDouble();
     String chaine;
-    int score = uprate;
+    int score = uprate.abs();
     lnew == 1
         ? chaine = 'is Set to'
         : accuracy >= 50

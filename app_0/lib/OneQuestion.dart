@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:EducationALL/OneAnswer.dart';
 import 'package:EducationALL/api_urls.dart';
 import 'package:EducationALL/my_data.dart';
@@ -393,8 +395,7 @@ class _QuestionsPageState extends State<OneQuestion> {
     String user,
     String correct,
   ) async {
-    int correctCount = user == correct ? 4 : 0;
-    int upRate = correctCount == 4 ? 1 : -1;
+    int correctCount = user == correct ? 4 : 2;
 
     try {
       var box = await Hive.openBox('testBox');
@@ -402,9 +403,28 @@ class _QuestionsPageState extends State<OneQuestion> {
 
       if (userData != null) {
         String selectedCategory = lessons[widget.selectedChoice];
+        int uprate=0;
+        Map<String, int> params ={
+    "Current_Score": userData.userScores[selectedCategory],
+    "Average":correctCount,
+    "Average_diff": difficulty,
 
+};
+        final String aiUrl = '${APIUrls.AiUrl}';
+        Dio dio = Dio();
+        final Response aiResponse = await dio.post(
+          aiUrl,
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+          data: jsonEncode(params),
+        );
         // Update user score locally in the Hive box
-        int newScore = userData.userScores[selectedCategory] + upRate;
+        print(aiResponse);
+        print(aiResponse.data['prediction']);
+        uprate =  aiResponse.data['prediction'].round();
+        // Update user score locally in the Hive box
+        int newScore = userData.userScores[selectedCategory] + uprate;
         userData.userScores[selectedCategory] = newScore;
         box.put(userData.userId, userData); // Assuming userId is unique
 
@@ -473,7 +493,7 @@ class _QuestionsPageState extends State<OneQuestion> {
             print("Response data: ${response1.data}");
           }
 
-          return upRate;
+          return uprate;
         } else {
           print(
               'Failed to fetch user history. Status code: ${historyResponse.statusCode}');

@@ -7,6 +7,7 @@ import 'package:EducationALL/my_data.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
+import 'dart:convert';
 
 class Questions extends StatefulWidget {
   final int selectedChoice;
@@ -687,9 +688,7 @@ class _QuestionsPageState extends State<Questions> {
   ) async {
     try {
       // Calculate average difficulty
-      double averageDifficulty =
-          difficultyList.reduce((value, element) => value + element) /
-              difficultyList.length;
+      double averageDifficulty = difficultyList.reduce((value, element) => value + element) / difficultyList.length;
 
       // Check correctness of each answer
       int correctCount = 0;
@@ -706,9 +705,28 @@ class _QuestionsPageState extends State<Questions> {
       // Ensure userData and the selected category exist before proceeding
       if (userData != null) {
         String selectedCategory = lessons[widget.selectedChoice];
+        int uprate = 0;
+        Map<String, int> params ={
+    "Current_Score": userData.userScores[selectedCategory],
+    "Average":correctCount,
+    "Average_diff": averageDifficulty.round(),
 
+};
+        final String aiUrl = '${APIUrls.AiUrl}';
+        Dio dio = Dio();
+        final Response aiResponse = await dio.post(
+          aiUrl,
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+          data: jsonEncode(params),
+        );
         // Update user score locally in the Hive box
-        int newScore = userData.userScores[selectedCategory] + 1;
+        print(aiResponse);
+        print(aiResponse.data['prediction']);
+        uprate =  aiResponse.data['prediction'].round();
+        // Update user score locally in the Hive box
+        int newScore = userData.userScores[selectedCategory] + uprate;
         userData.userScores[selectedCategory] = newScore;
         box.put(userData.userId, userData); // Assuming userId is unique
 
@@ -716,7 +734,6 @@ class _QuestionsPageState extends State<Questions> {
         final String apiUrl = '${APIUrls.userscoresURL}';
         final String apiUrl1 = '${APIUrls.userhistoryURL}';
 
-        Dio dio = Dio();
 
         // Fetch user history
         Response historyResponse = await dio.get(
@@ -769,7 +786,7 @@ class _QuestionsPageState extends State<Questions> {
           );
 
           print("Category $selectedCategory updated successfully.");
-          return 1; // Returning upRate (1) as specified in the original code
+          return uprate; // Returning upRate (1) as specified in the original code
         } else {
           print(
               'Failed to fetch user history. Status code: ${historyResponse.statusCode}');
