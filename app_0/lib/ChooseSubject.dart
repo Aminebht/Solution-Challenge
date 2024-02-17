@@ -115,7 +115,7 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                    Container(
@@ -176,7 +176,7 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                foregroundColor: Color(0xFFFEF6FF),
+                                foregroundColor: const Color(0xFFFEF6FF),
                                 backgroundColor: const Color(0xFF843AFD),
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 24.0,
@@ -244,7 +244,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
     double fontSize = screenWidth * 0.04;
 
     return GridView.builder(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -296,7 +296,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                           widget.customTexts[index],
                           style: TextStyle(
                             color: selectedChoice == index
-                                ? Color(0xFFFEF6FF)
+                                ? const Color(0xFFFEF6FF)
                                 : const Color.fromRGBO(123, 49, 244, 1.0),
                             fontSize: fontSize,
                             fontWeight: FontWeight.bold,

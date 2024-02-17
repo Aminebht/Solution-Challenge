@@ -39,7 +39,7 @@ class SignUp extends StatelessWidget {
               right: 0,
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.33,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('images/sign_bg.png'),
                     fit: BoxFit.fill,
@@ -54,7 +54,7 @@ class SignUp extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Sign Up',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -71,21 +71,21 @@ class SignUp extends StatelessWidget {
                       controller: emailController,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Color(0xFFF9F5FF),
+                        fillColor: const Color(0xFFF9F5FF),
                         hintText: 'Email',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: Color(0xFF5F5F5F),
                           fontSize: 14,
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(
-                            color: Color(0xB2B2B2).withOpacity(0.25),
+                            color: const Color(0xB2B2B2).withOpacity(0.25),
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Color(0xFF7B31F4),
                             width: 2,
                           ),
@@ -93,8 +93,8 @@ class SignUp extends StatelessWidget {
                         suffix: emailController.text.isNotEmpty
                             ? null
                             : Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                child: Text(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: const Text(
                                   '*',
                                   style: TextStyle(
                                     color: Colors.red, // Change this to your desired color
@@ -103,11 +103,11 @@ class SignUp extends StatelessWidget {
                                 ),
                               ),
                       ),
-                      style: TextStyle(color: Color(0xFF1F1926)),
+                      style: const TextStyle(color: Color(0xFF1F1926)),
                       keyboardType: TextInputType.emailAddress,
                     )
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: Row(
@@ -122,22 +122,22 @@ class SignUp extends StatelessWidget {
                                 controller: firstNameController,
                                 decoration: InputDecoration(
                                   filled: true,
-                                  fillColor: Color(0xFFF9F5FF),
+                                  fillColor: const Color(0xFFF9F5FF),
                                   hintText: 'First Name',
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                     color: Color(0xFF5F5F5F),
                                     fontSize: 14,
                                   ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: BorderSide(
-                                      color: Color(0xB2B2B2).withOpacity(0.25),
+                                      color: const Color(0xB2B2B2).withOpacity(0.25),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
                               width: 2, // Change this to your desired color
                             ),
@@ -145,8 +145,8 @@ class SignUp extends StatelessWidget {
                            suffix: firstNameController.text.isNotEmpty
                             ? null
                             : Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                child: Text(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: const Text(
                                   '*',
                                   style: TextStyle(
                                     color: Colors.red, // Change this to your desired color
@@ -155,11 +155,11 @@ class SignUp extends StatelessWidget {
                                 ),
                               ),
                                 ),
-                                style: TextStyle(color: Color(0xFF1F1926)),
+                                style: const TextStyle(color: Color(0xFF1F1926)),
                               ),
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: SizedBox(
                               width: 0.5 *
@@ -170,22 +170,22 @@ class SignUp extends StatelessWidget {
                                 controller: lastNameController,
                                 decoration: InputDecoration(
                                   filled: true,
-                                  fillColor: Color(0xFFF9F5FF),
+                                  fillColor: const Color(0xFFF9F5FF),
                                   hintText: 'Last Name',
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                     color: Color(0xFF5F5F5F),
                                     fontSize: 14,
                                   ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: BorderSide(
-                                      color: Color(0xB2B2B2).withOpacity(0.25),
+                                      color: const Color(0xB2B2B2).withOpacity(0.25),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
                               width: 2, // Change this to your desired color
                             ),
@@ -193,8 +193,8 @@ class SignUp extends StatelessWidget {
                            suffix: lastNameController.text.isNotEmpty
                             ? null
                             : Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                child: Text(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: const Text(
                                   '*',
                                   style: TextStyle(
                                     color: Colors.red, // Change this to your desired color
@@ -203,77 +203,77 @@ class SignUp extends StatelessWidget {
                                 ),
                               ),
                                 ),
-                                style: TextStyle(color: Color(0xFF1F1926)),
+                                style: const TextStyle(color: Color(0xFF1F1926)),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: TextField(
                         controller: gradeController,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Color(0xFFF9F5FF),
+                          fillColor: const Color(0xFFF9F5FF),
                           hintText: 'Grade',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: Color(0xFF5F5F5F),
                             fontSize: 14,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
                               width: 2, // Change this to your desired color
                             ),
                            ),
                         ),
-                        style: TextStyle(color: Color(0xFF1F1926)),
+                        style: const TextStyle(color: Color(0xFF1F1926)),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: TextField(
                         controller: phoneNumberController,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Color(0xFFF9F5FF),
+                          fillColor: const Color(0xFFF9F5FF),
                           hintText: 'Phone Number',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: Color(0xFF5F5F5F),
                             fontSize: 14,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
                               width: 2, // Change this to your desired color
                             ),
                            ),
                         ),
-                        style: TextStyle(color: Color(0xFF1F1926)),
+                        style: const TextStyle(color: Color(0xFF1F1926)),
                         keyboardType: TextInputType.phone,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: TextField(
@@ -281,22 +281,22 @@ class SignUp extends StatelessWidget {
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Color(0xFFF9F5FF),
+                          fillColor: const Color(0xFFF9F5FF),
                           hintText: 'Password',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: Color(0xFF5F5F5F),
                             fontSize: 14,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
                               width: 2, // Change this to your desired color
                             ),
@@ -304,8 +304,8 @@ class SignUp extends StatelessWidget {
                            suffix: passwordController.text.isNotEmpty
                             ? null
                             : Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                child: Text(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: const Text(
                                   '*',
                                   style: TextStyle(
                                     color: Colors.red, // Change this to your desired color
@@ -314,10 +314,10 @@ class SignUp extends StatelessWidget {
                                 ),
                               ),
                         ),
-                        style: TextStyle(color: Color(0xFF1F1926)),
+                        style: const TextStyle(color: Color(0xFF1F1926)),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: TextField(
@@ -325,22 +325,22 @@ class SignUp extends StatelessWidget {
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Color(0xFFF9F5FF),
+                          fillColor: const Color(0xFFF9F5FF),
                           hintText: 'Confirm Password',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: Color(0xFF5F5F5F),
                             fontSize: 14,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
                               width: 2, // Change this to your desired color
                             ),
@@ -348,8 +348,8 @@ class SignUp extends StatelessWidget {
                          suffix: confirmPasswordController.text.isNotEmpty
                             ? null
                             : Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                child: Text(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: const Text(
                                   '*',
                                   style: TextStyle(
                                     color: Colors.red, // Change this to your desired color
@@ -358,7 +358,7 @@ class SignUp extends StatelessWidget {
                                 ),
                               ),  
                         ),
-                        style: TextStyle(color: Color(0xFF1F1926)),
+                        style: const TextStyle(color: Color(0xFF1F1926)),
                       ),
                     ),
                     SizedBox(
@@ -368,33 +368,48 @@ class SignUp extends StatelessWidget {
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       height: 49,
                       child: ElevatedButton(
-                        onPressed: () {
-                          // Validate form
-                          if (_validateForm(context)) {
-                            // Get values from text fields
-                            String email = emailController.text;
-                            String password = passwordController.text;
-                            String firstName = firstNameController.text;
-                            String lastName = lastNameController.text;
+                        onPressed: () async {
+                                        // Validate form
+                                        if (_validateForm(context)) {
+                                          // Get values from text fields
+                                          String email = emailController.text;
+                                          String password = passwordController.text;
+                                          String firstName = firstNameController.text;
+                                          String lastName = lastNameController.text;
 
-                            // Call the registration function with email and password
-                            _progressDialog.show(message: 'Signing up...');
-                            registerWithEmailAndPassword(
-                                context, email, password, firstName, lastName);
-                            _progressDialog.hide();
-                            // Navigate or perform other actions...
+                                          // Show loading dialog
+                                          _progressDialog.show(message: 'Signing up...');
+                                          
+                                          try {
+                                            await registerWithEmailAndPassword(
+                                                context, email, password, firstName, lastName);
+                                            _progressDialog.hide();
+                                            // Hide loading dialog after registration is complete
+                                            
 
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => SignIn()));
-                          }
-                        },
+                                            // Navigate or perform other actions...
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                              builder: (context) => SignIn(),
+                                            ));
+                                          } catch (e) {
+                                            // Handle any errors during registration
+                                            print('Registration failed: $e');
+                                            // Hide loading dialog in case of an error
+                                            _progressDialog.hide();
+                                            // You may want to show an error message to the user
+                                          }
+                                        }
+                                      },
+
+
+
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF7B31F4),
+                          backgroundColor: const Color(0xFF7B31F4),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Sign Up',
                           style: TextStyle(
                             color: Colors.white,
@@ -412,11 +427,11 @@ class SignUp extends StatelessWidget {
                         text: TextSpan(
                           text: "Already have an account? ",
                           style:
-                              TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
+                              const TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
                           children: [
                             TextSpan(
                               text: "Sign In",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Color(0xFF7B31F4),
                                 decoration: TextDecoration.underline,
@@ -463,14 +478,14 @@ class SignUp extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: const Text('Error'),
           content: Text(message),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -483,14 +498,14 @@ class SignUp extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Success'),
+          title: const Text('Success'),
           content: Text(message),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -526,7 +541,7 @@ class SignUp extends StatelessWidget {
 
       if (user != null) {
         // Replace 'https://your-api-endpoint.com/create_user' with your actual API endpoint
-        final String apiUrl = '${APIUrls.userscoresURL}';
+        const String apiUrl = APIUrls.userscoresURL;
         //final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
 
         // Replace this with the actual data you want to send to your server

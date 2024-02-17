@@ -21,7 +21,7 @@ class DoneOneQuestion extends StatelessWidget {
     score >= 0 ? chaine = 'Increased' : chaine = 'Decreased';
 
     return Scaffold(
-      backgroundColor: Color(0xFFFEF6FF), // Set the background color to white
+      backgroundColor: const Color(0xFFFEF6FF), // Set the background color to white
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -188,7 +188,7 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('How was the difficulty?', style: TextStyle(fontSize: 18)),
+      title: const Text('How was the difficulty?', style: TextStyle(fontSize: 18)),
       content: Container(
         width: 300, // Set the width to maximum
         child: Column(
@@ -207,22 +207,22 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
                       difficultyValue = value;
                     });
                   },
-                  activeColor: Color(0xFF7B31F4),
+                  activeColor: const Color(0xFF7B31F4),
                   label: difficultyValue.toString(),
                 ),
-                Positioned(
+                const Positioned(
                   top: 35,
                   left: 12,
                   child: Text('Easy',
                       style: TextStyle(color: Colors.grey, fontSize: 12)),
                 ),
-                Positioned(
+                const Positioned(
                   top: 35,
                   left: 122,
                   child: Text('Suits Me',
                       style: TextStyle(color: Colors.grey, fontSize: 12)),
                 ),
-                Positioned(
+                const Positioned(
                   top: 35,
                   right: 0,
                   child: Text('Very Hard',
@@ -230,7 +230,7 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
@@ -243,13 +243,13 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
-                      Color(0xFF7B31F4), // Set button color to match slider
+                      const Color(0xFF7B31F4), // Set button color to match slider
                   shape: RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.circular(15.0), // Set BorderRadius
                   ),
                 ),
-                child: Text('Submit',
+                child: const Text('Submit',
                     style: TextStyle(color: Colors.white, fontSize: 12)),
               ),
             ),

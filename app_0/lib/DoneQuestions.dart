@@ -38,7 +38,7 @@ class DoneQuestions extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Text(
                   accuracy >= 50 ? 'Good Job!' : 'Not Bad!',
                   style: const TextStyle(
@@ -48,15 +48,15 @@ class DoneQuestions extends StatelessWidget {
                     decoration: TextDecoration.none,
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Container(
                   width: 0.8 * MediaQuery.of(context).size.width,
                   height: 0.5 * MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
-                    color: Color(0xFFF78AB1),
+                    color: const Color(0xFFF78AB1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -69,15 +69,15 @@ class DoneQuestions extends StatelessWidget {
                         height: 173.6,
                         width: 150,
                       ),
-                      SizedBox(height: 40),
+                      const SizedBox(height: 40),
                       Container(
                         width: 290,
                         child: Text(
                           'Your Score in "$selectedLesson" $chaine $score%',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xFFFEF6FF),
                             fontSize: 20,
-                            fontWeight: FontWeight.w100,
+                            fontWeight: FontWeight.w400,
                             decoration: TextDecoration.none,
                           ),
                           textAlign: TextAlign.center,
@@ -86,22 +86,22 @@ class DoneQuestions extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 Text(
                   'You Did +$totalQuizDone Quiz',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFF1F1926),
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.none,
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
               ],
             ),
             Center(
               child: Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
                     Row(
@@ -111,24 +111,24 @@ class DoneQuestions extends StatelessWidget {
                       children: [
                         _buildInfoElement(
                             'CORRECT ANSWER', '$numberOfCorrectAnswers'),
-                        SizedBox(width: 60),
+                        const SizedBox(width: 60),
                         _buildInfoElement('ACCURACY', '$accuracy%'),
-                        SizedBox(width: 55),
+                        const SizedBox(width: 55),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment:
                           MainAxisAlignment.center, // Center horizontally
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildInfoElement('TIMER OUT', '$numberOfTimeOut'),
-                        SizedBox(width: 100),
+                        const SizedBox(width: 100),
                         _buildInfoElement(
                             'INCORRECT ANSWER', '$numberOfIncorrectAnswers'),
                       ],
                     ),
-                    SizedBox(height: 50),
+                    const SizedBox(height: 50),
                     ElevatedButton(
                       onPressed: () {
                         /*if (totalQuizDone % 30 == 0) {
@@ -150,7 +150,7 @@ class DoneQuestions extends StatelessWidget {
                               }*/
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF7B31F4),
+                        backgroundColor: const Color(0xFF7B31F4),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -158,8 +158,8 @@ class DoneQuestions extends StatelessWidget {
                       child: Container(
                         width: 0.8 * MediaQuery.of(context).size.width,
                         height: 60,
-                        padding: EdgeInsets.symmetric(vertical: 15),
-                        child: Center(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: const Center(
                           child: Text(
                             'Done',
                             style: TextStyle(
@@ -197,10 +197,10 @@ class DoneQuestions extends StatelessWidget {
             ),
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF1F1926),
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -225,7 +225,7 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('How was the difficulty?', style: TextStyle(fontSize: 18)),
+      title: const Text('How was the difficulty?', style: TextStyle(fontSize: 18)),
       content: Container(
         width: 300, // Set the width to maximum
         child: Column(
@@ -244,22 +244,22 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
                       difficultyValue = value;
                     });
                   },
-                  activeColor: Color(0xFF7B31F4),
+                  activeColor: const Color(0xFF7B31F4),
                   label: difficultyValue.toString(),
                 ),
-                Positioned(
+                const Positioned(
                   top: 35,
                   left: 12,
                   child: Text('Easy',
                       style: TextStyle(color: Colors.grey, fontSize: 12)),
                 ),
-                Positioned(
+                const Positioned(
                   top: 35,
                   left: 122,
                   child: Text('Suits Me',
                       style: TextStyle(color: Colors.grey, fontSize: 12)),
                 ),
-                Positioned(
+                const Positioned(
                   top: 35,
                   right: 0,
                   child: Text('Very Hard',
@@ -267,7 +267,7 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
@@ -280,13 +280,13 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
-                      Color(0xFF7B31F4), // Set button color to match slider
+                      const Color(0xFF7B31F4), // Set button color to match slider
                   shape: RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.circular(15.0), // Set BorderRadius
                   ),
                 ),
-                child: Text('Submit',
+                child: const Text('Submit',
                     style: TextStyle(color: Colors.white, fontSize: 12)),
               ),
             ),

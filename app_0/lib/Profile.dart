@@ -65,7 +65,7 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
         ),
         title: Text(widget.name),
         content: Padding(
-          padding: EdgeInsets.all(30), // Add padding here
+          padding: const EdgeInsets.all(30), // Add padding here
           child: SizedBox(
             width: dialogWidth,
             height: dialogHeight,
@@ -76,20 +76,20 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                     children: [
                       TextField(
                         controller: newNameController,
-                        decoration: InputDecoration(labelText: 'New Name'),
+                        decoration: const InputDecoration(labelText: 'New Name'),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       TextField(
                         controller: newNumberController,
                         decoration:
-                            InputDecoration(labelText: 'New Phone Number'),
+                            const InputDecoration(labelText: 'New Phone Number'),
                       ),
                     ],
                   ),
                 if (widget.name == 'Change Email Address')
                   TextField(
                     controller: newEmailController,
-                    decoration: InputDecoration(labelText: 'New Email'),
+                    decoration: const InputDecoration(labelText: 'New Email'),
                   ),
                 if (widget.name == 'Change Password')
                   Column(
@@ -97,14 +97,14 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                       TextField(
                         controller: newPasswordController,
                         obscureText: true,
-                        decoration: InputDecoration(labelText: 'New Password'),
+                        decoration: const InputDecoration(labelText: 'New Password'),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       TextField(
                         controller: checkpasswordController,
                         obscureText: true,
                         decoration:
-                            InputDecoration(labelText: 'Confirm Password'),
+                            const InputDecoration(labelText: 'Confirm Password'),
                       ),
                     ],
                   ),
@@ -121,7 +121,7 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                         ),
                       );
                     },
-                    child: Text('Log out'),
+                    child: const Text('Log out'),
                   ),
                 if (widget.name == 'Your Stats')
                   ElevatedButton(
@@ -134,7 +134,7 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                         ),
                       );*/
                     },
-                    child: Text('Your Stats'),
+                    child: const Text('Your Stats'),
                   ),
               ],
             ),
@@ -163,7 +163,7 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                     if (widget.name == 'Change Password') {
                       if (newPassword != checkPassword) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text('Passwords do not match.'),
                             backgroundColor: Color(0xFF7B31F4),
                           ),
@@ -182,15 +182,15 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                   },
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFF7B31F4)),
-                    minimumSize: MaterialStateProperty.all<Size>(Size(150, 48)),
+                        MaterialStateProperty.all<Color>(const Color(0xFF7B31F4)),
+                    minimumSize: MaterialStateProperty.all<Size>(const Size(150, 48)),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Save',
                     style: TextStyle(fontSize: 18),
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 TextButton(
                   onPressed: () {
                     newNameController.dispose();
@@ -203,9 +203,9 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                   },
                   style: ButtonStyle(
                     foregroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFF7B31F4)),
+                        MaterialStateProperty.all<Color>(const Color(0xFF7B31F4)),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Cancel',
                     style: TextStyle(fontSize: 18),
                   ),
@@ -245,15 +245,15 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFECE0FF),
+      backgroundColor: const Color(0xFFECE0FF),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Profile',
                 style: TextStyle(
                   color: Color(0xFF1F1926),
@@ -261,14 +261,14 @@ class _ProfileState extends State<Profile> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 width: 1 * MediaQuery.of(context).size.width,
                 height: 93,
                 padding:
-                    EdgeInsets.only(left: 40, top: 15, bottom: 15, right: 40),
+                    const EdgeInsets.only(left: 40, top: 15, bottom: 15, right: 40),
                 decoration: BoxDecoration(
-                  color: Color(0xFF7B31F4),
+                  color: const Color(0xFF7B31F4),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -278,7 +278,7 @@ class _ProfileState extends State<Profile> {
                       onTap: _getImage,
                       child: CircleAvatar(
                         radius: 29,
-                        backgroundColor: Color(0xFFFEF6FF),
+                        backgroundColor: const Color(0xFFFEF6FF),
                         child: Center(
                           child:
                               _pickedFile != null && _pickedFile.path.isNotEmpty
@@ -311,16 +311,16 @@ class _ProfileState extends State<Profile> {
                       children: [
                         Text(
                           '$Username',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xFFFEF6FF),
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           '$email',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xFFA8A8A8),
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -331,15 +331,15 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFFEF6FF),
+                  color: const Color(0xFFFEF6FF),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 height: 260,
                 width: 1 * MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(30),
+                padding: const EdgeInsets.all(30),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -352,8 +352,8 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
               ),
-              SizedBox(height: 30),
-              Text(
+              const SizedBox(height: 30),
+              const Text(
                 'More',
                 style: TextStyle(
                   color: Color(0xFF717171),
@@ -361,16 +361,16 @@ class _ProfileState extends State<Profile> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFFEF6FF),
+                  color: const Color(0xFFFEF6FF),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 height: 140,
                 width: 1 * MediaQuery.of(context).size.width,
                 padding:
-                    EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 20),
+                    const EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -384,17 +384,17 @@ class _ProfileState extends State<Profile> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         child: Container(
           height: 60.0,
           decoration: BoxDecoration(
-            border: Border.all(color: Color(0xFFE5D4FF), width: 1.0),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+            border: Border.all(color: const Color(0xFFE5D4FF), width: 1.0),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
           ),
           child: BottomNavigationBar(
-            backgroundColor: Color(0xFFFEF6FF),
-            selectedItemColor: Color(0xFF7B31F4),
-            unselectedItemColor: Color(0xFF7B31F4).withOpacity(0.52),
+            backgroundColor: const Color(0xFFFEF6FF),
+            selectedItemColor: const Color(0xFF7B31F4),
+            unselectedItemColor: const Color(0xFF7B31F4).withOpacity(0.52),
             showSelectedLabels: true,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
@@ -410,7 +410,7 @@ class _ProfileState extends State<Profile> {
                 );
               });
             },
-            items: [
+            items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
@@ -465,7 +465,7 @@ class _ProfileState extends State<Profile> {
                 Container(
                   width: 40,
                   height: 40,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color(0xFFF0E5FB),
                   ),
@@ -477,7 +477,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                 ),
-                SizedBox(width: 18),
+                const SizedBox(width: 18),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -486,16 +486,16 @@ class _ProfileState extends State<Profile> {
                     ),
                     Text(
                       name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFF1F1926),
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     Text(
                       subtitle,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFFA8A8A8),
                         fontSize: 10,
                         fontWeight: FontWeight.normal,
@@ -570,7 +570,7 @@ class _ProfileState extends State<Profile> {
       context: context,
       barrierDismissible: false, // Prevent users from dismissing the dialog
       builder: (BuildContext context) {
-        return AlertDialog(
+        return const AlertDialog(
           title: Text('Updating Name'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -600,14 +600,14 @@ class _ProfileState extends State<Profile> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Name Updated'),
+              title: const Text('Name Updated'),
               content: Text('Display Name updated to: $newName'),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(); // Close the success dialog
                   },
-                  child: Text('OK'),
+                  child: const Text('OK'),
                 ),
               ],
             );
@@ -626,14 +626,14 @@ class _ProfileState extends State<Profile> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('An error occurred while updating the name.'),
+            title: const Text('Error'),
+            content: const Text('An error occurred while updating the name.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the error dialog
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );

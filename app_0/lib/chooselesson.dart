@@ -45,7 +45,7 @@ class _ChooseLessonState extends State<ChooseLesson> {
                   builder: (context) => SignIn(),
                 ));
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -113,12 +113,12 @@ class _ChooseLessonState extends State<ChooseLesson> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFFEF6FF),
+                      color: const Color(0xFFFEF6FF),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Padding(
@@ -221,7 +221,7 @@ class _ChooseLessonState extends State<ChooseLesson> {
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                foregroundColor: Color(0xFFFEF6FF),
+                                foregroundColor: const Color(0xFFFEF6FF),
                                 backgroundColor:
                                     const Color.fromRGBO(123, 49, 244, 1.0),
                                 padding: const EdgeInsets.symmetric(
@@ -295,7 +295,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
     return Column(
       children: [
         GridView.builder(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -341,7 +341,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                         customTexts[index],
                         style: TextStyle(
                           color: widget.selectedChoice == index
-                              ? Color(0xFFFEF6FF)
+                              ? const Color(0xFFFEF6FF)
                               : const Color(0xFF843AFD),
                           fontSize: fontSize,
                           fontWeight: FontWeight.bold,
@@ -373,7 +373,7 @@ class CircleIndicator extends StatelessWidget {
         shape: BoxShape.circle,
         color: isPink
             ? const Color.fromRGBO(247, 138, 177, 1.0)
-            : Color(0xFFFEF6FF),
+            : const Color(0xFFFEF6FF),
       ),
     );
   }

@@ -48,7 +48,7 @@ class _SignInState extends State<SignIn> {
               right: 0,
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.33,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('images/sign_bg.png'),
                     fit: BoxFit.fill,
@@ -64,7 +64,7 @@ class _SignInState extends State<SignIn> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // Sign In text
-                    Text(
+                    const Text(
                       'Sign In',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -83,31 +83,31 @@ class _SignInState extends State<SignIn> {
                             _emailController, // Pass the controller here
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Color(0xFFF9F5FF),
+                          fillColor: const Color(0xFFF9F5FF),
                           hintText: 'Email',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: Color(0xFF5F5F5F),
                             fontSize: 14,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
                               width: 2, // Change this to your desired color
                             ),
                            ),
                         ),
-                        style: TextStyle(color: Color(0xFF1F1926)),
+                        style: const TextStyle(color: Color(0xFF1F1926)),
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
 
                     // Password TextField
                     SizedBox(
@@ -118,34 +118,34 @@ class _SignInState extends State<SignIn> {
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Color(0xFFF9F5FF),
+                          fillColor: const Color(0xFFF9F5FF),
                           hintText: 'Password',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: Color(0xFF5F5F5F),
                             fontSize: 14,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0xB2B2B2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
                               width: 2, // Change this to your desired color
                             ),
                            ),
                         ),
                         
-                        style: TextStyle(color: Color(0xFF1F1926)),
+                        style: const TextStyle(color: Color(0xFF1F1926)),
                       ),
                     ),
 
                     // Additional UI elements
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: Row(
@@ -164,7 +164,7 @@ class _SignInState extends State<SignIn> {
                                         height: 18,
                                         decoration: BoxDecoration(
                                           border: Border.all(
-                                            color: Color(0xFF1F1926),
+                                            color: const Color(0xFF1F1926),
                                           ),
                                           borderRadius: BorderRadius.circular(5),
                                         ),
@@ -178,14 +178,14 @@ class _SignInState extends State<SignIn> {
                                                   keepSignedIn = value ?? false;
                                                 });
                                               },
-                                              checkColor: Color(0xFFF9F5FF),
-                                              activeColor: Color(0xFF7B31F4),
+                                              checkColor: const Color(0xFFF9F5FF),
+                                              activeColor: const Color(0xFF7B31F4),
                                             ),
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 8),
-                                      Text(
+                                      const SizedBox(width: 8),
+                                      const Text(
                                         'Keep me signed in',
                                         style: TextStyle(
                                           color: Color(0xFF5F5F5F),
@@ -196,13 +196,13 @@ class _SignInState extends State<SignIn> {
                                   ),
                                 ),
 
-                          Spacer(),
+                          const Spacer(),
                           // Right side - Forgot Your Password?
                           InkWell(
                             onTap: () {
                               // Add your logic for forgot password
                             },
-                            child: Text(
+                            child: const Text(
                               'Forgot Your Password?',
                               style: TextStyle(
                                 color: Color(0xFF5F5F5F),
@@ -289,12 +289,12 @@ class _SignInState extends State<SignIn> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF7B31F4),
+                          backgroundColor: const Color(0xFF7B31F4),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Sign In',
                           style: TextStyle(
                             color: Colors.white,
@@ -314,37 +314,37 @@ class _SignInState extends State<SignIn> {
                       child: Row(
                         children: [
                           // Left line
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Expanded(
                             child: Container(
                               height: 1,
-                              color: Color(0xFF5F5F5F),
+                              color: const Color(0xFF5F5F5F),
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           // 'or' text
-                          Text(
+                          const Text(
                             'Or',
                             style: TextStyle(
                               color: Color(0xFF5F5F5F),
                               fontSize: 14,
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           // Right line
                           Expanded(
                             child: Container(
                               height: 1,
-                              color: Color(0xFF5F5F5F),
+                              color: const Color(0xFF5F5F5F),
                             ),
                           ),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                         ],
                       ),
                     ),
 
                     // Additional UI elements
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
 
                     // New row with images
                     SizedBox(
@@ -365,7 +365,7 @@ class _SignInState extends State<SignIn> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                               width: 10), // Adjust the space between rectangles
                           // Right rectangle with Facebook image
                           Container(
@@ -383,18 +383,18 @@ class _SignInState extends State<SignIn> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     SizedBox(
                       width: 203, //
                       child: RichText(
                         text: TextSpan(
                           text: "Don't have an account? ",
                           style:
-                              TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
+                              const TextStyle(fontSize: 14, color: Color(0xFF5F5F5F)),
                           children: [
                             TextSpan(
                               text: "Sign Up",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Color(0xFF7B31F4),
                                 decoration: TextDecoration.underline,
@@ -507,7 +507,7 @@ void showErrorDialog(BuildContext context, String title, String message) {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       );

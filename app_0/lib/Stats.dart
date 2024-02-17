@@ -131,14 +131,14 @@ class _StatsState extends State<Stats> {
   }
 
   List<Color> rectangleColors = [
-    Color.fromARGB(255, 254, 251, 100),
-    Color(0xFFA2E3D7),
-    Color(0xFFE994FF),
-    Color(0xFFFFD6DD),
-    Color(0xFFC4D0FB),
-    Color(0xFFE4958A),
-    Color(0xFFFFF8E8),
-    Color(0xFFBAA1D5),
+    const Color.fromARGB(255, 254, 251, 100),
+    const Color(0xFFA2E3D7),
+    const Color(0xFFE994FF),
+    const Color(0xFFFFD6DD),
+    const Color(0xFFC4D0FB),
+    const Color(0xFFE4958A),
+    const Color(0xFFFFF8E8),
+    const Color(0xFFBAA1D5),
   ];
 
   @override
@@ -168,7 +168,7 @@ class _StatsState extends State<Stats> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Image.asset(
                         'images/back.png',
                         width: 24.0,
@@ -178,13 +178,13 @@ class _StatsState extends State<Stats> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Center(
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 1100,
                   decoration: BoxDecoration(
-                    color: Color(0xFFFEF6FF),
+                    color: const Color(0xFFFEF6FF),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -205,7 +205,7 @@ class _StatsState extends State<Stats> {
                           const SizedBox(height: 30),
                           Text(
                             name1,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF1F1926),
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -266,7 +266,7 @@ class _StatsState extends State<Stats> {
                       const SizedBox(height: 40),
                       if (isMath)
                         Container(
-                          padding: EdgeInsets.all(30),
+                          padding: const EdgeInsets.all(30),
                           width: 0.9 * MediaQuery.of(context).size.width,
                           height: 596,
                           decoration: BoxDecoration(
@@ -275,7 +275,7 @@ class _StatsState extends State<Stats> {
                           ),
                           child: Stack(
                             children: [
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(
                                   bottom: 30,
                                 ),
@@ -345,7 +345,7 @@ class _StatsState extends State<Stats> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Column(
@@ -388,8 +388,8 @@ class _StatsState extends State<Stats> {
                           ),
                         )
                       else
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
+                        const Padding(
+                          padding: EdgeInsets.all(20.0),
                           child: Text(
                             'Statistics for this subject are not available yet.',
                             style: TextStyle(
@@ -431,7 +431,7 @@ class _StatsState extends State<Stats> {
         decoration: BoxDecoration(
           color: selectedBoxIndex == index
               ? const Color(0xFFF78AB1)
-              : Color(0xFFFEF6FF).withOpacity(0.8),
+              : const Color(0xFFFEF6FF).withOpacity(0.8),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
@@ -439,7 +439,7 @@ class _StatsState extends State<Stats> {
             subjects[index].name,
             style: TextStyle(
               color: selectedBoxIndex == index
-                  ? Color(0xFFFEF6FF)
+                  ? const Color(0xFFFEF6FF)
                   : const Color(0xFF843AFD),
               fontSize: 10,
               fontWeight: FontWeight.w600,
@@ -465,7 +465,7 @@ class _StatsState extends State<Stats> {
                   width: 1,
                   height: 2,
                   margin: const EdgeInsets.symmetric(vertical: 2),
-                  color: Color(0xFFFEF6FF),
+                  color: const Color(0xFFFEF6FF),
                 ),
               ),
             ),

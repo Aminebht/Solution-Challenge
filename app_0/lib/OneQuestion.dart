@@ -66,11 +66,11 @@ class _QuestionsPageState extends State<OneQuestion> {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [const Color(0xFF7B31F4), Color(0xFFFEF6FF)],
+            colors: [Color(0xFF7B31F4), Color(0xFFFEF6FF)],
             stops: [0.5, 0.5],
           ),
         ),
@@ -79,13 +79,13 @@ class _QuestionsPageState extends State<OneQuestion> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 isLoading
                     ? _buildLoadingIndicator()
                     : isError
                         ? _buildErrorUI()
                         : _buildBottomBox(screenHeight, screenWidth),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
               ],
             ),
           ),
@@ -95,13 +95,13 @@ class _QuestionsPageState extends State<OneQuestion> {
   }
 
   Widget _buildLoadingIndicator() {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }
 
   Widget _buildErrorUI() {
-    return Center(
+    return const Center(
       child: Text(
         'An error occurred. Please try again.',
         style: TextStyle(color: Colors.red),
@@ -116,9 +116,9 @@ class _QuestionsPageState extends State<OneQuestion> {
 
     return Container(
       width: boxWidth,
-      padding: EdgeInsets.all(30),
+      padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(
-        color: Color(0xFFFEF6FF),
+        color: const Color(0xFFFEF6FF),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -126,14 +126,14 @@ class _QuestionsPageState extends State<OneQuestion> {
         children: [
           _buildTimer(),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.0),
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Container(
               // Wrap the Text widget with Container
               margin:
-                  EdgeInsets.only(bottom: 10), // Adjust the margin as needed
+                  const EdgeInsets.only(bottom: 10), // Adjust the margin as needed
               child: Text(
                 '$question',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF1F1926),
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -153,14 +153,14 @@ class _QuestionsPageState extends State<OneQuestion> {
     return Container(
       width: 75,
       height: 75,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xFFF78AB1),
         shape: BoxShape.circle,
       ),
       child: Center(
         child: Text(
           _formatTime(timerSeconds),
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFFFEF6FF),
             fontSize: 25,
           ),
@@ -190,7 +190,7 @@ class _QuestionsPageState extends State<OneQuestion> {
           Column(
             children: [
               _buildSelectableBox(i, options[i - 1]),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
           ),
       ],
@@ -207,18 +207,18 @@ class _QuestionsPageState extends State<OneQuestion> {
       },
       child: Container(
         width: 0.9 * screenWidth,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color:
-              selectedAnswer == index ? Color(0xFFE5D4FF) : Color(0xFFFEF6FF),
-          border: Border.all(color: Color(0xFFD7D7D7)),
+              selectedAnswer == index ? const Color(0xFFE5D4FF) : const Color(0xFFFEF6FF),
+          border: Border.all(color: const Color(0xFFD7D7D7)),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
           children: [
             Text(
               optionText,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color: Color(0xFF1F1926),
@@ -239,10 +239,10 @@ class _QuestionsPageState extends State<OneQuestion> {
         width: 0.4 * screenWidth,
         height: 52,
         decoration: BoxDecoration(
-          color: isButtonEnabled ? Color(0xFFF78AB1) : Colors.grey,
+          color: isButtonEnabled ? const Color(0xFFF78AB1) : Colors.grey,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Center(
+        child: const Center(
           child: Text(
             'Submit',
             style: TextStyle(

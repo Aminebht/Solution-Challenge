@@ -212,9 +212,8 @@ class _QuestionsPageState extends State<Questions> {
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-    int choice = widget.selectedChoice;
     return Scaffold(
-      backgroundColor: Color(0xFF843AFD),
+      backgroundColor: const Color(0xFFFEF6FF),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -239,9 +238,9 @@ class _QuestionsPageState extends State<Questions> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _buildIndicatorBox("${numberOfQuestions}/6"),
-                        SizedBox(width: 30),
+                        const SizedBox(width: 30),
                         _buildEvolutionIndicator(numberOfQuestions),
-                        SizedBox(width: 30),
+                        const SizedBox(width: 30),
                         _buildPopupMenuButton(),
                       ],
                     ),
@@ -270,13 +269,13 @@ class _QuestionsPageState extends State<Questions> {
       width: 42,
       height: 26,
       decoration: BoxDecoration(
-        color: Color(0xFFFFFFF).withOpacity(0.5),
+        color: const Color(0xFFFFFFF).withOpacity(0.5),
         borderRadius: BorderRadius.circular(5),
       ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFFFEF6FF),
             fontSize: 14,
           ),
@@ -293,7 +292,7 @@ class _QuestionsPageState extends State<Questions> {
       width: indicatorWidth,
       height: 7,
       decoration: BoxDecoration(
-        color: Color(0xFFFFFFF).withOpacity(0.4),
+        color: const Color(0xFFFFFFF).withOpacity(0.4),
         borderRadius: BorderRadius.circular(5),
       ),
       child: Stack(
@@ -302,7 +301,7 @@ class _QuestionsPageState extends State<Questions> {
             width: progress,
             height: 7,
             decoration: BoxDecoration(
-              color: Color(0xFFDCDF58),
+              color: const Color(0xFFDCDF58),
               borderRadius: BorderRadius.circular(5),
             ),
           ),
@@ -335,7 +334,7 @@ class _QuestionsPageState extends State<Questions> {
         width: 42,
         height: 26,
         decoration: BoxDecoration(
-          color: Color(0xFFFFFFF).withOpacity(0.5),
+          color: const Color(0xFFFFFFF).withOpacity(0.5),
           borderRadius: BorderRadius.circular(5),
         ),
         child: Center(
@@ -386,14 +385,14 @@ class _QuestionsPageState extends State<Questions> {
                       Navigator.pop(context); // Close the dialog
                       resumeTimer(); // Resume the timer
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.play_arrow,
                       color: Color(0xFFFEF6FF),
                       size: 50,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     'Tap to Resume',
                     style: TextStyle(color: Color(0xFFFEF6FF)),
                   ),
@@ -413,33 +412,33 @@ class _QuestionsPageState extends State<Questions> {
     int numberOfQuestions,
   ) {
     if (isLoading) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
     if (isError) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Error occurred while fetching data.'),
+          const Text('Error occurred while fetching data.'),
           ElevatedButton(
             onPressed: fetchQuestionsFromAPI,
-            child: Text('Retry'),
+            child: const Text('Retry'),
           ),
         ],
       );
     }
 
     if (questions.isEmpty) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
     String question = questions[numberOfQuestions - 1]['problem'];
 
     return Container(
       width: screenWidth,
-      padding: EdgeInsets.all(30),
+      padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(
-        color: Color(0xFFFEF6FF),
+        color: const Color(0xFFFEF6FF),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -447,15 +446,15 @@ class _QuestionsPageState extends State<Questions> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildTimer(),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10),
                 child: Text(
                   'QUESTION ${numberOfQuestions} OF 6',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFF979797),
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -464,18 +463,18 @@ class _QuestionsPageState extends State<Questions> {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             '$question',
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF1F1926),
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _buildSelectableBoxes(),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _buildSubmitAnswerButton(),
         ],
       ),
@@ -486,14 +485,14 @@ class _QuestionsPageState extends State<Questions> {
     return Container(
       width: 75,
       height: 75,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xFFF78AB1),
         shape: BoxShape.circle,
       ),
       child: Center(
         child: Text(
           _formatTime(timerSeconds),
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFFFEF6FF),
             fontSize: 25,
           ),
@@ -523,7 +522,7 @@ class _QuestionsPageState extends State<Questions> {
           Column(
             children: [
               _buildSelectableBox(option),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
           ),
       ],
@@ -541,22 +540,22 @@ class _QuestionsPageState extends State<Questions> {
       },
       child: Container(
         width: 0.9 * screenWidth,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: selectedAnswer ==
                   questions[numberOfQuestions - 1]['options']
                           .indexOf(optionText) +
                       1
-              ? Color(0xFFE5D4FF)
-              : Color(0xFFFEF6FF),
-          border: Border.all(color: Color(0xFFD7D7D7)),
+              ? const Color(0xFFE5D4FF)
+              : const Color(0xFFFEF6FF),
+          border: Border.all(color: const Color(0xFFD7D7D7)),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
           children: [
             Text(
               optionText,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color: Color(0xFF1F1926),
@@ -577,13 +576,13 @@ class _QuestionsPageState extends State<Questions> {
         width: 0.4 * screenWidth,
         height: 52,
         decoration: BoxDecoration(
-          color: isButtonEnabled ? Color(0xFFF78AB1) : Colors.grey,
+          color: isButtonEnabled ? const Color(0xFFF78AB1) : Colors.grey,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
           child: Text(
             numberOfQuestions < 6 ? 'Next' : 'Submit',
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFFFEF6FF),
               fontWeight: FontWeight.w600,
             ),
@@ -628,11 +627,13 @@ class _QuestionsPageState extends State<Questions> {
         print('Timer started: $timerSeconds seconds');
         startTimer(); // Restart the timer
       } else {
-        bool bpressed = true;
+        bool bpressed = false;
         // Navigate to the answers page or perform final action
         print('User Answers: $userAnswers');
-        if (bpressed) {
-          bpressed = false;
+        if (!bpressed) {
+          bpressed = true;
+          setState(() {
+        });
           for (int i = 0; i < 6; i++) {
             if (userAnswers[i] != -1) {
               stuserAnswers.add(questions[i]['options'][userAnswers[i]! - 1]);

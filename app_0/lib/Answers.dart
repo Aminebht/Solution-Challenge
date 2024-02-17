@@ -43,6 +43,7 @@ class _AnswersPageState extends State<Answers> {
     screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: const Color(0xFFFEF6FF),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -56,7 +57,7 @@ class _AnswersPageState extends State<Answers> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 40.0,
                 ),
                 Padding(
@@ -71,7 +72,7 @@ class _AnswersPageState extends State<Answers> {
                         }
                       },
                       child: Container(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Image.asset(
                           'images/back.png',
                           width: 24.0,
@@ -94,7 +95,7 @@ class _AnswersPageState extends State<Answers> {
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          color: Color(0xFFFEF6FF),
                           letterSpacing: 1.1,
                         ),
                       ),
@@ -130,7 +131,7 @@ class _AnswersPageState extends State<Answers> {
           child: Text(
             numberOfQuestions < 6 ? 'Next' : 'Submit',
             style: const TextStyle(
-              color: Colors.white,
+              color: Color(0xFFFEF6FF),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -241,7 +242,7 @@ class _AnswersPageState extends State<Answers> {
         width: screenWidth,
         padding: const EdgeInsets.all(30),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFFFEF6FF),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
@@ -296,10 +297,10 @@ class _AnswersPageState extends State<Answers> {
             ),
             const SizedBox(height: 20),
             if (selectedAnswer == correctAnswer)
-              _buildAnswerBox(selectedAnswer, Colors.white,
+              _buildAnswerBox(selectedAnswer, const Color(0xFFFEF6FF),
                   const Color(0xFF53DF83), screenWidth)
             else
-              _buildAnswerBox(selectedAnswer, Colors.white,
+              _buildAnswerBox(selectedAnswer, const Color(0xFFFEF6FF),
                   const Color(0xFFE33629), screenWidth),
 
             const SizedBox(height: 20),
@@ -357,11 +358,11 @@ class _AnswersPageState extends State<Answers> {
 Widget _buildAnswerBox(
     String answer, Color color1, Color color2, double screenWidth) {
   Color textColor =
-      (color1 == Colors.white && color2 == const Color(0xFF53DF83))
+      (color1 == const Color(0xFFFEF6FF) && color2 == const Color(0xFF53DF83))
           ? const Color(0xFF53DF83)
-          : (color1 == Colors.white && color2 == const Color(0xFFE33629))
+          : (color1 == const Color(0xFFFEF6FF) && color2 == const Color(0xFFE33629))
               ? const Color(0xFFE33629)
-              : Colors.white;
+              : const Color(0xFFFEF6FF);
   String imagePath =
       (color2 == const Color(0xFFE33629)) ? 'images/no.png' : 'images/tick.png';
 
@@ -398,7 +399,7 @@ Widget _buildExplanationBox(String explanation, double screenWidth) {
     width: 0.9 * screenWidth,
     padding: const EdgeInsets.all(20),
     decoration: const BoxDecoration(
-      color: Colors.white,
+      color: Color(0xFFFEF6FF),
     ),
     child: Text(
       explanation,

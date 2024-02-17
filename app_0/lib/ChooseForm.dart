@@ -33,7 +33,7 @@ class ChooseForm extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 40.0,
                 ),
                 Padding(
@@ -44,7 +44,7 @@ class ChooseForm extends StatelessWidget {
                         Navigator.of(context).pop();
                       },
                       child: Container(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Image.asset(
                           'images/back.png',
                           width: 24.0,
@@ -54,7 +54,7 @@ class ChooseForm extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CircleIndicator(),
@@ -64,8 +64,8 @@ class ChooseForm extends StatelessWidget {
                     CircleIndicator(isPink: true),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: Text(
                     'Choose a Subject',
                     style: TextStyle(
@@ -76,13 +76,13 @@ class ChooseForm extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: Color(0xFFFEF6FF),
+                    color: const Color(0xFFFEF6FF),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -93,10 +93,10 @@ class ChooseForm extends StatelessWidget {
                             selectedOption = option;
                           },
                         ),
-                        SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
                         Container(
                           width: double.infinity,
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
                           child: ElevatedButton(
                             onPressed: () {
                               if (selectedOption != null) {
@@ -120,9 +120,9 @@ class ChooseForm extends StatelessWidget {
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: Color(0xFF843AFD),
-                              onPrimary: Color(0xFFFEF6FF),
-                              padding: EdgeInsets.symmetric(
+                              primary: const Color(0xFF843AFD),
+                              onPrimary: const Color(0xFFFEF6FF),
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: 24.0,
                                 vertical: 24.0,
                               ),
@@ -130,7 +130,7 @@ class ChooseForm extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               'Next',
                               style: TextStyle(
                                 fontSize: 18.0,
@@ -186,8 +186,8 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
       children: [
         GridView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 1,
             mainAxisSpacing: 25.0,
             crossAxisSpacing: 25.0,
@@ -204,11 +204,11 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                 });
               },
               child: Container(
-                margin: EdgeInsets.all(8.0),
+                margin: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   color: selectedChoice == index
-                      ? Color.fromRGBO(247, 138, 177, 1.0)
-                      : Color.fromRGBO(229, 212, 255, 1.0),
+                      ? const Color.fromRGBO(247, 138, 177, 1.0)
+                      : const Color.fromRGBO(229, 212, 255, 1.0),
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Padding(
@@ -220,7 +220,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                         width: 175,
                         height: 175,
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(255, 255, 255, 0.5),
+                          color: const Color.fromRGBO(255, 255, 255, 0.5),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Center(
@@ -228,21 +228,21 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                             customImages[index],
                             style: TextStyle(
                               color: selectedChoice == index
-                                  ? Color(0xFFFEF6FF)
-                                  : Color(0xFF843AFD),
+                                  ? const Color(0xFFFEF6FF)
+                                  : const Color(0xFF843AFD),
                               fontSize: fontSize + 40.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 30.0),
+                      const SizedBox(height: 30.0),
                       Text(
                         customTexts[index],
                         style: TextStyle(
                           color: selectedChoice == index
-                              ? Color(0xFFFEF6FF)
-                              : Color(0xFF843AFD),
+                              ? const Color(0xFFFEF6FF)
+                              : const Color(0xFF843AFD),
                           fontSize: fontSize + 10.0,
                           fontWeight: FontWeight.bold,
                         ),
@@ -272,7 +272,7 @@ class CircleIndicator extends StatelessWidget {
       height: 12.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isPink ? Color.fromRGBO(247, 138, 177, 1.0) : Color(0xFFFEF6FF),
+        color: isPink ? const Color.fromRGBO(247, 138, 177, 1.0) : const Color(0xFFFEF6FF),
       ),
     );
   }
