@@ -1,8 +1,8 @@
 // api_urls.dart
 
 class APIUrls {
-  static const String baseUrl = 'https://d733-165-51-105-191.ngrok-free.app';
-  static const String baseUrlAi='https://e3f8-165-51-105-191.ngrok-free.app';
+  static const String baseUrl = 'https://b7c2-196-235-232-239.ngrok-free.app';
+  static const String baseUrlAi='https://5102-196-235-232-239.ngrok-free.app';
   static const String AiUrl = '$baseUrlAi/predict';
   static const String problemsearchURL ='/api/get-problems-by-score/'; //'/api/get-problems-by-score/';
   static const String userstatsURL = '$baseUrl/api/user/stats';
