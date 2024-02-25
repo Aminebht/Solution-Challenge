@@ -101,7 +101,7 @@ Follow these steps to set up the Django API locally:
 2. Navigate to the project directory:
 
    ```bash
-   cd Backend
+   cd backend
    ```
 
 3. Create a virtual environment if you don't already have one named "venv".
