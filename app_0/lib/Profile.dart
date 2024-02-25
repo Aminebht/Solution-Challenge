@@ -1,4 +1,5 @@
-import 'dart:io' if (dart.library.html) 'dart:html' as html;
+// ignore_for_file: file_names, use_build_context_synchronously
+
 import 'dart:io';
 import 'package:EducationALL/Home.dart';
 import 'package:EducationALL/SignIn.dart';
@@ -11,7 +12,10 @@ import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
+  const Profile({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ProfileState createState() => _ProfileState();
 }
 
@@ -23,7 +27,7 @@ class ChangeInfoPopup extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
 
-  ChangeInfoPopup({
+  const ChangeInfoPopup({
     Key? key,
     required this.name,
     required this.email,
@@ -34,7 +38,9 @@ class ChangeInfoPopup extends StatefulWidget {
   }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _ChangeInfoPopupState createState() =>
+      // ignore: no_logic_in_create_state
       _ChangeInfoPopupState(screenWidth, screenHeight);
 }
 
@@ -55,7 +61,7 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
     double dialogWidth = screenWidth * 0.6;
     double dialogHeight = screenHeight * 0.4;
 
-    return Container(
+    return SizedBox(
       width: dialogWidth,
       height: dialogHeight,
       child: AlertDialog(
@@ -65,7 +71,7 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
         ),
         title: Text(widget.name),
         content: Padding(
-          padding: const EdgeInsets.all(30), // Add padding here
+          padding: const EdgeInsets.all(30), 
           child: SizedBox(
             width: dialogWidth,
             height: dialogHeight,
@@ -111,13 +117,11 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                 if (widget.name == 'Log out')
                   ElevatedButton(
                     onPressed: () {
-                      // Perform log out logic here
                       Navigator.of(context).pop();
                       Navigator.of(context).pushReplacement(
-                        // Navigate to SignIn and remove all previous routes
                         MaterialPageRoute(
                           builder: (context) =>
-                              SignIn(), // Replace SignIn with the actual widget/class for your sign-in screen
+                              SignIn(),
                         ),
                       );
                     },
@@ -126,7 +130,6 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                 if (widget.name == 'Your Stats')
                   ElevatedButton(
                     onPressed: () {
-                      // Perform your stats logic here
                       /* Navigator.of(context).pop();
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
@@ -153,11 +156,9 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
                     String newPassword = newPasswordController.text;
                     String checkPassword = checkpasswordController.text;
 
-                    if (widget.name == 'My Account' &&
-                        widget.onUpdateName != null) {
+                    if (widget.name == 'My Account') {
                       widget.onUpdateName(newName);
-                    } else if (widget.name == 'Change Email Address' &&
-                        widget.onUpdateEmail != null) {
+                    } else if (widget.name == 'Change Email Address') {
                       widget.onUpdateEmail(newEmail);
                     }
                     if (widget.name == 'Change Password') {
@@ -222,10 +223,11 @@ class _ChangeInfoPopupState extends State<ChangeInfoPopup> {
 class _ProfileState extends State<Profile> {
   int _currentIndex = 0;
 
-  List<Widget> pages = [Home(), Profile(), Profile()];
+  List<Widget> pages = [const Home(), const Profile(), const Profile()];
   late ImagePicker _imagePicker;
   late File _pickedFile;
   User? user = FirebaseAuth.instance.currentUser;
+  // ignore: non_constant_identifier_names
   String Username = 'No Display Name';
   String email = 'Not Signed In';
   @override
@@ -236,9 +238,6 @@ class _ProfileState extends State<Profile> {
     if (user != null) {
       Username = user?.displayName ?? 'No Display Name';
       email = user?.email ?? 'Not Signed In';
-      print('Display Name: $Username');
-    } else {
-      print('User not signed in');
     }
   }
 
@@ -281,7 +280,7 @@ class _ProfileState extends State<Profile> {
                         backgroundColor: const Color(0xFFFEF6FF),
                         child: Center(
                           child:
-                              _pickedFile != null && _pickedFile.path.isNotEmpty
+                              _pickedFile.path.isNotEmpty
                                   ? ClipOval(
                                       child: kIsWeb
                                           ? Image.network(
@@ -310,7 +309,7 @@ class _ProfileState extends State<Profile> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '$Username',
+                          Username,
                           style: const TextStyle(
                             color: Color(0xFFFEF6FF),
                             fontSize: 16,
@@ -319,7 +318,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          '$email',
+                          email,
                           style: const TextStyle(
                             color: Color(0xFFA8A8A8),
                             fontSize: 12,
@@ -346,7 +345,7 @@ class _ProfileState extends State<Profile> {
                     _buildBottomElement('images/profile.png', 'My Account',
                         'Make changes to your account'),
                     _buildBottomElement(
-                        'images/email.png', 'Change Email Address', '$email'),
+                        'images/email.png', 'Change Email Address', email),
                     _buildBottomElement('images/lock.png', 'Change Password',
                         'Change your password'),
                   ],
@@ -401,7 +400,7 @@ class _ProfileState extends State<Profile> {
             currentIndex: _currentIndex,
             onTap: (index) {
               setState(() {
-                print(index);
+                
                 _currentIndex = index;
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -438,7 +437,6 @@ class _ProfileState extends State<Profile> {
             name == 'Change Password') {
           showChangeInfoDialog(name);
         } else if (name == 'Log out') {
-          // Perform log out logic and navigate to SignIn
           updateLastRowKeepMeSignedInToFalse();
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
@@ -446,7 +444,6 @@ class _ProfileState extends State<Profile> {
             ),
           );
         } else if (name == 'Your Stats') {
-          // Perform your stats logic here
           Navigator.of(context).pop();
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
@@ -456,62 +453,60 @@ class _ProfileState extends State<Profile> {
           );
         }
       },
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFF0E5FB),
-                  ),
-                  child: Center(
-                    child: Image.asset(
-                      imageName,
-                      width: 20,
-                      height: 20,
-                    ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFFF0E5FB),
+                ),
+                child: Center(
+                  child: Image.asset(
+                    imageName,
+                    width: 20,
+                    height: 20,
                   ),
                 ),
-                const SizedBox(width: 18),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: subtitle.isEmpty ? 10 : 2,
+              ),
+              const SizedBox(width: 18),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: subtitle.isEmpty ? 10 : 2,
+                  ),
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      color: Color(0xFF1F1926),
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        color: Color(0xFF1F1926),
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      color: Color(0xFFA8A8A8),
+                      fontSize: 10,
+                      fontWeight: FontWeight.normal,
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(
-                        color: Color(0xFFA8A8A8),
-                        fontSize: 10,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Image.asset(
-              'images/arrow.png',
-              width: 20,
-              height: 20,
-            ),
-          ],
-        ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Image.asset(
+            'images/arrow.png',
+            width: 20,
+            height: 20,
+          ),
+        ],
       ),
     );
   }
@@ -529,23 +524,13 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> updateLastRowKeepMeSignedInToFalse() async {
-    try {
       var box = await Hive.openBox('testBox');
-
-      // Check if the box is not empty
       if (box.isNotEmpty) {
-        // Get the last added item
         MyData lastData = box.getAt(box.length - 1) as MyData;
-
-        // Update the keepMeSignedIn property to false
         lastData.keepMeSignedIn = false;
-
-        // Put the updated data back into the box
         box.putAt(box.length - 1, lastData);
       }
-    } catch (e) {
-      print("Exception during updating last row: $e");
-    }
+    
   }
 
   void showChangeInfoDialog(String name) {
@@ -565,19 +550,19 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> updateName(String newName) async {
-    // Show loading indicator
+    
     showDialog(
       context: context,
-      barrierDismissible: false, // Prevent users from dismissing the dialog
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return const AlertDialog(
           title: Text('Updating Name'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CircularProgressIndicator(), // Loading indicator
+              CircularProgressIndicator(),
               SizedBox(height: 16),
-              Text('Please wait...'), // Optional message
+              Text('Please wait...'),
             ],
           ),
         );
@@ -586,16 +571,12 @@ class _ProfileState extends State<Profile> {
 
     try {
       if (user != null) {
-        // Perform name update operation
+        
         await user?.updateDisplayName(newName);
         setState(() {
           Username = newName;
         });
-
-        // Close the loading indicator dialog
         Navigator.of(context).pop();
-
-        // Display a success dialog
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -605,7 +586,7 @@ class _ProfileState extends State<Profile> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop(); // Close the success dialog
+                    Navigator.of(context).pop();
                   },
                   child: const Text('OK'),
                 ),
@@ -613,15 +594,9 @@ class _ProfileState extends State<Profile> {
             );
           },
         );
-
-        print('Display Name updated to: $newName');
       }
     } catch (e) {
-      print('Error updating display name: $e');
-      // Close the loading indicator dialog
       Navigator.of(context).pop();
-
-      // Display an error dialog
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -631,7 +606,7 @@ class _ProfileState extends State<Profile> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop(); // Close the error dialog
+                  Navigator.of(context).pop();
                 },
                 child: const Text('OK'),
               ),

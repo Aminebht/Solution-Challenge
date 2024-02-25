@@ -3,13 +3,16 @@ import 'package:EducationALL/chooseLesson.dart';
 import 'package:flutter/material.dart';
 
 class ChooseSubject extends StatefulWidget {
+  const ChooseSubject({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ChooseSubjectState createState() => _ChooseSubjectState();
 }
 
 class _ChooseSubjectState extends State<ChooseSubject> {
-  int selectedChoice = -1; // Track the selected choice
-  String selectedSubject = ''; // Variable to store the selected subject
+  int selectedChoice = -1;
+  String selectedSubject = ''; 
 
   void showSubjectNotSelectedDialog() {
     showDialog(
@@ -140,7 +143,6 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                               'Geography',
                             ],
                             onSelected: (index, selectedSubject) {
-                              // Update the selected choice and subject
                               setState(() {
                                 selectedChoice = index;
                                 this.selectedSubject = selectedSubject;
@@ -153,25 +155,17 @@ class _ChooseSubjectState extends State<ChooseSubject> {
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                // Check if a radio button is selected
                                 if (selectedChoice != -1) {
-                                  // Check if the selected subject is "Math"
                                   if (selectedSubject.toLowerCase() == 'math') {
-                                    // Print or use the selected subject as needed
-                                    print('Selected Subject: $selectedSubject');
-      
-                                    // Navigate to ChooseLesson when a button is pressed
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) => ChooseLesson(),
                                       ),
                                     );
                                   } else {
-                                    // Show a message or perform some action when the subject is not "Math"
                                     showUnavailableSubjectDialog();
                                   }
                                 } else {
-                                  // Show a message or perform some action when no radio button is selected
                                   showSubjectNotSelectedDialog();
                                 }
                               },
@@ -221,6 +215,7 @@ class RadioSelectGrid extends StatefulWidget {
   }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _RadioSelectGridState createState() => _RadioSelectGridState();
 }
 
@@ -261,7 +256,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                     widget.onSelected(
                         index,
                         widget.customTexts[
-                            index]); // Notify the parent about the selection
+                            index]);
                   });
                 },
                 child: Container(

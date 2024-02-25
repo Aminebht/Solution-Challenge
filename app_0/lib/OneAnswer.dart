@@ -1,5 +1,5 @@
-//import 'dart:js';
-import 'dart:ui';
+// ignore_for_file: file_names
+
 import 'package:EducationALL/DoneOneQuestion.dart';
 import 'package:EducationALL/api_urls.dart';
 import 'package:EducationALL/my_data.dart';
@@ -15,7 +15,7 @@ class OneAnswer extends StatefulWidget {
   final String lesson;
   final int up;
 
-  OneAnswer({
+  const OneAnswer({super.key, 
     required this.selectedAnswer,
     required this.correctAnswer,
     required this.question,
@@ -24,6 +24,7 @@ class OneAnswer extends StatefulWidget {
     required this.up,
   });
   @override
+  // ignore: library_private_types_in_public_api
   _AnswersPageState createState() => _AnswersPageState();
 }
 
@@ -35,8 +36,6 @@ class _AnswersPageState extends State<OneAnswer> {
 
   @override
   Widget build(BuildContext context) {
-    print('Selected Answer: ${widget.selectedAnswer}');
-    print('Correct Answer: ${widget.correctAnswer}');
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
 
@@ -89,7 +88,7 @@ class _AnswersPageState extends State<OneAnswer> {
         width: screenWidth,
         padding: const EdgeInsets.all(30),
         decoration: BoxDecoration(
-          color: Color(0xFFFEF6FF),
+          color: const Color(0xFFFEF6FF),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
@@ -109,7 +108,7 @@ class _AnswersPageState extends State<OneAnswer> {
             const SizedBox(height: 20),
             const Row(
               mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
+                  MainAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 10),
@@ -128,16 +127,16 @@ class _AnswersPageState extends State<OneAnswer> {
             const SizedBox(height: 20),
 
             if (widget.selectedAnswer == widget.correctAnswer)
-              _buildAnswerBox(widget.selectedAnswer, Color(0xFFFEF6FF),
+              _buildAnswerBox(widget.selectedAnswer, const Color(0xFFFEF6FF),
                   const Color(0xFF53DF83), screenWidth)
             else
-              _buildAnswerBox(widget.selectedAnswer, Color(0xFFFEF6FF),
+              _buildAnswerBox(widget.selectedAnswer, const Color(0xFFFEF6FF),
                   const Color(0xFFE33629), screenWidth),
 
             const SizedBox(height: 20),
             const Row(
               mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
+                  MainAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 10),
@@ -159,7 +158,7 @@ class _AnswersPageState extends State<OneAnswer> {
             const SizedBox(height: 20),
             const Row(
               mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
+                  MainAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 10),
@@ -190,25 +189,18 @@ class _AnswersPageState extends State<OneAnswer> {
       onTap: () async {
         var box = await Hive.openBox('testBox');
         MyData? userData = box.values.last;
-
-        // Ensure userData and the selected category exist before proceeding
-
         String user = userData!.userId;
-
-        // Prepare data for the Dio request
         Map<String, dynamic> requestData = {
           'user_id': user,
-          'category': "total_" + widget.lesson,
-          // Add any other necessary data
+          'category': "total_${widget.lesson}",
+          
         };
 
-        // Create Dio instance
         Dio dio = Dio();
 
-        try {
-          // Make the Dio request
+        
           Response response = await dio.get(
-            '${APIUrls.userhistoryURL}',
+            APIUrls.userhistoryURL,
             queryParameters: requestData,
             options: Options(
               headers: {
@@ -217,12 +209,9 @@ class _AnswersPageState extends State<OneAnswer> {
             ),
           );
 
-          // Check if the request was successful (status code 200)
           if (response.statusCode == 200) {
-            // Parse the response if needed
             dynamic responseData = response.data;
 
-            // Navigate to the next page or perform the final action
             // ignore: use_build_context_synchronously
             Navigator.pushReplacement(
               context,
@@ -233,14 +222,7 @@ class _AnswersPageState extends State<OneAnswer> {
                         totalQuizDone: responseData,
                       )),
             );
-          } else {
-            // Handle the case where the request was not successful
-            print('Error: ${response.statusCode}');
           }
-        } catch (error) {
-          // Handle any Dio errors
-          print('Dio error: $error');
-        }
       },
       child: Container(
         width: 0.8 * screenWidth,
@@ -266,11 +248,11 @@ class _AnswersPageState extends State<OneAnswer> {
 Widget _buildAnswerBox(
     String answer, Color color1, Color color2, double screenWidth) {
   Color textColor =
-      (color1 == Color(0xFFFEF6FF) && color2 == const Color(0xFF53DF83))
+      (color1 == const Color(0xFFFEF6FF) && color2 == const Color(0xFF53DF83))
           ? const Color(0xFF53DF83)
-          : (color1 == Color(0xFFFEF6FF) && color2 == const Color(0xFFE33629))
+          : (color1 == const Color(0xFFFEF6FF) && color2 == const Color(0xFFE33629))
               ? const Color(0xFFE33629)
-              : Color(0xFFFEF6FF);
+              : const Color(0xFFFEF6FF);
 
   String imagePath =
       (color2 == const Color(0xFFE33629)) ? 'images/no.png' : 'images/tick.png';

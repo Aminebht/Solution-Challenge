@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:ui';
-import 'package:EducationALL/Home.dart';
 import 'package:EducationALL/api_urls.dart';
 import 'package:EducationALL/my_data.dart';
 import 'package:dio/dio.dart';
@@ -27,6 +25,7 @@ class Answers extends StatefulWidget {
     required this.lnew,
   });
   @override
+  // ignore: library_private_types_in_public_api
   _AnswersPageState createState() => _AnswersPageState();
 }
 
@@ -124,7 +123,7 @@ class _AnswersPageState extends State<Answers> {
         width: 0.8 * screenWidth,
         height: 52,
         decoration: BoxDecoration(
-          color: const Color(0xFF7B31F4), // Change the color to 7B31F4
+          color: const Color(0xFF7B31F4),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
@@ -145,31 +144,29 @@ class _AnswersPageState extends State<Answers> {
       setState(() {
         numberOfQuestions++;
       });
-      // Restart the timer for the new questions
+      
     } else {
       int countTimeouts =
           widget.stuserAnswers.where((answer) => answer == 'Timer Out').length;
       var box = await Hive.openBox('testBox');
       MyData? userData = box.values.last;
 
-      // Ensure userData and the selected category exist before proceeding
+      
 
       String user = userData!.userId;
 
-      // Prepare data for the Dio request
+      
       Map<String, dynamic> requestData = {
         'user_id': user,
-        'category': "total_" + widget.lesson,
-        // Add any other necessary data
+        'category': "total_${widget.lesson}",
+        
       };
 
-      // Create Dio instance
+      
       Dio dio = Dio();
 
-      try {
-        // Make the Dio request
         Response response = await dio.get(
-          '${APIUrls.userhistoryURL}',
+          APIUrls.userhistoryURL,
           queryParameters: requestData,
           options: Options(
             headers: {
@@ -178,12 +175,11 @@ class _AnswersPageState extends State<Answers> {
           ),
         );
 
-        // Check if the request was successful (status code 200)
+        
         if (response.statusCode == 200) {
-          // Parse the response if needed
+          
           dynamic responseData = response.data;
 
-          // Navigate to the next page or perform the final action
           // ignore: use_build_context_synchronously
           Navigator.pushReplacement(
             context,
@@ -199,17 +195,12 @@ class _AnswersPageState extends State<Answers> {
               ),
             ),
           );
-        } else {
-          // Handle the case where the request was not successful
-          print('Error: ${response.statusCode}');
-        }
-      } catch (error) {
-        // Handle any Dio errors
-        print('Dio error: $error');
-      }
+        } 
+      
     }
   }
 
+  @override
   void initState() {
     super.initState();
     calculateAverage();
@@ -222,9 +213,7 @@ class _AnswersPageState extends State<Answers> {
       }
     }
     setState(() {
-      // Trigger a rebuild when correctCount changes
     });
-    print("Number of correct answers: $correctCount");
   }
 
   Widget _buildBottomBox(
@@ -235,8 +224,7 @@ class _AnswersPageState extends State<Answers> {
     String correctAnswer,
     String explanation,
   ) {
-    String question = widget
-        .problems[numberOfQuestions - 1]; // Retrieve question from the matrix
+    String question = widget.problems[numberOfQuestions - 1];
     return SingleChildScrollView(
       child: Container(
         width: screenWidth,
@@ -279,7 +267,7 @@ class _AnswersPageState extends State<Answers> {
             const SizedBox(height: 20),
             const Row(
               mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
+                  MainAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 10),
@@ -306,7 +294,7 @@ class _AnswersPageState extends State<Answers> {
             const SizedBox(height: 20),
             const Row(
               mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
+                  MainAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 10),
@@ -328,7 +316,7 @@ class _AnswersPageState extends State<Answers> {
             const SizedBox(height: 20),
             const Row(
               mainAxisAlignment:
-                  MainAxisAlignment.start, // Align to the start (left)
+                  MainAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 10),

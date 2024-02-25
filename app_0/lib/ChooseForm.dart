@@ -1,18 +1,18 @@
-// ChooseForm.dart
+// ignore_for_file: file_names
 
 import 'package:EducationALL/OneQuestion.dart';
 import 'package:EducationALL/Questions.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ChooseForm extends StatelessWidget {
   final int selectedChoice;
   late int savedChoice;
   int? selectedOption; // New variable to store the selected option
 
-  ChooseForm({required this.selectedChoice}) {
+  ChooseForm({super.key, required this.selectedChoice}) {
     savedChoice = selectedChoice;
-    print('Selected Choice: $selectedChoice');
-    print('Saved Choice: $savedChoice');
+   
   }
 
   @override
@@ -100,8 +100,7 @@ class ChooseForm extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () {
                               if (selectedOption != null) {
-                                print(
-                                    'Next button pressed. Selected Choice: $selectedChoice, Selected Option: $selectedOption');
+                                
                                 if (selectedOption == 0) {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => OneQuestion(
@@ -114,14 +113,11 @@ class ChooseForm extends StatelessWidget {
                                         lnew: 0),
                                   ));
                                 }
-                              } else {
-                                print(
-                                    'Please select an option before pressing Next');
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: const Color(0xFF843AFD),
-                              onPrimary: const Color(0xFFFEF6FF),
+                              foregroundColor: const Color(0xFFFEF6FF),
+                              backgroundColor: const Color(0xFF843AFD),
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 24.0,
                                 vertical: 24.0,
@@ -151,19 +147,18 @@ class ChooseForm extends StatelessWidget {
   }
 }
 
-// Rest of the code remains the same
 
-// Inside the RadioSelectGrid class
+
 class RadioSelectGrid extends StatefulWidget {
   final Function(int)? onOptionSelected;
 
-  RadioSelectGrid({this.onOptionSelected});
+  const RadioSelectGrid({super.key, this.onOptionSelected});
 
   @override
+  // ignore: library_private_types_in_public_api
   _RadioSelectGridState createState() => _RadioSelectGridState();
 }
 
-// Inside the _RadioSelectGridState class
 class _RadioSelectGridState extends State<RadioSelectGrid> {
   int selectedChoice = -1;
 
@@ -200,7 +195,7 @@ class _RadioSelectGridState extends State<RadioSelectGrid> {
                 setState(() {
                   selectedChoice = index;
                   widget.onOptionSelected?.call(
-                      index); // Notify the parent about the selected option
+                      index); 
                 });
               },
               child: Container(

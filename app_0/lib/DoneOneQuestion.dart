@@ -1,5 +1,6 @@
-import 'package:EducationALL/Home.dart';
+// ignore_for_file: file_names
 
+import 'package:EducationALL/Home.dart';
 import 'package:flutter/material.dart';
 
 class DoneOneQuestion extends StatelessWidget {
@@ -7,7 +8,7 @@ class DoneOneQuestion extends StatelessWidget {
   final int uprate;
   final int totalQuizDone;
 
-  DoneOneQuestion({
+  const DoneOneQuestion({super.key, 
     required this.selectedLesson,
     required this.uprate,
     required this.totalQuizDone,
@@ -21,7 +22,7 @@ class DoneOneQuestion extends StatelessWidget {
     score >= 0 ? chaine = 'Increased' : chaine = 'Decreased';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFEF6FF), // Set the background color to white
+      backgroundColor: const Color(0xFFFEF6FF),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -99,7 +100,7 @@ class DoneOneQuestion extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return FeedbackPopup();
+                            return const FeedbackPopup();
                           },
                         );
                         /*} else {
@@ -144,53 +145,25 @@ class DoneOneQuestion extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoElement(String title, String value) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Color(0xFF979797),
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.none,
-              letterSpacing: 1.1,
-            ),
-            textAlign: TextAlign.left,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: const TextStyle(
-              color: Color(0xFF1F1926),
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.none,
-            ),
-            textAlign: TextAlign.left,
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 class FeedbackPopup extends StatefulWidget {
+  const FeedbackPopup({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _FeedbackPopupState createState() => _FeedbackPopupState();
 }
 
 class _FeedbackPopupState extends State<FeedbackPopup> {
-  double difficultyValue = 0; // Default value
+  double difficultyValue = 0;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('How was the difficulty?', style: TextStyle(fontSize: 18)),
-      content: Container(
-        width: 300, // Set the width to maximum
+      content: SizedBox(
+        width: 300,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -243,10 +216,10 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
-                      const Color(0xFF7B31F4), // Set button color to match slider
+                      const Color(0xFF7B31F4),
                   shape: RoundedRectangleBorder(
                     borderRadius:
-                        BorderRadius.circular(15.0), // Set BorderRadius
+                        BorderRadius.circular(15.0),
                   ),
                 ),
                 child: const Text('Submit',
@@ -258,7 +231,7 @@ class _FeedbackPopupState extends State<FeedbackPopup> {
       ),
       shape: RoundedRectangleBorder(
         borderRadius:
-            BorderRadius.circular(15.0), // Set BorderRadius for AlertDialog
+            BorderRadius.circular(15.0),
       ),
     );
   }

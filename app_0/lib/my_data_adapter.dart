@@ -4,7 +4,7 @@ import 'my_data.dart';
 
 class MyDataAdapter extends TypeAdapter<MyData> {
   @override
-  final int typeId = 1; // Provide a unique identifier for your type
+  final int typeId = 1;
 
   @override
   MyData read(BinaryReader reader) {

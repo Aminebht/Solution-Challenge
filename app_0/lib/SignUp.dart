@@ -1,18 +1,14 @@
+// ignore_for_file: file_names, use_build_context_synchronously
 import 'package:EducationALL/api_urls.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
-
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:EducationALL/SignIn.dart';
-import 'package:EducationALL/my_data.dart';
-import 'package:EducationALL/my_data_adapter.dart';
-import 'package:hive/hive.dart';
-
+// ignore: must_be_immutable
 class SignUp extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
@@ -23,6 +19,8 @@ class SignUp extends StatelessWidget {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   late SimpleFontelicoProgressDialog _progressDialog;
+
+  SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +78,7 @@ class SignUp extends StatelessWidget {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(
-                            color: const Color(0xB2B2B2).withOpacity(0.25),
+                            color: const Color(0x00b2b2b2).withOpacity(0.25),
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -97,7 +95,7 @@ class SignUp extends StatelessWidget {
                                 child: const Text(
                                   '*',
                                   style: TextStyle(
-                                    color: Colors.red, // Change this to your desired color
+                                    color: Colors.red,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -131,7 +129,7 @@ class SignUp extends StatelessWidget {
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: BorderSide(
-                                      color: const Color(0xB2B2B2).withOpacity(0.25),
+                                      color: const Color(0x00b2b2b2).withOpacity(0.25),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
@@ -139,7 +137,7 @@ class SignUp extends StatelessWidget {
                             
                             borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
-                              width: 2, // Change this to your desired color
+                              width: 2,
                             ),
                            ),
                            suffix: firstNameController.text.isNotEmpty
@@ -149,7 +147,7 @@ class SignUp extends StatelessWidget {
                                 child: const Text(
                                   '*',
                                   style: TextStyle(
-                                    color: Colors.red, // Change this to your desired color
+                                    color: Colors.red,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -179,7 +177,7 @@ class SignUp extends StatelessWidget {
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: BorderSide(
-                                      color: const Color(0xB2B2B2).withOpacity(0.25),
+                                      color: const Color(0x00b2b2b2).withOpacity(0.25),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
@@ -187,7 +185,7 @@ class SignUp extends StatelessWidget {
                             
                             borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
-                              width: 2, // Change this to your desired color
+                              width: 2,
                             ),
                            ),
                            suffix: lastNameController.text.isNotEmpty
@@ -197,7 +195,7 @@ class SignUp extends StatelessWidget {
                                 child: const Text(
                                   '*',
                                   style: TextStyle(
-                                    color: Colors.red, // Change this to your desired color
+                                    color: Colors.red,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -226,15 +224,14 @@ class SignUp extends StatelessWidget {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: const Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0x00b2b2b2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
-                            
                             borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
-                              width: 2, // Change this to your desired color
+                              width: 2,
                             ),
                            ),
                         ),
@@ -257,7 +254,7 @@ class SignUp extends StatelessWidget {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: const Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0x00b2b2b2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -265,7 +262,7 @@ class SignUp extends StatelessWidget {
                             
                             borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
-                              width: 2, // Change this to your desired color
+                              width: 2,
                             ),
                            ),
                         ),
@@ -290,7 +287,7 @@ class SignUp extends StatelessWidget {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: const Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0x00b2b2b2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -298,7 +295,7 @@ class SignUp extends StatelessWidget {
                             
                             borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
-                              width: 2, // Change this to your desired color
+                              width: 2,
                             ),
                            ),
                            suffix: passwordController.text.isNotEmpty
@@ -308,7 +305,7 @@ class SignUp extends StatelessWidget {
                                 child: const Text(
                                   '*',
                                   style: TextStyle(
-                                    color: Colors.red, // Change this to your desired color
+                                    color: Colors.red,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -334,7 +331,7 @@ class SignUp extends StatelessWidget {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: const Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0x00b2b2b2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -342,7 +339,7 @@ class SignUp extends StatelessWidget {
                             
                             borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
-                              width: 2, // Change this to your desired color
+                              width: 2,
                             ),
                            ),
                          suffix: confirmPasswordController.text.isNotEmpty
@@ -352,7 +349,7 @@ class SignUp extends StatelessWidget {
                                 child: const Text(
                                   '*',
                                   style: TextStyle(
-                                    color: Colors.red, // Change this to your desired color
+                                    color: Colors.red,
                                     fontSize: 16,
                                   ),
                                 ),
@@ -369,40 +366,21 @@ class SignUp extends StatelessWidget {
                       height: 49,
                       child: ElevatedButton(
                         onPressed: () async {
-                                        // Validate form
+                                      
                                         if (_validateForm(context)) {
-                                          // Get values from text fields
+                                          
                                           String email = emailController.text;
                                           String password = passwordController.text;
                                           String firstName = firstNameController.text;
                                           String lastName = lastNameController.text;
-
-                                          // Show loading dialog
-                                          _progressDialog.show(message: 'Signing up...');
-                                          
-                                          try {
-                                            await registerWithEmailAndPassword(
+                                          registerWithEmailAndPassword(
                                                 context, email, password, firstName, lastName);
                                             _progressDialog.hide();
-                                            // Hide loading dialog after registration is complete
-                                            
-
-                                            // Navigate or perform other actions...
                                             Navigator.of(context).push(MaterialPageRoute(
-                                              builder: (context) => SignIn(),
+                                              builder: (context) => const SignIn(),
                                             ));
-                                          } catch (e) {
-                                            // Handle any errors during registration
-                                            print('Registration failed: $e');
-                                            // Hide loading dialog in case of an error
-                                            _progressDialog.hide();
-                                            // You may want to show an error message to the user
-                                          }
                                         }
                                       },
-
-
-
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF7B31F4),
                           shape: RoundedRectangleBorder(
@@ -439,7 +417,7 @@ class SignUp extends StatelessWidget {
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => SignIn()));
+                                      builder: (context) => const SignIn()));
                                 },
                             ),
                           ],
@@ -457,18 +435,15 @@ class SignUp extends StatelessWidget {
   }
 
   bool _validateForm(BuildContext context) {
-    // Add validation logic for required fields
     if (emailController.text.isEmpty ||
         passwordController.text.isEmpty ||
         confirmPasswordController.text.isEmpty ||
         firstNameController.text.isEmpty ||
         lastNameController.text.isEmpty) {
-      // Show an error message or handle it as needed
       _showErrorPopup(context, 'Please fill in all required fields.');
       return false;
     }
-
-    // You can add more validation logic if necessary (e.g., email format, password strength)
+    else{if(confirmPasswordController.text != passwordController.text){_showErrorPopup(context, 'Please check your password');}}
 
     return true;
   }
@@ -518,40 +493,24 @@ class SignUp extends StatelessWidget {
     bool isFirebaseUserCreated = false;
 
     try {
-      print('registration');
-
-      // Initialize Firebase if not initialized
       if (Firebase.apps.isEmpty) {
         await Firebase.initializeApp();
       }
 
-      // Create user in Firebase Authentication
       final UserCredential authResult =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-
-      // If Firebase registration is successful, send user data to your server
       final User? user = authResult.user;
-      String displayName = firstName + " " + lastName;
+      String displayName = "$firstName $lastName";
       await user?.updateDisplayName(displayName);
-
-      print('User registration successful with display name: $displayName');
-
       if (user != null) {
-        // Replace 'https://your-api-endpoint.com/create_user' with your actual API endpoint
         const String apiUrl = APIUrls.userscoresURL;
-        //final String apiUrl = 'http://127.0.0.1:8000/api/user/scores/';
-
-        // Replace this with the actual data you want to send to your server
         final Map<String, dynamic> userData = {
           "uid": user.uid,
-          // ... other user data
         };
-
         final Dio dio = Dio();
-
         final Response response = await dio.post(
           apiUrl,
           options: Options(
@@ -561,30 +520,17 @@ class SignUp extends StatelessWidget {
         );
 
         if (response.statusCode == 201) {
-          // If the server operation is successful, proceed to local data storage
-
-          // Set the flag to indicate that Firebase user creation was successful
           isFirebaseUserCreated = true;
-
-          // Show a success popup
           _showSuccessPopup(context, 'User created successfully.');
         } else {
-          print(
-              "Failed to create user on server. Status code: ${response.statusCode}");
-
-          // Show an error popup
           _showErrorPopup(context,
               'Failed to create user on server. Status code: ${response.statusCode}');
         }
       }
     } on FirebaseAuthException catch (firebaseException) {
-      // Handle Firebase Authentication exceptions
-      print("Firebase Exception: $firebaseException");
       _showErrorPopup(context, 'Firebase Exception: $firebaseException');
     // ignore: deprecated_member_use
     } on DioError catch (dioError) {
-      // Handle Dio exceptions (Django server request)
-      print("Dio Exception: $dioError");
       if (!isFirebaseUserCreated) {
         final User? currentUser = FirebaseAuth.instance.currentUser;
         if (currentUser != null) {
@@ -593,12 +539,9 @@ class SignUp extends StatelessWidget {
       }
       _showErrorPopup(context, 'Dio Exception: $dioError');
     } catch (e) {
-      print("Exception during registration: $e");
 
-      // Handle the case where user creation failed for both Firebase and Django
+
       _showErrorPopup(context, 'Failed to create user. Exception: $e');
-    } finally {
-      // If there's an error in Django and Firebase user was created, delete the Firebase user
     }
   }
 }

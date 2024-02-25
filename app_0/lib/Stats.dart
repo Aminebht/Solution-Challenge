@@ -1,4 +1,5 @@
-// Data model classes
+// ignore_for_file: file_names
+
 import 'package:EducationALL/home.dart';
 import 'package:EducationALL/my_data.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +21,14 @@ class Subject {
 class Stats extends StatefulWidget {
   final String url;
   final String name;
-  Stats({required this.url, required this.name, Key? key}) : super(key: key);
+  const Stats({required this.url, required this.name, Key? key}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _StatsState createState() => _StatsState();
 }
 
 class _StatsState extends State<Stats> {
-  int selectedBoxIndex = 0; // -1 represents no selection
-
-  // Data
+  int selectedBoxIndex = 0;
   List<Subject> subjects = [
     Subject(name: 'Math', lessons: [
       Lesson(name: 'Algebra'),
@@ -41,51 +41,29 @@ class _StatsState extends State<Stats> {
       Lesson(name: 'Other'),
     ]),
     Subject(name: 'Physics', lessons: [
-      // Add lessons for Physics
     ]),
-    Subject(name: 'Science', lessons: [
-      // Add lessons for Science
-    ]),
-    Subject(name: 'Chemistry', lessons: [
-      // Add lessons for Chemistry
-    ]),
-    Subject(name: 'Robotics', lessons: [
-      // Add lessons for Robotics
-    ]),
-    Subject(name: 'Computer\nScience', lessons: [
-      // Add lessons for Computer Science
-    ]),
-    Subject(name: 'History', lessons: [
-      // Add lessons for History
-    ]),
-    Subject(name: 'Geography', lessons: [
-      // Add lessons for Geography
-    ]),
+    Subject(name: 'Science', lessons: []),
+    Subject(name: 'Chemistry', lessons: []),
+    Subject(name: 'Robotics', lessons: []),
+    Subject(name: 'Computer\nScience', lessons: []),
+    Subject(name: 'History', lessons: []),
+    Subject(name: 'Geography', lessons: []),
   ];
 
   List<int> transformValuesToList(Map<String, dynamic> inputMap) {
     List<int> resultList = [];
-
-    // Add 0 at position 0
     resultList.add(0);
-
-    // Copy the first 4 values from the map
     for (int i = 1; i <= 4; i++) {
       if (i <= inputMap.length) {
         resultList.add(inputMap.values.elementAt(i - 1) as int);
       } else {
-        resultList.add(0); // If there are fewer than 4 values, add 0
+        resultList.add(0);
       }
     }
-
-    // Add 0 at position 5
     resultList.add(0);
-
-    // Copy the remaining values from the map
     for (int i = 4; i < 6; i++) {
       resultList.add(inputMap.values.elementAt(i) as int);
     }
-    print(resultList);
     return resultList;
   }
 
@@ -93,22 +71,15 @@ class _StatsState extends State<Stats> {
     List<int> intList = [0, 0, 0, 0, 0, 0, 0, 0];
     try {
       var box = await Hive.openBox('testBox');
-
-      // Check if the box is not empty
       if (box.isNotEmpty) {
-        // Get the index of the last item
         MyData? userData = box.values.last;
         Map<String, dynamic> userscores = userData!.userScores;
         intList = transformValuesToList(userscores);
-        print(intList); // Output: [10, 20, 30]
         return intList;
       }
-
-      // Close the box
       await box.close();
       return intList;
     } catch (e) {
-      print("Exception during Hive database update: $e");
       return intList;
     }
   }
@@ -118,15 +89,11 @@ class _StatsState extends State<Stats> {
   @override
   void initState() {
     super.initState();
-    // Call the asynchronous method in initState
     loadScores();
   }
 
   Future<void> loadScores() async {
-    // Use await to get the result of the asynchronous operation
     scores = await getscores();
-
-    // Call setState to trigger a rebuild with the updated scores
     setState(() {});
   }
 
@@ -145,7 +112,7 @@ class _StatsState extends State<Stats> {
   @override
   Widget build(BuildContext context) {
     bool isMath = selectedBoxIndex ==
-        0; // Check if the selected index corresponds to 'Math'
+        0;
 
     String name1 = widget.name;
     return Scaffold(
@@ -333,7 +300,7 @@ class _StatsState extends State<Stats> {
                                                   ),
                                                   const SizedBox(width: 4),
                                                   Text(
-                                                    '${subjects[0].lessons[index].name}',
+                                                    subjects[0].lessons[index].name,
                                                     style: const TextStyle(
                                                       color: Color(0xFFFEF6FF),
                                                       fontSize: 10,

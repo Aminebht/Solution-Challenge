@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ChooseLesson extends StatefulWidget {
+  const ChooseLesson({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ChooseLessonState createState() => _ChooseLessonState();
 }
 
@@ -78,7 +81,7 @@ class _ChooseLessonState extends State<ChooseLesson> {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ChooseSubject(),
+                            builder: (context) => const ChooseSubject(),
                           ));
                         },
                         child: Container(
@@ -135,9 +138,8 @@ class _ChooseLessonState extends State<ChooseLesson> {
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: ElevatedButton(
                               onPressed: () async {
-                                try {
+                                
                                   if (selectedChoice == -1) {
-                                    // Show popup for not selecting a lesson
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -158,7 +160,7 @@ class _ChooseLessonState extends State<ChooseLesson> {
                                     );
                                   } else if (selectedChoice == 0 ||
                                       selectedChoice == 5) {
-                                    // Show popup for lesson not available
+                                    
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -179,17 +181,17 @@ class _ChooseLessonState extends State<ChooseLesson> {
                                       },
                                     );
                                   } else {
-                                    // Navigate to the next screen as the lesson is valid
+                                    
                                     var box = await Hive.openBox('testBox');
                                     if (box.isNotEmpty) {
                                       MyData? userData = box.values.last;
-                                      if (userData != null &&
-                                          userData.userScores != null) {
+                                      if (userData != null) {
                                         int? selectedChoiceScore =
                                             userData.userScores[
                                                 lessons[selectedChoice]];
                                         if (selectedChoiceScore != null &&
                                             selectedChoiceScore == 0) {
+                                          // ignore: use_build_context_synchronously
                                           Navigator.of(context)
                                               .push(MaterialPageRoute(
                                             builder: (context) => Questions(
@@ -197,18 +199,17 @@ class _ChooseLessonState extends State<ChooseLesson> {
                                                 lnew: 1),
                                           ));
                                         } else {
+                                          // ignore: use_build_context_synchronously
                                           Navigator.of(context)
                                               .push(MaterialPageRoute(
                                             builder: (context) => ChooseForm(
                                                 selectedChoice: selectedChoice),
                                           ));
                                         }
-                                      } else {
-                                        print(
-                                            "Error: User data or user scores are null");
-                                      }
+                                      } 
                                     } else {
-                                      print("Error: Hive box is empty");
+                                      
+                                      // ignore: use_build_context_synchronously
                                       showErrorDialog(
                                         context,
                                         'Error',
@@ -216,9 +217,7 @@ class _ChooseLessonState extends State<ChooseLesson> {
                                       );
                                     }
                                   }
-                                } catch (e) {
-                                  print("Error: $e");
-                                }
+                                
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: const Color(0xFFFEF6FF),
@@ -258,10 +257,11 @@ class RadioSelectGrid extends StatefulWidget {
   final int selectedChoice;
   final Function(int) updateSelectedChoice;
 
-  RadioSelectGrid(
-      {required this.selectedChoice, required this.updateSelectedChoice});
+  const RadioSelectGrid(
+      {super.key, required this.selectedChoice, required this.updateSelectedChoice});
 
   @override
+  // ignore: library_private_types_in_public_api
   _RadioSelectGridState createState() => _RadioSelectGridState();
 }
 

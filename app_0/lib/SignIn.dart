@@ -1,6 +1,7 @@
+// ignore_for_file: file_names
+
 import 'dart:io';
 import 'package:EducationALL/api_urls.dart';
-
 import 'package:EducationALL/Home.dart';
 import 'package:EducationALL/SignUp.dart';
 import 'package:EducationALL/my_data.dart';
@@ -14,14 +15,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 
 class SignIn extends StatefulWidget {
+  const SignIn({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
   bool keepSignedIn = false;
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   late SimpleFontelicoProgressDialog _progressDialog;
   Map<String, dynamic> apiResponse = {};
   @override
@@ -33,7 +37,6 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize _progressDialog here
     _progressDialog = SimpleFontelicoProgressDialog(context: context);
 
     return Scaffold(
@@ -41,7 +44,6 @@ class _SignInState extends State<SignIn> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Background image covering 33% of the screen height
             Positioned(
               top: 0,
               left: 0,
@@ -63,13 +65,13 @@ class _SignInState extends State<SignIn> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Sign In text
+                    
                     const Text(
                       'Sign In',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 28,
-                        color: Color(0xFF1F1926), // Adjust text color
+                        color: Color(0xFF1F1926),
                       ),
                     ),
                     SizedBox(
@@ -80,7 +82,7 @@ class _SignInState extends State<SignIn> {
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: TextFormField(
                         controller:
-                            _emailController, // Pass the controller here
+                            _emailController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color(0xFFF9F5FF),
@@ -92,7 +94,7 @@ class _SignInState extends State<SignIn> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: const Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0x00b2b2b2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -100,7 +102,7 @@ class _SignInState extends State<SignIn> {
                             
                             borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
-                              width: 2, // Change this to your desired color
+                              width: 2,
                             ),
                            ),
                         ),
@@ -108,13 +110,11 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     const SizedBox(height: 8),
-
-                    // Password TextField
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: TextFormField(
                         controller:
-                            _passwordController, // Pass the controller here
+                            _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
@@ -127,7 +127,7 @@ class _SignInState extends State<SignIn> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
                             borderSide: BorderSide(
-                              color: const Color(0xB2B2B2).withOpacity(0.25),
+                              color: const Color(0x00b2b2b2).withOpacity(0.25),
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -135,7 +135,7 @@ class _SignInState extends State<SignIn> {
                             
                             borderSide: const BorderSide(
                               color: Color(0xFF7B31F4),
-                              width: 2, // Change this to your desired color
+                              width: 2,
                             ),
                            ),
                         ),
@@ -144,13 +144,11 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
 
-                    // Additional UI elements
                     const SizedBox(height: 8),
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: Row(
                         children: [
-                          // Left side - Checkbox and text
                           GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -197,10 +195,8 @@ class _SignInState extends State<SignIn> {
                                 ),
 
                           const Spacer(),
-                          // Right side - Forgot Your Password?
                           InkWell(
                             onTap: () {
-                              // Add your logic for forgot password
                             },
                             child: const Text(
                               'Forgot Your Password?',
@@ -215,45 +211,35 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
 
-                    // Additional UI elements
                     SizedBox(
                         height:
                             6.29 * MediaQuery.of(context).size.height / 100),
 
-                    // Sign In Button
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       height: 49,
                       child: ElevatedButton(
                         onPressed: () async {
                           try {
-                            // Perform sign-in
-                            // Get email and password from text fields
+                          
                             String email = _emailController.text;
                             String password = _passwordController.text;
                             _progressDialog.show(message: 'Signing in...');
-                            print(keepSignedIn);
                             int updated = await signInWithEmailAndPassword(
                                 email, password, keepSignedIn);
-                            print("Taw nrmlmnt yhidi");
-
                             _progressDialog.hide();
-
-                            print('cbn hide zah');
-                            print("\n");
-                            print(updated);
-                            print("\n");
-                            // Check if sign-in is successful
                             if (updated == 0) {
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
                               prefs.setBool('keepSignedIn', keepSignedIn);
 
+                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Home(),
+                                builder: (context) => const Home(),
                               ));
                             } else {
                               if (updated == 2) {
+                                // ignore: use_build_context_synchronously
                                 showErrorDialog(
                                   context,
                                   'Sign-in Failed',
@@ -261,6 +247,7 @@ class _SignInState extends State<SignIn> {
                                 );
                               }
                               if (updated == 1) {
+                                // ignore: use_build_context_synchronously
                                 showErrorDialog(
                                   context,
                                   'Connection Error',
@@ -268,8 +255,10 @@ class _SignInState extends State<SignIn> {
                                 );
                               }
                             }
-                          } on DioError catch (e) {
+                          // ignore: deprecated_member_use
+                          } on DioError {
                             _progressDialog.hide();
+                            // ignore: use_build_context_synchronously
                             showErrorDialog(
                               context,
                               'Connection Error',
@@ -277,10 +266,12 @@ class _SignInState extends State<SignIn> {
                             );
                           } on FirebaseAuthException catch (e) {
                             _progressDialog.hide();
+                            // ignore: use_build_context_synchronously
                             showErrorDialog(context, 'Authentication Error',
                                 e.message ?? '');
                           } catch (e) {
                             _progressDialog.hide();
+                            // ignore: use_build_context_synchronously
                             showErrorDialog(
                               context,
                               'Sign-in Failed',
@@ -308,12 +299,11 @@ class _SignInState extends State<SignIn> {
                         height:
                             6.29 * MediaQuery.of(context).size.height / 100),
 
-                    // New row with 'or' and horizontal lines
                     SizedBox(
                       width: 73 * MediaQuery.of(context).size.width / 100,
                       child: Row(
                         children: [
-                          // Left line
+                       
                           const SizedBox(width: 20),
                           Expanded(
                             child: Container(
@@ -322,7 +312,6 @@ class _SignInState extends State<SignIn> {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          // 'or' text
                           const Text(
                             'Or',
                             style: TextStyle(
@@ -331,7 +320,6 @@ class _SignInState extends State<SignIn> {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          // Right line
                           Expanded(
                             child: Container(
                               height: 1,
@@ -342,17 +330,12 @@ class _SignInState extends State<SignIn> {
                         ],
                       ),
                     ),
-
-                    // Additional UI elements
                     const SizedBox(height: 8),
-
-                    // New row with images
                     SizedBox(
-                      width: 95, // Set the width to 95 pixels
+                      width: 95,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Left rectangle with Google image
                           Container(
                             width: 42,
                             height: 42,
@@ -360,14 +343,13 @@ class _SignInState extends State<SignIn> {
                             child: Center(
                               child: Image.asset(
                                 'images/google.png',
-                                width: 24, // Adjust the width of the image
-                                height: 24, // Adjust the height of the image
+                                width: 24,
+                                height: 24,
                               ),
                             ),
                           ),
                           const SizedBox(
-                              width: 10), // Adjust the space between rectangles
-                          // Right rectangle with Facebook image
+                              width: 10),
                           Container(
                             width: 42,
                             height: 42,
@@ -375,8 +357,8 @@ class _SignInState extends State<SignIn> {
                             child: Center(
                               child: Image.asset(
                                 'images/fb.png',
-                                width: 24, // Adjust the width of the image
-                                height: 24, // Adjust the height of the image
+                                width: 24,
+                                height: 24,
                               ),
                             ),
                           ),
@@ -437,35 +419,26 @@ Future<int> signInWithEmailAndPassword(
     if (userCredential.user != null) {
       bool scoresUpdated =
           await updateScoresFromDjango(userCredential.user!.uid, keepSignedIn);
-
-      print("scoes are updated $scoresUpdated");
-      if (scoresUpdated)
+      if (scoresUpdated) {
         return 0;
-      else
-        return 1; // Only return true if scores were successfully updated
+      } else {
+        return 1;
+      }
     } else {
       return 1;
     }
   // ignore: deprecated_member_use
   } on DioError catch (e) {
-    // Handle DioException separately
-    // Check if it's a connection error
     if (e.error is SocketException) {
-      print('Connection error during scores update: $e');
+      
       return 1;
     } else {
-      // It's another Dio error
-      print('Dio error during scores update: $e');
       return 1;
     }
-  } on FirebaseAuthException catch (e) {
-    // Handle FirebaseAuthException
-    print('FirebaseAuthException during sign-in: $e');
+  } on FirebaseAuthException {
+  
     return 2;
   } catch (e) {
-    // Handle other exceptions
-
-    print('Exception during sign-in: $e');
     return 2;
   }
 }
@@ -473,26 +446,12 @@ Future<int> signInWithEmailAndPassword(
 Dio dio = Dio();
 
 Future<void> importUserFromFirebase(String userId, bool keepMeSignedIn) async {
-  try {
-    // Fetch user data from Firebase
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      print("User ID from Firebase:");
-      print(user.uid);
       userId = user.uid;
-
-      // Fetch user scores from Firebase or another source
-
-      // Update the Hive database with the fetched user data
-      //await updateHiveDatabase(userId, keepMeSignedIn, userScores);
-
-      // Fetch scores from Django and update Hive
-      Future<bool> updated = updateScoresFromDjango(userId, keepMeSignedIn);
     }
-  } catch (e) {
-    print("Exception during importing user from Firebase: $e");
-  }
+ 
 }
 
 void showErrorDialog(BuildContext context, String title, String message) {
@@ -516,81 +475,43 @@ void showErrorDialog(BuildContext context, String title, String message) {
 }
 
 Future<bool> updateScoresFromDjango(String userId, bool keepMeSignedIn) async {
-  print('Before API call');
-  //final url =
-  //'http://127.0.0.1:8000/api/user/stats/?type=score&user_id=$userId';
   final url = '${APIUrls.userstatsURL}/?type=score&user_id=$userId';
-  print('API URL: $url');
 
-  print('After API call');
+
+
   try {
-    print("Dkhalt fi try fi django");
-    // Replace the URL with your Django API endpoint
     final response = await dio.get(url);
-    print("kamalt l api call get");
     if (response.statusCode == 200) {
-      // Parse the JSON response
       final Map<String, dynamic> data = response.data;
-
-      print(data);
-
-      // Update user scores in Hive
       await updateHiveDatabase(userId, keepMeSignedIn, data);
       return true;
     } else {
-      // Handle API error
-      print('Failed to get scores from Django API');
       return false;
     }
-  } on DioError catch (e) {
-    // Print the Dio error message
-    print('Dio error during scores update: ${e.message}');
+  // ignore: deprecated_member_use
+  } on DioError {
+    
+
     return false;
   } catch (e) {
-    // Handle other exceptions
-    print('Exception during scores update: $e');
     return false;
   }
 }
 
 Future<void> updateHiveDatabase(
     String userId, bool keepMeSignedIn, Map<String, dynamic> userScores) async {
-  try {
     var box = await Hive.openBox('testBox');
-
-    // Check if the box is not empty
     if (box.isNotEmpty) {
-      // Get the index of the last item
       final lastIndex = box.length - 1;
-
-      // Delete the last item
       await box.deleteAt(lastIndex);
-      print("Deleted last row in box");
     }
-
-    // Close the box
-    //await box.close();
-
-    // Add the user to the database with scores
     MyData newData = MyData(
       userId: userId,
-      userScores: userScores, // Use the provided scores
+      userScores: userScores,
       keepMeSignedIn: keepMeSignedIn,
     );
-    print("Adding");
     box.add(newData);
-  } catch (e) {
-    print("Exception during Hive database update: $e");
-  }
-}
-
-Future<void> printHiveDatabaseContent() async {
-  var box = await Hive.openBox('testBox');
-  print('Hive Database Content:');
-  for (var key in box.keys) {
-    var value = box.get(key);
-    print('Key: $key, Value: ${value.toString()}');
-  }
+ 
 }
 
 bool isUserSignedIn() {

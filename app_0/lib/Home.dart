@@ -1,10 +1,14 @@
+// ignore_for_file: file_names
+
 import 'package:EducationALL/ChooseSubject.dart';
 import 'package:EducationALL/Profile.dart';
-import 'package:EducationALL/Stats.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _HomeState createState() => _HomeState();
 }
 
@@ -13,7 +17,7 @@ class _HomeState extends State<Home> {
   List<String> lasts = ['Math', 'Robotics', 'Math', 'History'];
   List<String> subtitles = ['Gain', 'Lesson', 'Probability', 'Time'];
 
-  List<Widget> pages = [Home(),Profile(), Profile()];
+  List<Widget> pages = [const Home(),Profile(), Profile()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +62,7 @@ class _HomeState extends State<Home> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => ChooseSubject(),
+                              builder: (context) => const ChooseSubject(),
                             ),
                           );
                         },
@@ -109,7 +113,7 @@ class _HomeState extends State<Home> {
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount:
-                            lasts.length, // Dynamically set the number of items
+                            lasts.length,
                         itemBuilder: (BuildContext context, int index) {
                           return QuizItem(
                             title: lasts[index],
@@ -117,7 +121,7 @@ class _HomeState extends State<Home> {
                                 'https://example.com/your_image_url$index.png',
                             subtitle: subtitles[index],
                             onTap: () {
-                              print('QuizItem $index tapped!');
+                              /*not completed yet*/
                             },
                           );
                         },
@@ -131,7 +135,6 @@ class _HomeState extends State<Home> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        //shape: const CircularNotchedRectangle(),
         child: SafeArea(
           child: Container(
             height: 60.0,
@@ -150,11 +153,8 @@ class _HomeState extends State<Home> {
   currentIndex: _currentIndex,
   onTap: (index) {
     setState(() {
-      print(index);
       _currentIndex = index;
     });
-
-    // Use a Future.delayed to allow the setState to complete before navigating
     Future.delayed(Duration.zero, () {
       Navigator.push(
         context,
@@ -193,8 +193,8 @@ class QuizItem extends StatelessWidget {
   final String subtitle;
   final VoidCallback onTap;
 
-  QuizItem(
-      {required this.title,
+  const QuizItem(
+      {super.key, required this.title,
       required this.imageUrl,
       required this.subtitle,
       required this.onTap});
@@ -202,7 +202,7 @@ class QuizItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap, // Call the onTap callback when the item is tapped
+      onTap: onTap,
       child: Container(
         width: 174,
         decoration: BoxDecoration(

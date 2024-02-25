@@ -1,5 +1,5 @@
+// ignore_for_file: file_names
 import 'dart:convert';
-
 import 'package:EducationALL/OneAnswer.dart';
 import 'package:EducationALL/api_urls.dart';
 import 'package:EducationALL/my_data.dart';
@@ -12,9 +12,10 @@ import 'package:hive/hive.dart';
 class OneQuestion extends StatefulWidget {
   final int selectedChoice;
 
-  OneQuestion({required this.selectedChoice});
+  const OneQuestion({super.key, required this.selectedChoice});
 
   @override
+  // ignore: library_private_types_in_public_api
   _QuestionsPageState createState() => _QuestionsPageState();
 }
 
@@ -111,7 +112,6 @@ class _QuestionsPageState extends State<OneQuestion> {
 
   Widget _buildBottomBox(double screenHeight, double screenWidth) {
     String question = problem;
-    //double boxHeight = screenHeight * 0.7;
     double boxWidth = screenWidth;
 
     return Container(
@@ -128,11 +128,11 @@ class _QuestionsPageState extends State<OneQuestion> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Container(
-              // Wrap the Text widget with Container
+             
               margin:
-                  const EdgeInsets.only(bottom: 10), // Adjust the margin as needed
+                  const EdgeInsets.only(bottom: 10), 
               child: Text(
-                '$question',
+                question,
                 style: const TextStyle(
                   color: Color(0xFF1F1926),
                   fontSize: 20,
@@ -177,7 +177,7 @@ class _QuestionsPageState extends State<OneQuestion> {
     String secondsStr =
         remainingSeconds < 10 ? '0$remainingSeconds' : '$remainingSeconds';
     if (minutesStr == '00') {
-      return '$secondsStr';
+      return secondsStr;
     } else {
       return '$minutesStr:$secondsStr';
     }
@@ -202,7 +202,6 @@ class _QuestionsPageState extends State<OneQuestion> {
       onTap: () {
         setState(() {
           selectedAnswer = index;
-          print(selectedAnswer);
         });
       },
       child: Container(
@@ -256,10 +255,8 @@ class _QuestionsPageState extends State<OneQuestion> {
   }
 
   void fetchData() async {
-    print(isUserSignedIn());
-    print(widget.selectedChoice);
-    final String baseUrl = '${APIUrls.baseUrl}';
-    final String path = '${APIUrls.problemsearchURL}';
+    const String baseUrl = APIUrls.baseUrl;
+    const String path = APIUrls.problemsearchURL;
     List<String> lessons = [
       'algebra',
       'gain',
@@ -270,7 +267,6 @@ class _QuestionsPageState extends State<OneQuestion> {
       'probability',
       'other'
     ];
-    print(lessons[widget.selectedChoice]);
 
     final Map<String, dynamic> queryParams = {
       'count': '1',
@@ -286,19 +282,11 @@ class _QuestionsPageState extends State<OneQuestion> {
           userData.userScores[lessons[widget.selectedChoice]].toString();
     }
 
-    print(queryParams);
-    final Uri uri =
-        Uri.parse(baseUrl + path).replace(queryParameters: queryParams);
+    
+    final Uri uri = Uri.parse(baseUrl + path).replace(queryParameters: queryParams);
 
     try {
-      print("taw bch nab3ath");
       final Response response = await dio.get(uri.toString());
-
-      print('Request URL: ${uri.toString()}');
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Headers: ${response.headers}');
-      print('Response Data: ${response.data}');
-
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = response.data;
         questionId = data['id'];
@@ -309,12 +297,8 @@ class _QuestionsPageState extends State<OneQuestion> {
             .toList();
         correctAnswer = data['correct'];
         explanation = (data['rationale'] as String);
-        print('\n');
-        print(explanation);
-        print('\n');
         stcorrectAnswer = options[correctAnswer.codeUnitAt(0) - 97];
         difficulty = (data['difficulty_score'] as int);
-        print(difficulty);
         if (difficulty >= 73) {
           timerSeconds = 180;
         } else {
@@ -323,19 +307,12 @@ class _QuestionsPageState extends State<OneQuestion> {
           }
         }
       } else {
-        print('Request failed with status: ${response.statusCode}');
         setState(() {
           isError = true;
         });
       }
-    } catch (error, stackTrace) {
-      if (error is DioError) {
-        print('DioError during the HTTP request: ${error.message}');
-        print('DioError response: ${error.response}');
-      } else {
-        print('Error during the HTTP request: $error');
-        print('Stack trace: $stackTrace');
-      }
+    } catch (error) {
+      
       setState(() {
         isError = true;
       });
@@ -348,7 +325,7 @@ class _QuestionsPageState extends State<OneQuestion> {
   }
 
   void startTimer() {
-    const oneSec = const Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
       (timer) {
@@ -366,9 +343,7 @@ class _QuestionsPageState extends State<OneQuestion> {
   }
 
   Future<void> goToNextQuestion() async {
-    //timerSeconds = 60;
-    print('Selected Choice in OneQuestion: ${widget.selectedChoice}');
-    print('Selected Answer in OneQuestion: ${selectedAnswer}');
+   
     if (timerSeconds == 0) {
       stSelectedAnswer = 'Timer Out';
     } else {
@@ -376,6 +351,7 @@ class _QuestionsPageState extends State<OneQuestion> {
     }
     _timer.cancel();
     int up = await updateScore(difficulty, stSelectedAnswer, stcorrectAnswer);
+    // ignore: use_build_context_synchronously
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -410,7 +386,7 @@ class _QuestionsPageState extends State<OneQuestion> {
     "Average_diff": difficulty,
 
 };
-        final String aiUrl = '${APIUrls.AiUrl}';
+        const String aiUrl = APIUrls.AiUrl;
         Dio dio = Dio();
         final Response aiResponse = await dio.post(
           aiUrl,
@@ -419,26 +395,13 @@ class _QuestionsPageState extends State<OneQuestion> {
           ),
           data: jsonEncode(params),
         );
-        // Update user score locally in the Hive box
-        print(aiResponse);
-        print(aiResponse.data['prediction']);
         uprate =  aiResponse.data['prediction'].round();
-        // Update user score locally in the Hive box
+        
         int newScore = userData.userScores[selectedCategory] + uprate;
         userData.userScores[selectedCategory] = newScore;
-        box.put(userData.userId, userData); // Assuming userId is unique
+        box.put(userData.userId, userData);
+        const String apiUrl1 = APIUrls.userhistoryURL;
 
-        // Make API request to update the score on the server
-        final String apiUrl = '${APIUrls.userscoresURL}';
-        final String apiUrl1 = '${APIUrls.userhistoryURL}';
-
-        final Map<String, dynamic> requestBody = {
-          "user_id": userData.userId,
-          "category": selectedCategory,
-          "new_score": newScore,
-        };
-
-        // Fetch user history
         Response historyResponse = await Dio().get(
           apiUrl1,
           queryParameters: {
@@ -459,24 +422,6 @@ class _QuestionsPageState extends State<OneQuestion> {
             "new_history": currentHistory + 1,
           };
 
-          // Update score
-          Response response = await Dio().patch(
-            apiUrl,
-            data: requestBody,
-            options: Options(
-              headers: {'Content-Type': 'application/json'},
-            ),
-          );
-
-          if (response.statusCode == 200) {
-            print("Category $selectedCategory updated successfully.");
-          } else {
-            print(
-                "Failed to update category $selectedCategory. Status code: ${response.statusCode}");
-            print("Response data: ${response.data}");
-          }
-
-          // Update history
           Response response1 = await Dio().patch(
             apiUrl1,
             data: requestBody1,
@@ -486,26 +431,17 @@ class _QuestionsPageState extends State<OneQuestion> {
           );
 
           if (response1.statusCode == 200) {
-            print("History updated successfully.");
           } else {
-            print(
-                "Failed to update history. Status code: ${response1.statusCode}");
-            print("Response data: ${response1.data}");
           }
 
           return uprate;
         } else {
-          print(
-              'Failed to fetch user history. Status code: ${historyResponse.statusCode}');
-          print('Response data: ${historyResponse.data}');
           return 0;
         }
       } else {
-        print("User data not available");
         return 0;
       }
     } catch (e) {
-      print("Error during the updateScore operation: $e");
       return 0;
     }
   }
