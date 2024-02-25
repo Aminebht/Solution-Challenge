@@ -115,5 +115,5 @@ Follow these steps to set up the Django API locally:
 #### Running the API
 
 Run the file `./start_env.bat` to start the servers.
-##note
+#### note
 If you are using a Browser copy the localhost link of it and paste it in the `CORS_ALLOWED_ORIGINS` in the Django project `settings.py`.
