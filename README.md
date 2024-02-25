@@ -32,11 +32,11 @@ Make sure you have Flutter and Dart installed on your machine. If not, you can f
 
 There are some configurations in the `Frontend/lib/api_urls.dart` file. Depending on your environment, follow the instructions below:
 
-1. If you are using a web browser:
+1. If you are using an emulator:
    - Set `baseUrl` variable to `'http://10.0.2.2:8000'`
    - Set `baseUrlAi` variable to `'http://10.0.2.2:8001'`
 
-2. If you are using an emulator:
+2. If you are using a web browser:
    - Set `baseUrl` variable to `'http://127.0.0.1:8000'`
    - Set `baseUrlAi` variable to `'http://127.0.0.1:8001'`
 
@@ -115,5 +115,5 @@ Follow these steps to set up the Django API locally:
 #### Running the API
 
 Run the file `./start_env.bat` to start the servers.
-
-Copy the Django API tunnel link (forwarded to localhost:8000) and paste it in the `ALLOWED_HOSTS` and `CSRF_TRUSTED_ORIGINS` in the Django project `settings.py`.
+#### note
+If you are using a Browser copy the localhost link of it and paste it in the `CORS_ALLOWED_ORIGINS` in the Django project `settings.py`.
