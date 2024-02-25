@@ -112,8 +112,10 @@ Follow these steps to set up the Django API locally:
 5. Install dependencies:
 
    ```bash
+   cd venv/Scripts
+   activate
+   cd ../..
    pip install -r requirements.txt
-   ```
 
 #### Running the API
 
